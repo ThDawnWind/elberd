@@ -1,0 +1,1 @@
+export { RecommendedDishes } from "./RecommendedDishes";

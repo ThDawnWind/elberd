@@ -1,0 +1,1 @@
+export { PopularDishes } from "./PopularDishes";
