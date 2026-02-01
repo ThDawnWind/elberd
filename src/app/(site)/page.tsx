@@ -1,9 +1,9 @@
-import { Advantages } from "@/components/sections/Advantages";
-import { CategoriesSwiper } from "@/components/sections/CategoriesSwiper/CategoriesSwiper";
-import { PopularDishes } from "@/components/sections/PopularDishes";
-import { RecommendedDishes } from "@/components/sections/RecommendedDishes";
+import { Advantages } from "@/sections/Advantages";
+import { CategoriesSwiper } from "@/sections/CategoriesSwiper/CategoriesSwiper";
+import { PopularDishes } from "@/sections/PopularDishes";
+import { RecommendedDishes } from "@/sections/RecommendedDishes";
 
-import { WallaperSwiper } from "@/components/sections/Swiper";
+import { WallaperSwiper } from "@/sections/Swiper";
 
 export default function Home() {
   return (
