@@ -1,0 +1,1 @@
+export { CategoriesSwiper } from "./CategoriesSwiper";
