@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ChefHat, ChevronDown, Croissant, Heart, Pizza, Sandwich, Search, ShoppingCart } from 'lucide-react';
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components//ui/dropdown-menu";
 
 const categories = [
   { id: 1, name: "Все категории", icon: ChefHat, href: "/catalog" },
