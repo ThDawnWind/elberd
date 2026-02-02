@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ChefHat,  Heart, ShoppingCart } from 'lucide-react';
-import { SearchBar } from "../ui/search-bar";
+import { SearchBar } from "../components/ui/search-bar";
 
 export const Header = () => {
   const favoritesCount = 5;

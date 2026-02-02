@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { Menu } from "lucide-react";
 
+// Основные пункты меню
 const navItems = [
   { name: "Главная", href: "/" },
   { name: "О нас", href: "/about" },
