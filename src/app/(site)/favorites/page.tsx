@@ -204,11 +204,11 @@ export default function FavoritesPage() {
         <div className="mb-8 sm:mb-10">
           <div className="flex sm:flex-row flex-col justify-between items-start sm:items-center gap-4 mb-6">
             <div className="flex-1 min-w-0">
-              <h1 className="mb-2 font-sans font-bold text-gray-900 md:text-2.3xl text-xl sm:text-2xl lg:text-4xl leading-tight /* 20px - мобильные */ /* 24px - планшеты */ /* 30px - ноутбуки */ /* 36px - большие экраны */">
+              <h1 className="mb-2 font-sans font-bold text-gray-900 md:text-2.3xl text-xl sm:text-2xl lg:text-4xl leading-tight">
                 Избранные товары
               </h1>
 
-              <p className="max-w-3xl font-sans text-gray-600 md:text-1.2xl text-sm sm:text-base lg:text-xl leading-relaxed /* 14px - мобильные */ /* 16px - планшеты */ /* 18px - ноутбуки */ /* 20px - большие экраны */">
+              <p className="max-w-3xl font-sans text-gray-600 md:text-1.2xl text-sm sm:text-base lg:text-xl leading-relaxed">
                 Ваши любимые блюда всегда под рукой
               </p>
             </div>
