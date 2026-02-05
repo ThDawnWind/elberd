@@ -5,7 +5,7 @@ const advantages = [
     id: 1,
     icon: <Truck className="w-8 h-8" />,
     title: "Быстрая доставка",
-    description: "Доставим ваш заказ за 30-60 минут в любую точку города",
+    description: "Доставим ваш заказ за 60 минут в любую точку города",
   },
   {
     id: 2,
@@ -99,7 +99,7 @@ export const Advantages = () => {
         <div className="mt-12 sm:mt-16 text-center">
           <div className="inline-flex flex-wrap justify-center items-center gap-6 sm:gap-8 bg-white/80 backdrop-blur-sm px-6 py-4 border border-gray-200 rounded-2xl">
             <div className="text-center">
-              <div className="font-sans font-bold text-berd-primary text-2xl sm:text-3xl">30+</div>
+              <div className="font-sans font-bold text-berd-primary text-2xl sm:text-3xl">60+</div>
               <div className="font-sans text-gray-600 text-sm sm:text-base">минут доставка</div>
             </div>
             <div className="bg-gray-200 w-px h-8" />
@@ -109,8 +109,8 @@ export const Advantages = () => {
             </div>
             <div className="bg-gray-200 w-px h-8" />
             <div className="text-center">
-              <div className="font-sans font-bold text-berd-primary text-2xl sm:text-3xl">150+</div>
-              <div className="font-sans text-gray-600 text-sm sm:text-base">блюд в меню</div>
+              <div className="font-sans font-bold text-berd-primary text-2xl sm:text-3xl">100+</div>
+              <div className="font-sans text-gray-600 text-sm sm:text-base">позиций в меню</div>
             </div>
             <div className="bg-gray-200 w-px h-8" />
           </div>

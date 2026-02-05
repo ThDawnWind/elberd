@@ -12,11 +12,20 @@ export const Footer = () => {
             
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-8">
-                <div className="flex justify-center items-center bg-gradient-to-r from-berd-primary to-amber-600 rounded-full w-10 h-10">
-                  <span className="font-bold text-white text-lg">EB</span>
+                <div className="flex justify-center items-center w-10 h-10">
+             <div className="relative w-24 md:w-28 lg:w-32 h-24 md:h-28 lg:h-32">
+                <Image
+                  src="/logo.png"
+                  alt="Эльберд"
+                  width={128} 
+                  height={128}
+                  priority
+                  className="w-full h-full object-contain scale-125 md:scale-150"
+                />
+              </div>
                 </div>
-                <span className="bg-clip-text bg-gradient-to-r from-berd-primary to-amber-600 font-bold text-transparent text-2xl">
-                  EL.BERD
+                <span className="bg-clip-text font-sans text-berd-primary text-2xl">
+                  EL&apos;BERD
                 </span>
               </div>
 
@@ -25,13 +34,12 @@ export const Footer = () => {
                 Мы заботимся о каждом клиенте и гарантируем качество.
               </p>
 
-              {/* Контактная информация */}
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <MapPin className="flex-shrink-0 mt-0.5 w-5 h-5 text-berd-primary" />
                   <div>
                     <h4 className="mb-1 font-semibold text-gray-200">Адрес:</h4>
-                    <p className="text-gray-400">1762 School House Road</p>
+                    <p className="text-gray-400">г. Грозный, пр. Исаева 3</p>
                   </div>
                 </div>
 
@@ -40,10 +48,10 @@ export const Footer = () => {
                   <div>
                     <h4 className="mb-1 font-semibold text-gray-200">Телефон:</h4>
                     <a 
-                      href="tel:1233777" 
+                      href="tel:+79899194871" 
                       className="text-gray-400 hover:text-berd-primary transition-colors"
                     >
-                      1233-777
+                      +7 (989) 919-48-71
                     </a>
                   </div>
                 </div>
@@ -66,7 +74,7 @@ export const Footer = () => {
                   <div>
                     <h4 className="mb-1 font-semibold text-gray-200">Часы работы:</h4>
                     <p className="text-gray-400">8:00 - 20:00</p>
-                    <p className="text-gray-400 text-sm">Воскресенье - Четверг</p>
+                    <p className="text-gray-400 text-sm">Без выходных</p>
                   </div>
                 </div>
               </div>
@@ -97,7 +105,6 @@ export const Footer = () => {
                 </ul>
               </div>
 
-              {/* Колонка 2 - Соцсети и призыв к действию */}
               <div>
                 <h3 className="mb-6 font-bold text-white text-xl">Следите за нами</h3>
                 <p className="mb-6 text-gray-300">
@@ -106,7 +113,7 @@ export const Footer = () => {
 
                 <div className="flex gap-4 mb-8">
                 <a
-                    href="https://wa.me/1233777"
+                    href="https://wa.me/79899194871"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex justify-center items-center bg-gradient-to-br from-green-500 to-green-600 hover:shadow-lg rounded-full w-12 h-12 hover:scale-110 transition-transform"
@@ -123,7 +130,7 @@ export const Footer = () => {
                 </a>
                   
                   <a
-                    href="https://instagram.com"
+                    href="https://www.instagram.com/el.berd_?igsh=MWM0amx4OXhuaWx4cg=="
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex justify-center items-center bg-gradient-to-br from-pink-500 to-purple-600 hover:shadow-lg rounded-full w-12 h-12 hover:scale-110 transition-transform"

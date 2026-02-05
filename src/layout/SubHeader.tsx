@@ -1,81 +1,128 @@
-// components/layout/SubHeader.tsx
 "use client";
 
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { Grid3X3, Home, Info, Menu, Store } from "lucide-react";
+import { useState } from "react";
 
-// Основные пункты меню
-const navItems = [
-  { name: "Главная", href: "/" },
-  { name: "О нас", href: "/about" },
-  { name: "Магазины", href: "/stores" },
+const mobileNavItems = [  
+  { name: "Главная", href: "/", icon: Home },
+  { name: "Меню", href: "/catalog", icon: Grid3X3 },
+  { name: "О нас", href: "/about", icon: Info },
+  { name: "Магазины", href: "/stores", icon: Store },
 ];
 
 export const SubHeader = () => {
+  const [activeLink, setActiveLink] = useState("/");
+
   return (
-    <nav className="bg-white border-b w-full">
-      <div className="mx-4 md:mx-[90px] px-4">
-        <div className="hidden md:flex justify-between items-center h-12">
-          <div className="flex items-center gap-6">
-            <Link 
-              href="/catalog"
-              className="group flex items-center gap-2 hover:bg-berd-primary px-4 py-2 rounded-lg focus:outline-2 active:outline-black text-black transition-colors"
-            >
-              <Menu className="w-4 h-4" />
-              <span className="font-medium">Меню</span>
-            </Link>
-            
-            <div>
+    <>
+      <nav className="hidden lg:block bg-white border-b w-full">
+        <div className="mx-4 md:mx-8 lg:mx-12 xl:mx-24">
+          <div className="flex items-center gap-8 h-12">
+            <div className="flex items-center gap-8">
+              <Link 
+                href="/catalog"
+                onClick={() => setActiveLink("/catalog")}
+                className={`group flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                  activeLink === "/catalog" 
+                    ? "bg-berd-primary text-white" 
+                    : "hover:bg-berd-primary/10 text-gray-800"
+                }`}
+              >
+                <Menu className="w-4 h-4" />
+                <span className="font-medium text-sm">Меню</span>
+              </Link>
+
               <Link
                 href="/"
-                className="group relative py-1 font-medium text-gray-700 text-sm transition-colors hover:berd-primary"
+                onClick={() => setActiveLink("/")}
+                className={`group flex items-center gap-2 py-1 font-medium text-sm transition-colors ${
+                  activeLink === "/"
+                    ? "text-berd-primary"
+                    : "text-gray-700 hover:text-berd-primary"
+                }`}
               >
-                Главная
-                <span className="bottom-0 left-0 absolute bg-berd-primary w-0 group-hover:w-full h-0.5 transition-all duration-300" />
+                <Home className="w-4 h-4" />
+                <span>Главная</span>
+                <span 
+                  className={`bottom-0 left-0 absolute bg-berd-primary h-0.5 transition-all duration-300 ${
+                    activeLink === "/"
+                      ? "w-full"
+                      : "w-0 group-hover:w-full"
+                  }`}
+                />
+              </Link>
+            </div>
+
+            <div className="flex items-center gap-8 ml-auto">
+          <Link
+              href="/about"
+              onClick={() => setActiveLink("/about")}
+              className={`group relative py-1 font-medium text-sm transition-colors ${
+                activeLink === "/about"
+                  ? "text-berd-primary"
+                  : "text-gray-700 hover:text-berd-primary"
+              }`}
+            >
+              <span>О нас</span>
+              <span className={`absolute bottom-0 left-0 bg-berd-primary h-0.5 transition-all duration-300 ${
+                  activeLink === "/about" ? "w-full" : "w-0 group-hover:w-full"
+                }`}
+              />
+            </Link>
+
+              <Link
+                href="/stores"
+                onClick={() => setActiveLink("/stores")}
+                className={`group relative py-1 font-medium text-sm transition-colors ${
+                  activeLink === "/stores"
+                    ? "text-berd-primary"
+                    : "text-gray-700 hover:text-berd-primary"
+                }`}
+              >
+                <span>Магазины</span> 
+                <span 
+                  className={`absolute bottom-0 left-0  bg-berd-primary h-0.5 transition-all duration-300 ${
+                    activeLink === "/stores" ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+                />
               </Link>
             </div>
           </div>
-
-          <div className="flex items-center gap-6">
-            <Link
-              href="/about"
-              className="group relative py-1 font-medium text-gray-700 hover:text-berd-primary text-sm transition-colors"
-            >
-              О нас
-              <span className="bottom-0 left-0 absolute bg-berd-primary w-0 group-hover:w-full h-0.5 transition-all duration-300" />
-            </Link>
-            <Link
-              href="/stores"
-              className="group relative py-1 font-medium text-gray-700 hover:text-berd-primary text-sm transition-colors"
-            >
-              Наши магазины
-              <span className="bottom-0 left-0 absolute bg-berd-primary group-hover:w-full h-0.5 transition-all duration-300" />
-            </Link>
-          </div>
         </div>
+      </nav>
 
-        <div className="md:hidden py-3">
-          <div className="flex flex-col space-y-3">
-            <Link 
-              href="/catalog"
-              className="flex items-center gap-3 bg-berd-primary hover:bg-berd-primary px-4 py-3 rounded-lg text-white transition-colors"
-            >
-              <Menu className="w-5 h-5" />
-              <span className="font-medium">Меню</span>
-            </Link>
-
-            {navItems.map((item) => (
+      <nav className="lg:hidden block right-0 bottom-0 left-0 z-50 fixed bg-white/95 shadow-lg backdrop-blur-lg border-t">
+        <div className="flex justify-around items-center px-1 h-16">
+          {mobileNavItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeLink === item.href;
+            
+            return (
               <Link
                 key={item.name}
                 href={item.href}
-                className="flex items-center hover:bg-gray-50 px-4 py-3 rounded-lg text-gray-700 hover:text-berd-primary transition-colors"
+                onClick={() => setActiveLink(item.href)}
+                className={`flex flex-col justify-center items-center gap-1 px-2 py-1 rounded-xl min-w-[60px] transition-colors ${
+                  isActive
+                    ? "text-berd-primary"
+                    : "text-gray-600 hover:text-berd-primary"
+                }`}
               >
-                <span className="font-medium text-sm">{item.name}</span>
+                <div className="relative">
+                  <Icon className="w-5 h-5" />
+                  {isActive && (
+                    <div className="-top-1 -right-1 absolute bg-berd-primary rounded-full w-2 h-2"></div>
+                  )}
+                </div>
+                <span className="font-medium text-[10px] sm:text-xs">{item.name}</span>
               </Link>
-            ))}
-          </div>
+            );
+          })}
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      <div className="lg:hidden h-16" />
+    </>
   );
 };
