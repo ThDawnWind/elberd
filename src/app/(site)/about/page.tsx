@@ -24,8 +24,8 @@ export default function AboutPage() {
         
         <div className="relative mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16 max-w-7xl">
           <div className="text-center">
-            <h1 className="mb-3 sm:mb-4 font-sans font-bold text-gray-900 text-2xl sm:text-3xl lg:text-4xl">
-              EL<span className="text-berd-primary">.BERD</span>
+            <h1 className="mb-3 sm:mb-4 font-sans font-bold text-berd-primaryq text-2xl sm:text-3xl lg:text-4xl">
+              <span className="text-berd-primary">EL&apos;BERD</span>
             </h1>
             <p className="mx-auto max-w-3xl font-sans text-gray-600 text-base sm:text-lg lg:text-xl">
               Производство и продажа продуктов питания с доставкой в Грозном
@@ -44,12 +44,11 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-2 sm:space-y-3 font-sans text-gray-600 text-sm sm:text-base">
                 <p>
-                  Мы занимаемся производством и продажей продуктов питания, 
-                  а также оказываем услуги по доставке в городе Грозный.
-                </p>
-                <p>
-                  Наша миссия — обеспечить вас свежими, качественными продуктами 
-                  и готовыми блюдами с доставкой до двери.
+                EL’BERD — семейное дело с историей более 20 лет.
+                Всё начиналось с домашних заготовок и варенья, которые готовились по семейным рецептам, но со временем это переросло во что-то большее.
+                Название «Эльберд», что в переводе означает «Владыка холмов», отражает суть нашего проекта. Оно напрямую связано с нашими предками, нашей землёй и нашими корнями.
+                Через наши блюда мы стремимся передать людям красоту и ценность традиций, которые существуют испокон веков и бережно сохраняются в нашей семье.
+                Спасибо, что выбираете нас!
                 </p>
               </div>
             </div>
@@ -73,7 +72,7 @@ export default function AboutPage() {
                     </span>
                   </div>
                   <span className="font-sans font-bold text-gray-900 text-sm sm:text-base">
-                    9:00 - 00:00
+                    9:00 - 20:00
                   </span>
                 </div>
                 
@@ -85,7 +84,7 @@ export default function AboutPage() {
                     </span>
                   </div>
                   <span className="font-sans font-bold text-gray-900 text-sm sm:text-base">
-                    9:00 - 21:00
+                    9:00 - 20:00
                   </span>
                 </div>
                 
@@ -118,7 +117,7 @@ export default function AboutPage() {
                       href="tel:+79380031333" 
                       className="font-sans font-bold text-gray-900 hover:text-berd-primary text-base sm:text-lg transition-colors"
                     >
-                      +7 (938) 003-13-33
+                      +7 (989) 919-48-71
                     </a>
                   </div>
                 </div>
@@ -162,22 +161,19 @@ export default function AboutPage() {
                     <div className="flex items-center gap-1.5">
                       <div className="bg-green-500 rounded-full w-1.5 h-1.5" />
                       <span className="font-sans text-gray-600 text-xs sm:text-sm">
-                        при заказе от <span className="font-sans font-bold text-gray-900">3000₽</span> — бесплатно
+                        при заказе от <span className="font-sans font-bold text-gray-900">8000₽</span> — бесплатно
                       </span>
                     </div>
                     
                     <div className="flex items-center gap-1.5">
                       <div className="bg-blue-500 rounded-full w-1.5 h-1.5" />
                       <span className="font-sans text-gray-600 text-xs sm:text-sm">
-                        до <span className="font-sans font-bold text-gray-900">3000₽</span> — по тарифу курьерской службы
+                        до <span className="font-sans font-bold text-gray-900">8000₽</span> — по тарифу курьерской службы
                       </span>
                     </div>
                   </div>
                 </div>
-                
-                <div className="font-sans text-gray-500 text-xs">
-                  *Минимальная сумма заказа для доставки — 500₽
-                </div>
+            
               </div>
             </div>
           </div>
@@ -201,7 +197,7 @@ export default function AboutPage() {
                 Перейти в каталог
               </Link>
               <a
-                href="tel:+79380031333"
+                href="tel:+79899194871"
                 className="bg-white hover:bg-berd-primary px-5 sm:px-6 py-2 sm:py-2.5 border-2 border-berd-primary rounded-lg sm:rounded-xl font-sans font-bold text-gray-900 hover:text-black text-xs sm:text-sm transition-all"
               >
                 Позвонить сейчас
@@ -223,7 +219,7 @@ export default function AboutPage() {
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
             <Button asChild variant="outline" className="hover:bg-pink-50 border-gray-200 hover:border-pink-200">
               <a
-                href="https://instagram.com/elberd"
+                href="https://www.instagram.com/el.berd_?igsh=MWM0amx4OXhuaWx4cg=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 sm:gap-2"
