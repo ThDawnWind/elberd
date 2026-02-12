@@ -251,7 +251,6 @@ export default function AboutPage() {
             </Button>
           </div>
         </div>
-
       </div>
     </div>
   );

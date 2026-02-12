@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "el.berd - Доставка готовых блюд",
+  title: "Эльберд - Доставка еды",
   description: "Заказывайте вкусные готовые блюда с доставкой",
 };
 

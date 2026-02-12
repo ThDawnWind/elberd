@@ -1,5 +1,4 @@
-// components/sections/CategoriesSwiper/index.tsx
-"use client";
+'use client'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -11,7 +10,7 @@ import { SwiperControls } from './SwiperControls';
 
 export const CategoriesSwiper = () => {
   return (
-    <div className="relative px-2 md:px-4">
+    <div className="relative px-2 sm:px-4 lg:px-4">
       <Swiper
         modules={[Navigation]}
         navigation={{
@@ -19,45 +18,31 @@ export const CategoriesSwiper = () => {
           prevEl: '.custom-prev',
           disabledClass: 'opacity-30 pointer-events-none',
         }}
-        slidesPerView={7}
-        breakpoints={{
-          320: {
-            slidesPerView: 1.3,
-            spaceBetween: 1,
-          },
-          375: {
-            slidesPerView: 2,
-            spaceBetween: 1, 
-          },
-          425: {
-            slidesPerView: 2,
-            spaceBetween: 1.5,
-          },
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 2, 
-            centeredSlides: false, 
-          },
-          768: {
-            slidesPerView: 4,
-            spaceBetween: 2, 
-          },
-          1024: {
-            slidesPerView: 5,
-            spaceBetween: 4, 
-          },
-           1440: {
-            slidesPerView: 8,
-            spaceBetween: 4,
-          },
-        }}
+          slidesPerView={2.5}     
+          spaceBetween={8}          
+          breakpoints={{
+            490: {                 
+              slidesPerView: 2.5,
+              spaceBetween: 5,
+            },
+            768: {                 
+              slidesPerView: 4,
+              spaceBetween: 5,
+            },
+            1024: {                 
+              slidesPerView: 6,
+              spaceBetween: 5,
+            },
+            1280: {                 
+              slidesPerView: 9,
+              spaceBetween: 24,
+            },
+          }}
         className="!pb-2"
       >
         {CATEGORIES.map((category) => (
-          <SwiperSlide 
-            key={category.id} 
-          >
-              <CategoryCard {...category} />
+          <SwiperSlide key={category.id}>
+            <CategoryCard {...category} />
           </SwiperSlide>
         ))}
       </Swiper>

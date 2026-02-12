@@ -9,69 +9,67 @@ export const Header = () => {
 
   return (
     <header className="top-0 z-50 sticky bg-white/95 supports-[backdrop-filter]:bg-white/60 backdrop-blur border-b w-full font-mono">
-      <div className="px-4 md:px-8 lg:px-12">
-        <div className="flex justify-between items-center h-16 md:h-20">
-          
+      <div className="px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 sm:h-18 lg:h-20">
           <div className="flex flex-shrink-0 items-center">
-            <Link href="/" className="flex items-center gap-1 md:gap-2">
-              <div className="relative w-21 md:w-28 lg:w-28 h-21 md:h-28 lg:h-28">
-                  <Image
-                    src="/logo.png"
-                    alt="Эльберд"
-                    width={98} 
-                    height={98}
-                    priority
-                    className="w-full h-full object-contain scale-125 md:scale-150"
-                  />
-                </div>
+            <Link href="/" className="flex items-center gap-1 sm:gap-2 lg:gap-3">
+              <div className="relative max-w-[50px] sm:max-w-[55px] lg:max-w-[58px] max-h-[50px] sm:max-h-[55px] lg:max-h-[58px]">
+                <Image
+                  src="/logo.png"
+                  alt="Эльберд"
+                  width={695}
+                  height={792}
+                  priority
+                  className="w-full h-full object-contain scale-110 sm:scale-125 lg:scale-150"
+                />
+              </div>
 
-              
               <div className="flex flex-col">
-                <span className="font-bold text-berd-primary text-lg md:text-xl lg:text-2xl">
+                <span className="font-bold text-berd-primary text-base sm:text-lg lg:text-2xl">
                   Эльберд
                 </span>
-                <p className="text-gray-500 text-xs md:text-sm">
+                <p className="text-gray-500 text-xs sm:text-sm">
                   Доставка еды
                 </p>
               </div>
             </Link>
           </div>
 
-          <div className="hidden xl:block flex-1 mx-3 md:mx-6 lg:mx-8 min-w-0 max-w-2xl">
+          <div className="hidden lg:block flex-1 mx-4 lg:mx-6 min-w-0 max-w-2xl">
             <SearchBar />
           </div>
 
-          <div className="flex flex-shrink-0 items-center gap-3 md:gap-4 lg:gap-6"> 
+          <div className="flex flex-shrink-0 items-center gap-2 xs:gap-6 sm:gap-3 lg:gap-6"> 
             <Link 
               href="/favorites" 
-              className="relative flex items-center gap-2.5 md:gap-2.5 hover:text-red-500 transition-colors"
+              className="relative flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 hover:text-red-500 transition-colors"
             >
               <div className="relative">
-                <Heart className="w-5 md:w-6 h-5 md:h-6 text-gray-700" />
+                <Heart className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-gray-700" />
                 {favoritesCount > 0 && (
-                  <span className="-top-1.5 md:-top-2 -right-1.5 md:-right-2 absolute flex justify-center items-center bg-red-500 rounded-full w-4 md:w-5 h-4 md:h-5 font-semibold text-[10px] text-white md:text-xs">
+                  <span className="-top-1.5 sm:-top-2 -right-1.5 sm:-right-2 absolute flex justify-center items-center bg-red-500 rounded-full w-3.5 sm:w-4 lg:w-5 h-3.5 sm:h-4 lg:h-5 font-semibold text-[9px] text-white sm:text-[10px]">
                     {favoritesCount}
                   </span>
                 )}
               </div>
-              <span className="hidden lg:inline font-medium text-gray-700 text-sm">
+              <span className="font-medium text-gray-700 text-sm">
                 Избранное
               </span>
             </Link>
 
             <Link 
               href="/cart" 
-              className="relative flex items-center gap-2 md:gap-2.5 hover:text-berd-primary transition-colors"
+              className="relative flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 hover:text-berd-primary transition-colors"
             >
               <div className="relative">
-                <ShoppingCart className="w-5 md:w-6 h-5 md:h-6 text-gray-700" />
+                <ShoppingCart className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-gray-700" />
                 {cartCount > 0 && (
-                  <span className="-top-1.5 md:-top-2 -right-1.5 md:-right-2 absolute flex justify-center items-center bg-berd-primary rounded-full w-4 md:w-5 h-4 md:h-5 font-semibold text-[10px] text-black md:text-xs">
+                  <span className="-top-1.5 sm:-top-2 -right-1.5 sm:-right-2 absolute flex justify-center items-center bg-berd-primary rounded-full w-3.5 sm:w-4 lg:w-5 h-3.5 sm:h-4 lg:h-5 font-semibold text-[9px] text-black sm:text-[10px]">
                     {cartCount}
                   </span>
                 )}
               </div>
-              <span className="hidden lg:inline font-medium text-gray-700 text-sm">
+              <span className="font-medium text-gray-700 text-sm">
                 Корзина
               </span>
             </Link>
@@ -79,10 +77,10 @@ export const Header = () => {
             <div className="flex items-center">
               <a 
                 href="tel:+79899194871" 
-                className="lg:hidden flex justify-center items-center hover:bg-gray-100 rounded-full w-10 h-10 transition-colors"
+                className="lg:hidden flex justify-center items-center hover:bg-gray-100 rounded-full w-9 sm:w-10 h-9 sm:h-10 transition-colors"
                 aria-label="Позвонить +7 (989) 919-48-71"
               >
-                <Phone className="w-5 h-5 text-gray-700" />
+                <Phone className="w-4 sm:w-5 h-4 sm:h-5 text-gray-700" />
               </a>
               
               <div className="hidden lg:flex items-center gap-3">

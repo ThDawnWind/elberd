@@ -4,7 +4,6 @@ import { PopularDishes } from "@/sections/PopularDishes";
 import { RecommendedDishes } from "@/sections/RecommendedDishes";
 import { WallaperSwiper } from "@/sections/Swiper";
 
-
 export default function Home() {
   return (
     <>

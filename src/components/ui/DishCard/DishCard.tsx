@@ -1,115 +1,313 @@
-// components/catalog/dish-card.tsx
-"use client";
+"use client"
 
-import { Heart, ShoppingCart, Star } from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import React, { useState } from 'react';
+import { DishCardProps } from '@/types';
+import { AddToCartButton } from './AddToCartButton';
+import { Heart } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import Image from 'next/image';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { CarouselWithDots } from '../carousel-with-dots';
 
-interface DishCardProps {
-  dish: {
-    id: number;
-    name: string;
-    weight: string;
-    price: number;
-    image: string;
-    isNew?: boolean;
-    description?: string;
-    rating?: number;
-    tags?: string[];
-  };
-}
-
-export const DishCard = ({ dish }: DishCardProps) => {
+export const DishCard: React.FC<DishCardProps> = ({
+  product,
+  variant = 'grid',
+  className = '',
+}) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  const [quantity, setQuantity] = useState(0);
+  
+  const productImages = product.images || [];
 
-  const handleAddToCart = () => {
-    setQuantity(prev => prev + 1);
-    console.log(`Добавлено в корзину: ${dish.name}`);
-  };
+  if (!product) {
+    return <ProductSkeleton variant={variant} className={className} />;
+  }
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsFavorite(!isFavorite);
   };
 
+if (variant === 'grid') {
   return (
-    <Card className="hover:shadow-md border-gray-200 w-full h-auto overflow-hidden transition-all">
-      {/* Изображение */}
-      <div className="relative h-[160px] overflow-hidden">
-        <Image
-          src={dish.image || "/images/placeholder.jpg"}
-          alt={dish.name}
-          fill
-          className="object-cover hover:scale-105 transition-transform"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+    <Card key={product.id} className={cn(
+      "group overflow-hidden transition-all duration-300",
+      "hover:shadow-lg hover:-translate-y-1 hover:shadow-berd-primary",
+      "border-border/60",
+      "flex flex-col h-full",
+      className
+    )}>
+      <div className="relative aspect-square overflow-hidden">
+        <CarouselWithDots
+          images={productImages}
+          alt={product.name}
+          className="aspect-square"
+          imageClassName="object-cover group-hover:scale-110 transition-transform duration-500"
         />
-        
-        {/* Новинка бейдж */}
-        {dish.isNew && (
-          <span className="top-2 left-2 absolute bg-amber-600 px-2 py-1 rounded-full font-sans font-semibold text-white text-xs">
-            Новинка
-          </span>
-        )}
-        
-        {/* Рейтинг */}
-        {dish.rating && (
-          <div className="top-2 right-2 absolute flex items-center gap-1 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
-            <Star className="fill-yellow-400 w-3 h-3 text-yellow-400" />
-            <span className="font-semibold text-xs">{dish.rating}</span>
-          </div>
-        )}
-        
+
+        <div className="top-2 sm:top-3 left-2 sm:left-3 absolute flex flex-col gap-1 sm:gap-2">
+          {product.isNew && (
+            <Badge className="bg-berd-primary hover:bg-berd-primary/90 px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs">
+              Новинка
+            </Badge>
+          )}
+        </div>
+
         <Button
           variant="ghost"
           size="icon"
+          className="top-2 sm:top-3 right-2 sm:right-3 absolute bg-background/80 hover:bg-background backdrop-blur-sm w-7 sm:w-8 h-7 sm:h-8"
           onClick={handleToggleFavorite}
-          className="right-2 bottom-2 absolute bg-white/90 backdrop-blur-sm w-8 h-8"
         >
-          <Heart className={cn("w-4 h-4", isFavorite && "fill-red-500 text-red-500")} />
+          <Heart className={cn(
+            "w-3.5 sm:w-4 h-3.5 sm:h-4 transition-colors",
+            isFavorite
+              ? "fill-red-500 text-red-500"
+              : "text-muted-foreground hover:fill-red-500 hover:text-red-500"
+          )} />
         </Button>
       </div>
 
-      {/* Контент */}
-      <CardContent className="flex flex-col p-3">
-        <h3 className="font-sans font-semibold text-sm line-clamp-2">{dish.name}</h3>
-        {dish.description && (
-          <p className="mt-1 font-sans text-gray-500 text-xs line-clamp-2">{dish.description}</p>
-        )}
-        
-        {/* Теги */}
-        {dish.tags && dish.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-2">
-            {dish.tags.slice(0, 2).map((tag, index) => (
-              <span 
-                key={index} 
-                className="bg-gray-100 px-2 py-0.5 rounded-full text-gray-600 text-xs"
-              >
-                {tag}
+      <CardHeader className='p-2'>
+        <CardTitle className="font-mono text-sm sm:text-base lg:text-lg">
+          {product.name}
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent className="flex flex-col flex-1 px-2 sm:px-3 pb-3 sm:pb-4">
+        <CardDescription className="mb-3 sm:mb-3 text-xs sm:text-sm line-clamp-2">
+          Срок годности:  {product.shelfLife}
+        </CardDescription>
+
+        {product.content && (
+          <div className="mb-2 h-10 lg:h-8">
+            <h4 className="flex items-start gap-1 mb-1 sm:mb-0.5 font-sans text-xs sm:text-sm leading-tight">
+              <span className="whitespace-nowrap">Состав:</span>
+              <span className="flex-1 sm:text-xs break-words line-clamp-2">
+                {product.content}
               </span>
-            ))}
+            </h4>
           </div>
         )}
-        
-        <div className="flex justify-between items-center mt-3">
-          <span className="font-sans text-gray-500 text-xs">Вес: {dish.weight}</span>
-          <span className="font-sans font-bold text-base">{dish.price}₴</span>
+
+        <div className="flex justify-between items-center gap-1 mt-auto pt-2 border-t">
+          <div className="flex flex-col">
+            <span className="text-[10px] text-muted-foreground sm:text-xs leading-tight">
+              {product.weight}г
+            </span>
+            <span className="font-bold text-xs sm:text-sm lg:text-base leading-tight">
+              {product.price} ₽
+            </span>
+          </div>
+          <AddToCartButton
+            dishId={product.id}
+            variant={variant}
+            size="sm"
+          />
         </div>
       </CardContent>
+    </Card>
+  );
+}
 
-      <CardFooter className="p-3 pt-0">
-        <Button 
-          onClick={handleAddToCart}
-          className="bg-berd-primary hover:bg-berd-primary/90 w-full font-sans text-sm"
-          size="sm"
-        >
-          <ShoppingCart className="mr-2 w-4 h-4" />
-          {quantity > 0 ? `В корзине: ${quantity}` : "В корзину"}
-        </Button>
-      </CardFooter>
+  if (variant === 'list') {
+    return (
+      <Card key={product.id} className={cn(
+        "group overflow-hidden transition-all duration-300",
+        "hover:shadow-lg",
+        "border-border/40",
+        "flex flex-row",
+        className
+      )}>
+        <div className="relative flex-row ml-3 sm:w-48 lg:w-56 xl:w-64">
+          <div className="relative w-full aspect-square sm:aspect-square">
+            <Image
+              src={productImages[0]}
+              alt={product.name}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            />
+          </div>
+          <div className="top-2 xs:top-2 sm:top-3 left-2 xs:left-2 sm:left-3 absolute flex flex-col gap-1 xs:gap-1 sm:gap-2">
+            {product.isNew && (
+              <Badge className="bg-berd-primary hover:bg-berd-primary/90 px-1.5 xs:px-1.5 sm:px-2 py-0.5 xs:py-0.5 sm:py-1 text-[10px] xs:text-[10px] sm:text-xs">
+                Новинка
+              </Badge>
+            )}
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="top-2 xs:top-2 sm:top-3 right-2 xs:right-2 sm:right-3 absolute bg-background/80 hover:bg-background backdrop-blur-sm w-7 xs:w-7 sm:w-8 h-7 xs:h-7 sm:h-8"
+            onClick={handleToggleFavorite}
+          >
+            <Heart className={cn(
+              "w-3.5 xs:w-3.5 sm:w-4 h-3.5 xs:h-3.5 sm:h-4 transition-colors",
+              isFavorite ? "fill-red-500 text-red-500" : "text-muted-foreground"
+            )} />
+          </Button>
+        </div>
+
+        <div className="flex flex-col flex-grow px-3">
+          <div className="flex flex-row justify-between">
+            <CardTitle className="mb-5 font-semibold text-sm xs:text-sm lg:text-lg line-clamp-2">
+              {product.name}
+            </CardTitle>
+            <span className="font-bold text-sm xs:text-sm sm:text-base lg:text-lg whitespace-nowrap">
+              {product.price} ₽
+            </span>
+          </div>
+
+        <div className='flex flex-col mb-8 h-[100px] xs:h-[90px] sm:h-[110px] lg:h-[120px]'>
+            <CardDescription className="mb-1 xs:mb-1 sm:mb-1.5 h-[40px] xs:h-[35px] sm:h-[42px] lg:h-[48px] text-muted-foreground xs:text-xs sm:text-sm text-base line-clamp-2">
+              {product.shelfLife}
+            </CardDescription>
+  
+            {product.content && (
+              <div className="flex flex-col h-[50px] xs:h-[45px] sm:h-[55px] lg:h-[60px]">
+                <h4 className="mb-1 xs:mb-0.5 font-medium xs:text-xs text-base">
+                Состав:
+              </h4>
+              <p className="xs:text-[10px] sm:text-xs text-base line-clamp-2">
+                {product.content}
+              </p>
+              </div>
+            )}
+          </div>
+
+          <div className="flex justify-between items-center pt-3 border-t">
+            <span className="text-black xs:text-[10px] sm:text-xs text-base">
+              Вес: {product.weight}г
+            </span>
+            <AddToCartButton
+              dishId={product.id}
+              variant={variant}
+              size="sm"
+              className="xs:px-2 sm:px-3 xs:py-1 sm:py-1.5 xs:h-7 sm:h-8 xs:text-[10px] sm:text-xs"
+            />
+          </div>
+        </div>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className={cn(
+      "overflow-hidden transition-all duration-300",
+      "hover:shadow-md",
+      "border-border/30",
+      "flex items-center p-2 xs:p-2 sm:p-3",
+      className
+    )}>
+      <div className="relative flex-shrink-0 mr-2 xs:mr-2 sm:mr-3 rounded-lg w-12 xs:w-12 sm:w-14 lg:w-16 h-12 xs:h-12 sm:h-14 lg:h-16 overflow-hidden">
+        <Image
+          src={productImages[0]}
+          alt={product.name}
+          fill
+          className="object-cover"
+          sizes="64px"
+        />
+        {product.isNew && (
+          <Badge className="-top-1 -right-1 absolute p-0 w-4 xs:w-4 sm:w-5 h-4 xs:h-4 sm:h-5 text-[8px] xs:text-[8px] sm:text-[10px]">
+            NEW
+          </Badge>
+        )}
+      </div>
+
+      <div className="flex-1 min-w-0">
+        <CardTitle className="mb-0.5 xs:mb-0.5 sm:mb-1 font-medium text-xs xs:text-xs sm:text-sm line-clamp-1">
+          {product.name}
+        </CardTitle>
+        
+        <div className="flex justify-between items-center">
+          <div>
+            <span className="block text-[10px] text-muted-foreground xs:text-[10px] sm:text-xs">
+              {product.weight}г
+            </span>
+            <span className="font-bold text-xs xs:text-xs sm:text-sm">
+              {product.price} ₴
+            </span>
+          </div>
+          
+          <AddToCartButton
+            dishId={product.id}
+            variant="compact"
+            size="sm"
+            className="xs:px-1.5 sm:px-2 xs:py-0.5 sm:py-1 xs:h-6 sm:h-7 xs:text-[10px] sm:text-xs"
+          />
+        </div>
+      </div>
+    </Card>
+  );
+};
+
+const ProductSkeleton = ({ 
+  variant = 'grid', 
+  className = '' 
+}: { 
+  variant?: 'grid' | 'list' | 'detailed';
+  className?: string;
+}) => {
+  if (variant === 'grid') {
+    return (
+      <Card className={cn("h-full overflow-hidden animate-pulse", className)}>
+        <div className="bg-muted aspect-square" />
+        <CardContent className="space-y-2 p-2 xs:p-2 sm:p-3">
+          <div className="bg-muted rounded h-3 xs:h-3 sm:h-4" />
+          <div className="bg-muted rounded w-3/4 h-2 xs:h-2 sm:h-3" />
+          <div className="flex justify-between items-center pt-2">
+            <div className="space-y-1">
+              <div className="bg-muted rounded w-10 h-2 xs:h-2 sm:h-3" />
+              <div className="bg-muted rounded w-12 h-3 xs:h-3 sm:h-4" />
+            </div>
+            <div className="bg-muted rounded w-16 xs:w-14 sm:w-20 h-7 xs:h-6 sm:h-8" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (variant === 'list') {
+    return (
+      <Card className={cn("flex sm:flex-row flex-col overflow-hidden animate-pulse", className)}>
+        <div className="bg-muted sm:w-48 lg:w-56 xl:w-64 aspect-square sm:aspect-square" />
+        <div className="flex-1 space-y-2 p-3 xs:p-3 sm:p-4">
+          <div className="bg-muted rounded w-3/4 h-4 xs:h-4 sm:h-5" />
+          <div className="bg-muted rounded w-1/2 h-3 xs:h-3 sm:h-4" />
+          <div className="bg-muted rounded h-12 xs:h-10 sm:h-14" />
+          <div className="flex justify-between items-center pt-2">
+            <div className="space-y-1">
+              <div className="bg-muted rounded w-10 h-2 xs:h-2 sm:h-3" />
+              <div className="bg-muted rounded w-16 h-3 xs:h-3 sm:h-4" />
+            </div>
+            <div className="bg-muted rounded w-20 xs:w-20 sm:w-24 h-8 xs:h-7 sm:h-9" />
+          </div>
+        </div>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className={cn("flex items-center p-2 xs:p-2 sm:p-3 animate-pulse", className)}>
+      <div className="bg-muted mr-2 xs:mr-2 sm:mr-3 rounded-lg w-12 xs:w-12 sm:w-14 h-12 xs:h-12 sm:h-14" />
+      <div className="flex-1 space-y-1">
+        <div className="bg-muted rounded w-3/4 h-3 xs:h-3 sm:h-4" />
+        <div className="flex justify-between">
+          <div className="space-y-1">
+            <div className="bg-muted rounded w-8 h-2 xs:h-2 sm:h-3" />
+            <div className="bg-muted rounded w-10 h-3 xs:h-3 sm:h-4" />
+          </div>
+          <div className="bg-muted rounded w-14 xs:w-12 sm:w-16 h-6 xs:h-5 sm:h-7" />
+        </div>
+      </div>
     </Card>
   );
 };
