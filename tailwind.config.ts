@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import animate from 'tailwindcss-animate'
 
 const config: Config = {
     darkMode: ["class"],
@@ -65,8 +66,16 @@ const config: Config = {
 			sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
 			mono: ['var(--font-geist-mono)', 'monospace'],
         },
+		 screens: {
+			s:{'min': '320px', 'max': '490px'},
+			xs: {'min': '484px', 'max': '767px'},
+			sm: {'min': '768px', 'max': '1023px'},
+			lg: {'min': '1024px', 'max': '1391px'},
+      }
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+	animate
+  ]
 };
 export default config;

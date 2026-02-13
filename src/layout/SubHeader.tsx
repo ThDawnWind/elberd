@@ -1,42 +1,48 @@
 "use client";
 
 import Link from "next/link";
-import { Grid3X3, Home, Info, Menu, Store } from "lucide-react";
+import { ChevronDown, Home, Menu} from "lucide-react";
 import { useState } from "react";
-
-const mobileNavItems = [  
-  { name: "Главная", href: "/", icon: Home },
-  { name: "Меню", href: "/catalog", icon: Grid3X3 },
-  { name: "О нас", href: "/about", icon: Info },
-  { name: "Магазины", href: "/stores", icon: Store },
-];
+import { CategoryDropdown } from "@/components/ui/category-dropdown";
+import { mobileNavItems } from "@/lib/constants";
 
 export const SubHeader = () => {
   const [activeLink, setActiveLink] = useState("/");
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   return (
     <>
-      <nav className="hidden lg:block bg-white border-b w-full">
-        <div className="mx-4 md:mx-8 lg:mx-12 xl:mx-24">
-          <div className="flex items-center gap-8 h-12">
-            <div className="flex items-center gap-8">
-              <Link 
-                href="/catalog"
-                onClick={() => setActiveLink("/catalog")}
-                className={`group flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                  activeLink === "/catalog" 
-                    ? "bg-berd-primary text-white" 
-                    : "hover:bg-berd-primary/10 text-gray-800"
-                }`}
-              >
-                <Menu className="w-4 h-4" />
-                <span className="font-medium text-sm">Меню</span>
-              </Link>
-
+      <nav className="xs:hidden bg-white border-b w-full">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-6 lg:gap-8 h-12">
+            <div className="flex items-center gap-6 lg:gap-8">
+              <div className="relative">
+                <CategoryDropdown 
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                trigger={
+                    <Link 
+                      href="/catalog"
+                      onClick={() => setActiveLink("/catalog")}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                        activeLink === "/catalog" 
+                          ? "bg-berd-primary text-black" 
+                          : "hover:bg-berd-primary/10 text-gray-800"
+                      }`}
+                    >
+                      <Menu className="w-4 h-4" />
+                      <span className="font-medium text-sm">
+                        Меню
+                      </span>
+                      <ChevronDown className="w-4 h-4" />
+                    </Link>
+                  }
+                />
+              </div>
               <Link
                 href="/"
                 onClick={() => setActiveLink("/")}
-                className={`group flex items-center gap-2 py-1 font-medium text-sm transition-colors ${
+                className={`relative group flex items-center gap-2 py-1 font-medium text-sm transition-colors ${
                   activeLink === "/"
                     ? "text-berd-primary"
                     : "text-gray-700 hover:text-berd-primary"
@@ -54,22 +60,22 @@ export const SubHeader = () => {
               </Link>
             </div>
 
-            <div className="flex items-center gap-8 ml-auto">
-          <Link
-              href="/about"
-              onClick={() => setActiveLink("/about")}
-              className={`group relative py-1 font-medium text-sm transition-colors ${
-                activeLink === "/about"
-                  ? "text-berd-primary"
-                  : "text-gray-700 hover:text-berd-primary"
-              }`}
-            >
-              <span>О нас</span>
-              <span className={`absolute bottom-0 left-0 bg-berd-primary h-0.5 transition-all duration-300 ${
-                  activeLink === "/about" ? "w-full" : "w-0 group-hover:w-full"
+            <div className="flex items-center gap-6 lg:gap-8 ml-auto">
+              <Link
+                href="/about"
+                onClick={() => setActiveLink("/about")}
+                className={`group relative py-1 font-medium text-sm transition-colors ${
+                  activeLink === "/about"
+                    ? "text-berd-primary"
+                    : "text-gray-700 hover:text-berd-primary"
                 }`}
-              />
-            </Link>
+              >
+                <span>О нас</span>
+                <span className={`absolute bottom-0 left-0 bg-berd-primary h-0.5 transition-all duration-300 ${
+                    activeLink === "/about" ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+                />
+              </Link>
 
               <Link
                 href="/stores"
@@ -92,7 +98,7 @@ export const SubHeader = () => {
         </div>
       </nav>
 
-      <nav className="lg:hidden block right-0 bottom-0 left-0 z-50 fixed bg-white/95 shadow-lg backdrop-blur-lg border-t">
+      <nav className="sm:hidden lg:hidden block right-0 bottom-0 left-0 z-50 fixed bg-white/95 shadow-lg backdrop-blur-lg border-t">
         <div className="flex justify-around items-center px-1 h-16">
           {mobileNavItems.map((item) => {
             const Icon = item.icon;
@@ -122,7 +128,7 @@ export const SubHeader = () => {
         </div>
       </nav>
 
-      <div className="lg:hidden h-16" />
+      <div className="xs:hidden sm:hidden h-16" />
     </>
   );
 };

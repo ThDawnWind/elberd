@@ -1,6 +1,5 @@
-import { Category } from "@/types";
-import { Beef, Box, CakeSlice, ChefHat, CookingPot, Fish, Package, PartyPopper } from "lucide-react";
-
+import { Category, Product } from "@/types";
+import { Beef, Box, CakeSlice, ChefHat, CookingPot, Fish, Grid3X3, Home, Info, Package, PartyPopper, Store } from "lucide-react";
 
 export const CATEGORIES: Category[] = [
   { id: 1, name: "Все категории", icon: ChefHat, href: "/catalog" },
@@ -11,4 +10,16 @@ export const CATEGORIES: Category[] = [
   { id: 6, name: "Хлебобулочные изделия", icon: CakeSlice, href: "/catalog/bakery" },
   { id: 7, name: "Заготовки", icon: Box, href: "/catalog/preserves" },
   { id: 8, name: "Праздничные блюда", icon: PartyPopper, href: "/catalog/holiday" },
+];
+
+export const filters = [
+  { id: "new", label: "Новинки", condition: (product: Product) => product.isNew },
+  { id: "bestseller", label: "Хиты продаж", condition: (product: Product) => (product.rating || 0) >= 4.7 },
+]
+
+export const mobileNavItems = [  
+  { name: "Главная", href: "/", icon: Home },
+  { name: "Меню", href: "/catalog", icon: Grid3X3 },
+  { name: "О нас", href: "/about", icon: Info },
+  { name: "Магазины", href: "/stores", icon: Store },
 ];

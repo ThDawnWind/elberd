@@ -1,8 +1,364 @@
+"use client";
 
+import { useState, useMemo } from "react";
+import { DishCard } from "@/components/ui/DishCard";
+import { CATEGORIES, filters } from "@/lib/constants";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import { Grid3X3, List } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Products } from "@/lib/products";
+import { DesktopFiltersSidebarProps } from "@/types";
+import { MobileFiltersSheet } from "@/components/ui/MobileFiltersSheet";
 
-export const Catalog = () => {
+export default function CatalogPage() {
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [priceRange, setPriceRange] = useState([50, 2600]);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [sortBy, setSortBy] = useState("popular");
+
+  const filteredProducts = useMemo(() => {
+    let result = [...Products];
+
+    if (selectedCategory !== "all") {
+      const category = CATEGORIES.find(c => c.id.toString() === selectedCategory);
+      if (category) {
+        result = result.filter(product => product.category === category.name);
+      }
+    }
+    
+    const [minPrice, maxPrice] = priceRange;
+    result = result.filter(product => product.price >= minPrice && product.price <= maxPrice);
+    
+    selectedFilters.forEach(filterId => {
+      const filter = filters.find(f => f.id === filterId);
+      if (filter && filter.condition) {
+        result = result.filter(filter.condition);
+      }
+    });
+    
+     result.sort((a, b) => {
+      switch (sortBy) {
+        case "price-asc": 
+          return a.price - b.price;
+        case "price-desc": 
+          return b.price - a.price;
+        case "rating": 
+          return (b.rating || 0) - (a.rating || 0);
+        case "new": 
+          if (a.isNew && !b.isNew) return -1;
+          if (!a.isNew && b.isNew) return 1;
+          return 0;
+        case "popular":
+        default: 
+          return (b.rating || 0) - (a.rating || 0);
+      }
+    });
+    
+    return result;
+  }, [selectedCategory, priceRange, selectedFilters, sortBy]);
+
+  const toggleFilter = (filterId: string) => {
+    setSelectedFilters(prev => 
+      prev.includes(filterId) 
+        ? prev.filter(id => id !== filterId) 
+        : [...prev, filterId]
+    );
+  };
+
+  const resetFilters = () => {
+    setPriceRange([0, 1000]);
+    setSelectedFilters([]);
+    setSelectedCategory("all");
+  };
+
+  const selectedCategoryName = selectedCategory === "all" 
+    ? "Все товары" 
+    : CATEGORIES.find(c => c.id.toString() === selectedCategory)?.name;
+
+  return (
+    <div className="bg-background min-h-screen font-sans">
+      <div className="bg-white/95 supports-[backdrop-filter]:bg-white/60 backdrop-blur border-b w-full font-mono">
+        <div className="mx-4 md:mx-[60px] px-4 py-4">
+          <div className="flex sm:flex sm:justify-between items-start gap-4 mb-4">
+            <div className="flex items-center gap-2 mr-80">
+              <Grid3X3 className="w-5 h-5 text-berd-primary" />
+              <h1 className="font-bold text-2xl tracking-tight">Каталог</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-4 sm:mx-[60px] px-4 py-6">
+        <div className="flex lg:flex-row flex-col gap-6">
+          <aside className="hidden lg:block lg:w-1/4">
+            <DesktopFiltersSidebar
+              priceRange={priceRange}
+              setPriceRange={setPriceRange}
+              selectedFilters={selectedFilters}
+              toggleFilter={toggleFilter}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+              resetFilters={resetFilters}
+            />
+          </aside>
+
+          <div className="lg:w-3/4">
+            <div className="flex sm:flex-row flex-col justify-between items-start sm:items-center gap-4 mb-6">
+              <div>
+                <h2 className="font-semibold text-lg">{selectedCategoryName}</h2>
+                <p className="text-muted-foreground text-sm">
+                  Найдено {filteredProducts.length} товаров
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {selectedFilters.map(filterId => (
+                  <Button
+                    key={filterId}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => toggleFilter(filterId)}
+                    className="h-7 text-xs"
+                  >
+                    {filters.find(f => f.id === filterId)?.label} ×
+                  </Button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex sm:flex-row xs:justify-between sm:justify-between lg:justify-between gap-4 mb-6">
+              <div>
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger className="w-44">
+                    <SelectValue placeholder="Сортировка" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="popular">По популярности</SelectItem>
+                    <SelectItem value="price-asc">По цене (возр.)</SelectItem>
+                    <SelectItem value="price-desc">По цене (убыв.)</SelectItem>
+                    <SelectItem value="new">Сначала новинки</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex sm:justify-start items-center gap-2.5 sm:mt-0 sm:w-auto">
+                  <div className="lg:hidden w-full sm:w-auto">
+                      <MobileFiltersSheet
+                        priceRange={priceRange}
+                        setPriceRange={setPriceRange}
+                        selectedFilters={selectedFilters}
+                        toggleFilter={toggleFilter}
+                        selectedCategory={selectedCategory}
+                        setSelectedCategory={setSelectedCategory}
+                        resetFilters={resetFilters}
+                        filters={filters}
+                      />
+                  </div>
+                <div className="xs:hidden flex border rounded-lg">
+                  <Button
+                    variant={viewMode === 'grid' ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setViewMode('grid')}
+                    className="rounded-r-none"
+                  >
+                    <Grid3X3 className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant={viewMode === 'list' ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setViewMode('list')}
+                    className="rounded-l-none"
+                  >
+                    <List className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {viewMode === 'grid' ? (
+              <div className={cn(
+                    "gap-2 xs:gap-3 sm:gap-4 grid",
+                    "grid-cols-1",                         
+                    "s:grid-cols-1",             
+                    "xs:grid-cols-2", 
+                    "sm:grid-cols-2",                      
+                    "lg:grid-cols-4"
+              )}>
+                {filteredProducts.map(product => (
+                  <DishCard 
+                    key={product.id}
+                    product={product}
+                    variant="grid"
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {filteredProducts.map(product => (
+                  <DishCard 
+                    key={product.id}
+                    product={product}
+                    variant="list"
+                  />
+                ))}
+              </div>
+            )}
+
+            {filteredProducts.length > 0 && filteredProducts.length > 12 && (
+              <div className="flex justify-center mt-8">
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" size="sm" disabled>
+                    Назад
+                  </Button>
+                  <Button variant="default" size="sm" className="p-0 w-8 h-8">
+                    1
+                  </Button>
+                  <Button variant="outline" size="sm" className="p-0 w-8 h-8">
+                    2
+                  </Button>
+                  <Button variant="outline" size="sm" className="p-0 w-8 h-8">
+                    3
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    Вперед
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {filteredProducts.length === 0 && (
+              <div className="py-12 text-center">
+                <h3 className="font-semibold text-lg">Товары не найдены</h3>
+                <p className="mt-2 text-muted-foreground">
+                  Попробуйте изменить фильтры или выбрать другую категорию
+                </p>
+                <Button 
+                  onClick={resetFilters}
+                  className="mt-4"
+                  variant="outline"
+                >
+                  Сбросить фильтры
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DesktopFiltersSidebar({
+  priceRange,
+  setPriceRange,
+  selectedFilters,
+  toggleFilter,
+  selectedCategory,
+  setSelectedCategory,
+}: Readonly<DesktopFiltersSidebarProps>) {
+  return (
+    <div className="top-24 sticky space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="font-semibold text-lg">Фильтры</h2>
+      </div>
+
+      <div className="space-y-3">
+        <h3 className="font-medium">Категории</h3>
+       <div className="space-y-1">
+  {CATEGORIES.map(category => {
+    const Icon = category.icon;
+    const isAllCategories = category.name === "Все категории";
+    
+    const isSelected = isAllCategories 
+      ? selectedCategory === "all"
+      : selectedCategory === category.id.toString();
 
     return (
+      <Button
+        key={category.id}
+        variant={isSelected ? "secondary" : "ghost"}
+        className={`
+          justify-start gap-2 w-full
+          ${isSelected 
+            ? 'bg-berd-primary hover:bg-berd-primary/90 text-white' 
+            : 'hover:bg-gray-100 text-gray-700'
+          }
+          transition-colors duration-200
+        `}
+        onClick={() => {
+          if (isAllCategories) {
+            setSelectedCategory("all"); 
+          } else {
+            setSelectedCategory(category.id.toString()); 
+          }
+        }}
+      >
+        <Icon className={`w-4 h-4 ${isSelected ? 'text-white' : 'text-gray-500'}`} />
+        <span className="flex-1 text-left">{category.name}</span>
         
-    )
+        {isAllCategories && selectedCategory !== "all" && (
+          <span className="ml-auto font-normal text-gray-400 text-xs">
+            (сбросить)
+          </span>
+        )}
+        
+        {isSelected && !isAllCategories && (
+          <div className="bg-white/80 ml-auto rounded-full w-2 h-2" />
+        )}
+      </Button>
+    );
+  })}
+</div>
+      </div>
+      <div className="space-y-3">
+        <h3 className="font-medium">Дополнительно</h3>
+        <div className="space-y-2">
+          {filters.map(filter => (
+            <div key={filter.id} className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id={`desktop-${filter.id}`}
+                checked={selectedFilters.includes(filter.id)}
+                onChange={() => toggleFilter(filter.id)}
+                className="border-gray-300 rounded focus:ring-berd-primary w-4 h-4 text-berd-primary"
+              />
+              <label
+                htmlFor={`desktop-${filter.id}`}
+                className="text-sm leading-none cursor-pointer"
+              >
+                {filter.label}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <h3 className="font-medium">Цена, ₽</h3>
+          <span className="text-muted-foreground text-sm">
+            {priceRange[0]} – {priceRange[1]} ₽
+          </span>
+        </div>
+          <Slider
+            defaultValue={priceRange}
+            min={50}
+            max={2600}
+            step={50}
+            value={priceRange}
+            onValueChange={setPriceRange}
+            className="my-4"
+            aria-label="Диапазон цен"
+          />
+        
+        <div className="flex justify-between items-center text-muted-foreground text-xs sm:text-sm">
+          <span>50 ₽</span>
+          <span>2600 ₽</span>
+        </div>
+      </div>
+    </div>
+  );
 }
