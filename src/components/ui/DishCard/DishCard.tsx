@@ -168,7 +168,7 @@ if (variant === 'grid') {
 
         <div className='flex flex-col mb-8 h-[100px] xs:h-[90px] sm:h-[110px] lg:h-[120px]'>
             <CardDescription className="mb-1 xs:mb-1 sm:mb-1.5 h-[40px] xs:h-[35px] sm:h-[42px] lg:h-[48px] text-muted-foreground xs:text-xs sm:text-sm text-base line-clamp-2">
-              {product.shelfLife}
+             Срок годности: {product.shelfLife}
             </CardDescription>
   
             {product.content && (

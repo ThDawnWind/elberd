@@ -15,7 +15,7 @@ export const RecommendedDishes = () => {
 
       <div className="gap-2 sm:gap-3 lg:gap-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {recProducts.map((product) => (
-          <DishCard  product={product} variant="grid" />
+          <DishCard key={product.id}  product={product} variant="grid" />
         ))}
       </div>
     </section>

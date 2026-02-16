@@ -3,9 +3,10 @@
 import { Category } from "@/types";
 import Link from "next/link";
 
-export const CategoryCard = ({ name, icon: Icon, href }: Category) => {
+export const CategoryCard = ({ id, name, icon: Icon, href }: Category) => {
   return (
     <Link
+      key={id}
       href={href}
       className="group flex flex-col justify-center items-center bg-white hover:shadow-lg px-2 sm:px-4 lg:px-4 py-3 sm:py-5 lg:py-5 border border-gray-100 hover:border-berd-primary/30 rounded-xl lg:rounded-2xl w-[120px] sm:w-[140px] lg:w-[150px] h-[150px] sm:h-[170px] lg:h-[190px] transition-all duration-300"
       aria-label={`Перейти в категорию ${name}`}

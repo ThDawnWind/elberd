@@ -1,4 +1,4 @@
-import { Product } from "@/types";
+import { CartItem, Product } from "@/types";
 
 export const Products: Product[] =  [
   {
@@ -201,10 +201,9 @@ export const popProducts: Product[] =  [
     name: "Манты",
     weight: "420г",
     price: 320,
-    image: "/images/product.jpg",
+    image: "/images/popProducts/manty.jpg",
     images: [                   
-      "/images/product1.jpg",
-      "/images/product2.jpg",
+      "/images/popProducts/manty.jpg",
     ],
     shelfLife: "48 часов",
     category: "Чеченская кухня",
@@ -217,10 +216,9 @@ export const popProducts: Product[] =  [
     name: "Чебуреки (готовые)",
     weight: "500г",
     price: 280,
-    image: "/images/product.jpg",
+    image: "/images/popProducts/chebureki1.jpg",
     images: [                     
-      "/images/product1.jpg",
-      "/images/product2.jpg",
+      "/images/popProducts/chebureki1.jpg",
     ],
     shelfLife: "48 часов",
     category: "Готовая еда",
@@ -233,10 +231,9 @@ export const popProducts: Product[] =  [
     name: "Вареники с творогом",
     weight: "600г",
     price: 350,
-    image: "/images/product.jpg",
+    image: "/images/popProducts/vareniki1.jpg",
     images: [                     
-      "/images/product1.jpg",
-      "/images/product2.jpg",
+      "/images/popProducts/vareniki1.jpg",
     ],
     shelfLife: "36 часов",
     category: "Готовая еда",
@@ -249,10 +246,9 @@ export const popProducts: Product[] =  [
     name: "Котлеты по киевски",
     weight: "800г",
     price: 420,
-    image: "/images/product.jpg",
+    image: "/images/popProducts/katlet_po_k.jpg",
     images: [                     
-      "/images/product1.jpg",
-      "/images/product2.jpg",
+      "/images/popProducts/katlet_po_k.jpg"
     ],
     shelfLife: "48 часов",
     category: "Полуфабрикаты",
@@ -265,10 +261,9 @@ export const popProducts: Product[] =  [
     name: "Голубцы",
     weight: "300г",
     price: 890,
-    image: "/images/product.jpg",
+    image: "/images/popProducts/golubec.jpg",
     images: [                     
-      "/images/product1.jpg",
-      "/images/product2.jpg",
+      "/images/popProducts/golubec.jpg"
     ],
     shelfLife: "72 часа",
     category: "Мясная продукция",
@@ -284,10 +279,9 @@ export const recProducts: Product[] =  [
     name: "Пельмени",
     weight: "420г",
     price: 320,
-    image: "/images/product.jpg",
+    image: "/images/recProducts/pelmeni.jpg",
     images: [                     
-      "/images/product1.jpg",
-      "/images/product2.jpg",
+        "/images/recProducts/pelmeni.jpg",
     ],
     shelfLife: "6 месяцев",
     category: "Чеченская кухня",
@@ -300,10 +294,9 @@ export const recProducts: Product[] =  [
     name: "Хинкали с мясом",
     weight: "500г",
     price: 280,
-    image: "/images/product.jpg",
+    image: "/images/recProducts/hinkali.jpg",
     images: [                     
-      "/images/product1.jpg",
-      "/images/product2.jpg",
+      "/images/recProducts/hinkali.jpg"
     ],
     shelfLife: "36 часов",
     category: "Готовая еда",
@@ -316,10 +309,9 @@ export const recProducts: Product[] =  [
     name: "Малиновое варенье",
     weight: "600г",
     price: 350,
-    image: "/images/product.jpg",
+    image: "/images/recProducts/mal_vareni.jpg",
     images: [                     
-      "/images/product1.jpg",
-      "/images/product2.jpg",
+      "/images/recProducts/mal_vareni.jpg",
     ],
     shelfLife: "2 года",
     category: "Готовая еда",
@@ -332,10 +324,9 @@ export const recProducts: Product[] =  [
     name: "Пирожки с капустой",
     weight: "800г",
     price: 420,
-    image: "/images/product.jpg",
+    image: "/images/recProducts/piroshki_s_kap.jpg",
     images: [                     
-      "/images/product1.jpg",
-      "/images/product2.jpg",
+      "/images/recProducts/piroshki_s_kap.jpg",
     ],
     shelfLife: "48 часов",
     category: "Полуфабрикаты",
@@ -348,10 +339,9 @@ export const recProducts: Product[] =  [
     name: "Мини-чебуреки",
     weight: "300г",
     price: 890,
-    image: "/images/product.jpg",
+    image: "/images/recProducts/mini_chEbs.JPG",
     images: [                     
-      "/images/product1.jpg",
-      "/images/product2.jpg",
+      "/images/recProducts/mini_chEbs.JPG",
     ],
     shelfLife: "48 часов",
     category: "Мясная продукция",
@@ -489,5 +479,72 @@ export const favProducts: Product[] = [
     isNew: false,
     rating: 4.7,
     content: "Лапша, говядина, болгарский перец, морковь, лук, помидоры, специи"
+  },
+];
+
+export const mockCartItems: CartItem[] = [
+  {
+    id: 1,
+    name: "Пицца Маргарита",
+    price: 450,
+    weight: 550,
+    image: "/images/product.jpg",
+    quantity: 1,
+  },
+  {
+    id: 2,
+    name: "Бургер с говядиной",
+    price: 350,
+    weight: 320,
+    image: "/images/product.jpg",
+    quantity: 1,
+  },
+  {
+    id: 3,
+    name: "Картошка фри",
+    price: 180,
+    weight: 200,
+    image: "/images/product.jpg",
+    quantity: 1,
+  },
+  {
+    id: 4,
+    name: "Цезарь с курицей",
+    price: 320,
+    weight: 280,
+    image: "/images/product.jpg",
+    quantity: 1,
+  },
+  {
+    id: 5,
+    name: "Спагетти Карбонара",
+    price: 390,
+    weight: 420,
+    image: "/images/product.jpg",
+    quantity: 1,
+  },
+  {
+    id: 6,
+    name: "Греческий салат",
+    price: 250,
+    weight: 300,
+    image: "/images/product.jpg",
+    quantity: 2,
+  },
+  {
+    id: 7,
+    name: "Стейк из лосося",
+    price: 650,
+    weight: 280,
+    image: "/images/product.jpg",
+    quantity: 1,
+  },
+  {
+    id: 8,
+    name: "Шоколадный фондан",
+    price: 220,
+    weight: 150,
+    image: "/images/product.jpg",
+    quantity: 3,
   },
 ];

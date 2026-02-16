@@ -24,6 +24,15 @@ export interface Product {
   tags?: string[];
 }
 
+export interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  weight: number;
+  image: string;
+  quantity: number;
+}
+
 export interface CategoryDropdownProps {
   readonly selectedCategory: string;
   readonly setSelectedCategory: (category: string) => void;

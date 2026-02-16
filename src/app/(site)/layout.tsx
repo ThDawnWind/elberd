@@ -9,13 +9,19 @@ export default function SiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col w-full min-h-screen">
+    <div className="flex flex-col mx-auto w-full max-w-[1440px]">
       <Header />
-     <div className="lg:hidden max-md:block flex-1 mx-3 md:mx-6 lg:mx-8 mt-3 mb-2.5 min-w-0 max-w-2xl">
-       <SearchBar />
+      
+      <div className="lg:hidden max-md:block mx-3 md:mx-6 mt-3 mb-2.5">
+        <SearchBar />
       </div>
+
       <SubHeader />
-      {children}
+
+      <main className="flex-1">
+        {children}
+      </main>
+
       <Footer />
     </div>
   );
