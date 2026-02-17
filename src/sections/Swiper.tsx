@@ -57,7 +57,7 @@ export const WallaperSwiper = () => {
   }, [swiperInstance]);
 
   return (
-    <div className="group relative mt-4 w-full h-[400px] sm:h-[500px] lg:h-[700px] overflow-hidden">
+    <div className="group relative w-full h-[400px] sm:h-[500px] lg:h-[700px] overflow-hidden">
       <Swiper
         onSwiper={setSwiperInstance}
         modules={[Autoplay, EffectFade]}

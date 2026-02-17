@@ -23,3 +23,5 @@ export const mobileNavItems = [
   { name: "О нас", href: "/about", icon: Info },
   { name: "Магазины", href: "/stores", icon: Store },
 ];
+
+export const RESTAURANT_PHONE = "+79637042858";

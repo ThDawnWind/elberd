@@ -68,9 +68,9 @@ const config: Config = {
         },
 		 screens: {
 			s:{'min': '320px', 'max': '490px'},
-			xs: {'min': '484px', 'max': '767px'},
+			xs: {'min': '491px', 'max': '767px'},
 			sm: {'min': '768px', 'max': '1023px'},
-			lg: {'min': '1024px', 'max': '1391px'},
+			lg: {'min': '1024px'},
       }
   	}
   },

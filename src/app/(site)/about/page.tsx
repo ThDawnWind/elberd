@@ -189,16 +189,16 @@ export default function AboutPage() {
               качество наших продуктов и скорость доставки
             </p>
             
-            <div className="flex sm:flex-row flex-col justify-center gap-2 sm:gap-3">
+            <div className="flex sm:flex-row flex-col justify-center items-center gap-2 sm:gap-3">
               <Link
                 href="/catalog"
-                className="bg-gradient-to-r from-berd-primary hover:from-amber-600 to-amber-600 hover:to-amber-700 hover:shadow px-5 sm:px-6 py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-sans font-bold text-black hover:text-white text-xs sm:text-sm transition-all hover:-translate-y-0.5"
+                className="bg-gradient-to-r from-berd-primary hover:from-amber-600 to-amber-600 hover:to-amber-700 hover:shadow px-5 sm:px-6 py-2 sm:py-2.5 rounded-lg sm:rounded-xl w-80 font-sans font-bold text-black hover:text-white text-xs sm:text-sm transition-all hover:-translate-y-0.5"
               >
                 Перейти в каталог
               </Link>
               <a
                 href="tel:+79899194871"
-                className="bg-white hover:bg-berd-primary px-5 sm:px-6 py-2 sm:py-2.5 border-2 border-berd-primary rounded-lg sm:rounded-xl font-sans font-bold text-gray-900 hover:text-black text-xs sm:text-sm transition-all"
+                className="bg-white hover:bg-berd-primary px-5 sm:px-6 py-2 sm:py-2.5 border-2 border-berd-primary rounded-lg sm:rounded-xl w-80 font-sans font-bold text-gray-900 hover:text-black text-xs sm:text-sm transition-all"
               >
                 Позвонить сейчас
               </a>

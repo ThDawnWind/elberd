@@ -52,14 +52,14 @@ export const Header = () => {
                   </span>
                 )}
               </div>
-              <span className="font-medium text-gray-700 text-sm">
+              <span className="s:hidden xs:hidden font-medium text-gray-700 hover:text-berd-primary text-sm transition-duration-300 ease-in-out">
                 Избранное
               </span>
             </Link>
 
             <Link 
               href="/cart" 
-              className="relative flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 hover:text-berd-primary transition-colors"
+              className="relative flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-colors"
             >
               <div className="relative">
                 <ShoppingCart className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-gray-700" />
@@ -69,7 +69,7 @@ export const Header = () => {
                   </span>
                 )}
               </div>
-              <span className="font-medium text-gray-700 text-sm">
+              <span className="s:hidden xs:hidden font-medium text-gray-700 hover:text-berd-primary text-sm transition-duration-300 ease-in-out">
                 Корзина
               </span>
             </Link>
@@ -86,7 +86,7 @@ export const Header = () => {
               <div className="hidden lg:flex items-center gap-3">
                 <a 
                   href="tel:+79899194871" 
-                  className="flex items-center gap-2 bg-berd-primary hover:bg-berd-primary/90 px-4 py-2 rounded-lg font-semibold text-white text-sm transition-colors"
+                  className="flex items-center gap-2 bg-berd-primary hover:bg-black px-4 py-2 rounded-lg font-semibold text-white text-sm transition duration-300 ease-in-out"
                   aria-label="Позвонить по номеру +7 (989) 919-48-71"
                 >
                   <Phone className="w-4 h-4" />

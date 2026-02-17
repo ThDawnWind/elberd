@@ -10,16 +10,16 @@ import { SwiperControls } from './SwiperControls';
 
 export const CategoriesSwiper = () => {
   return (
-    <div className="relative px-2 sm:px-4 lg:px-4">
+    <div className="relative lg:px-4">
       <Swiper
         modules={[Navigation]}
         navigation={{
           nextEl: '.custom-next',
           prevEl: '.custom-prev',
-          disabledClass: 'opacity-30 pointer-events-none',
+          disabledClass: 'opacity-30',
         }}
           slidesPerView={2.5}     
-          spaceBetween={8}          
+          spaceBetween={12}          
           breakpoints={{
             490: {                 
               slidesPerView: 2.5,
@@ -34,8 +34,12 @@ export const CategoriesSwiper = () => {
               spaceBetween: 5,
             },
             1280: {                 
-              slidesPerView: 9,
-              spaceBetween: 24,
+              slidesPerView: 8,
+              spaceBetween: 19,
+            },
+             1439: {                 
+              slidesPerView: 8,
+              spaceBetween: 19,
             },
           }}
         className="!pb-2"

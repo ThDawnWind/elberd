@@ -128,7 +128,7 @@ export const SubHeader = () => {
         </div>
       </nav>
 
-      <div className="xs:hidden sm:hidden h-16" />
+      <div className="xs:hidden sm:hidden" />
     </>
   );
 };

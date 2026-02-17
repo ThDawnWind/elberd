@@ -165,13 +165,10 @@ export const AddToCartButton = ({
       "transition-all duration-200 hover:shadow-sm",
       className
     )}>
-      <div className="flex flex-row justify-between items-center gap-2 xs:gap-1">
+      <div className="flex flex-row items-center gap-2 xs:gap-1">
         <div className="flex items-center gap-1 text-berd-primary">
           <ShoppingCart className={cn(getIconSize(), "fill-berd-primary/10")} />
-          <span className={cn(
-            "font-medium text-berd-primary whitespace-nowrap",
-            variant === 'compact' ? "text-xs" : "text-sm"
-          )}>
+          <span className="font-medium text-berd-primary text-xs whitespace-nowrap">
             В корзине
           </span>
         </div>
