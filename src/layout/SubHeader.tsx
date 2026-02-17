@@ -78,8 +78,8 @@ export const SubHeader = () => {
               </Link>
 
               <Link
-                href="/stores"
-                onClick={() => setActiveLink("/stores")}
+                href="/where-to-buy"
+                onClick={() => setActiveLink("/where-to-buy")}
                 className={`group relative py-1 font-medium text-sm transition-colors ${
                   activeLink === "/stores"
                     ? "text-berd-primary"
@@ -89,7 +89,7 @@ export const SubHeader = () => {
                 <span>Магазины</span> 
                 <span 
                   className={`absolute bottom-0 left-0  bg-berd-primary h-0.5 transition-all duration-300 ${
-                    activeLink === "/stores" ? "w-full" : "w-0 group-hover:w-full"
+                    activeLink === "/where-to-buy" ? "w-full" : "w-0 group-hover:w-full"
                   }`}
                 />
               </Link>
