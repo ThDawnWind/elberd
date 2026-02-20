@@ -1,19 +1,8 @@
-import { CartItem } from "@/types"
+import {  CartState } from "@/types"
 import { create } from "zustand"
 import { persist, createJSONStorage } from "zustand/middleware"
 
-type CartState = {
-  items: CartItem[]
-  hasHydrated: boolean
-  setHasHydrated: (v: boolean) => void
 
-  addToCart: (id: number, name: string, price: number, weight: string, image: string, qty: number) => void
-  removeFromCart: (id: number) => void
-  updateQuantity: (id: number, qty: number) => void
-  clearCart: () => void
-  totalItems: () => number
-  totalAmount: () => number
-}
 
 export const useCartStore = create<CartState>()(
   persist(

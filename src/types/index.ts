@@ -122,3 +122,26 @@ export type CatalogState = {
   resetFilters: () => void
 }
 
+export type CartState = {
+  items: CartItem[]
+  hasHydrated: boolean
+  setHasHydrated: (v: boolean) => void
+
+  addToCart: (id: number, name: string, price: number, weight: string, image: string, qty: number) => void
+  removeFromCart: (id: number) => void
+  updateQuantity: (id: number, qty: number) => void
+  clearCart: () => void
+  totalItems: () => number
+  totalAmount: () => number
+}
+
+export type FavoritesState = {
+  ids: number[]
+  hasHydrated: boolean
+  setHasHydrated: (v: boolean) => void
+
+  toggleFavorite: (id: number) => void
+  clearFavorites: () => void
+  isFavorite: (id: number) => boolean
+  totalItems: () => number
+}

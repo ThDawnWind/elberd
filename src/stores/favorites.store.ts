@@ -1,16 +1,7 @@
+import { FavoritesState } from "@/types"
 import { create } from "zustand"
 import { persist, createJSONStorage } from "zustand/middleware"
 
-type FavoritesState = {
-  ids: number[]
-  hasHydrated: boolean
-  setHasHydrated: (v: boolean) => void
-
-  toggleFavorite: (id: number) => void
-  clearFavorites: () => void
-  isFavorite: (id: number) => boolean
-  totalItems: () => number
-}
 
 export const useFavoritesStore = create<FavoritesState>()(
   persist(
