@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { DishCard } from "@/components/ui/DishCard";
 import { CATEGORIES, filters } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
@@ -9,21 +9,33 @@ import { Slider } from "@/components/ui/slider";
 import { Grid3X3, List } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Products } from "@/lib/products";
-import { DesktopFiltersSidebarProps } from "@/types";
 import { MobileFiltersSheet } from "@/components/ui/MobileFiltersSheet";
+import { useCatalogStore } from "@/stores/catalog.store";
+import { DesktopFiltersSidebarProps } from "@/types";
 
 export default function CatalogPage() {
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [priceRange, setPriceRange] = useState([50, 2600]);
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [sortBy, setSortBy] = useState("popular");
+  const viewMode = useCatalogStore(state => state.viewMode);
+  const setViewMode = useCatalogStore(state => state.setViewMode);
+  const priceRange = useCatalogStore(state => state.priceRange);
+  const setPriceRange = useCatalogStore(state => state.setPriceRange);
+  const selectedTags = useCatalogStore(state => state.selectedTags);
+  const toggleTag = useCatalogStore(state => state.toggleTag);
+  const selectedCategoryId = useCatalogStore(state => state.selectedCategoryId);
+  const setSelectedCategoryId = useCatalogStore(state => state.setSelectedCategoryId);
+  const sort = useCatalogStore(state => state.sort);
+  const setSort = useCatalogStore(state => state.setSort);
+  const resetFilters = useCatalogStore(state => state.resetFilters);
+  const setProducts = useCatalogStore(state => state.setProducts);
+
+  useEffect(() => {
+    setProducts(Products);
+  }, [setProducts]);
 
   const filteredProducts = useMemo(() => {
     let result = [...Products];
 
-    if (selectedCategory !== "all") {
-      const category = CATEGORIES.find(c => c.id.toString() === selectedCategory);
+    if (selectedCategoryId !== null) {
+      const category = CATEGORIES.find(c => c.id === selectedCategoryId);
       if (category) {
         result = result.filter(product => product.category === category.name);
       }
@@ -32,7 +44,7 @@ export default function CatalogPage() {
     const [minPrice, maxPrice] = priceRange;
     result = result.filter(product => product.price >= minPrice && product.price <= maxPrice);
     
-    selectedFilters.forEach(filterId => {
+    selectedTags.forEach(filterId => {
       const filter = filters.find(f => f.id === filterId);
       if (filter && filter.condition) {
         result = result.filter(filter.condition);
@@ -40,8 +52,8 @@ export default function CatalogPage() {
     });
     
      result.sort((a, b) => {
-      switch (sortBy) {
-        case "price-asc": 
+      switch (sort) {
+        case "price-asc":
           return a.price - b.price;
         case "price-desc": 
           return b.price - a.price;
@@ -51,32 +63,20 @@ export default function CatalogPage() {
           if (a.isNew && !b.isNew) return -1;
           if (!a.isNew && b.isNew) return 1;
           return 0;
-        case "popular":
+        case "rating":
         default: 
           return (b.rating || 0) - (a.rating || 0);
       }
     });
     
     return result;
-  }, [selectedCategory, priceRange, selectedFilters, sortBy]);
+  }, [selectedCategoryId, priceRange, selectedTags, sort]);
 
-  const toggleFilter = (filterId: string) => {
-    setSelectedFilters(prev => 
-      prev.includes(filterId) 
-        ? prev.filter(id => id !== filterId) 
-        : [...prev, filterId]
-    );
-  };
 
-  const resetFilters = () => {
-    setPriceRange([0, 1000]);
-    setSelectedFilters([]);
-    setSelectedCategory("all");
-  };
-
-  const selectedCategoryName = selectedCategory === "all" 
-    ? "Все товары" 
-    : CATEGORIES.find(c => c.id.toString() === selectedCategory)?.name;
+  const selectedCategoryName =
+    selectedCategoryId === null
+      ? "Все товары"
+      : CATEGORIES.find(c => c.id === selectedCategoryId)?.name || "Категория не найдена";
 
   return (
     <div className="bg-background min-h-screen font-sans">
@@ -97,10 +97,10 @@ export default function CatalogPage() {
             <DesktopFiltersSidebar
               priceRange={priceRange}
               setPriceRange={setPriceRange}
-              selectedFilters={selectedFilters}
-              toggleFilter={toggleFilter}
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
+              selectedFilters={selectedTags}
+              toggleFilter={toggleTag}
+              selectedCategory={selectedCategoryId}
+              setSelectedCategory={setSelectedCategoryId}
               resetFilters={resetFilters}
             />
           </aside>
@@ -115,12 +115,12 @@ export default function CatalogPage() {
               </div>
 
               <div className="flex flex-wrap gap-2">
-                {selectedFilters.map(filterId => (
+                {selectedTags.map(filterId => (
                   <Button
                     key={filterId}
                     variant="outline"
                     size="sm"
-                    onClick={() => toggleFilter(filterId)}
+                    onClick={() => toggleTag(filterId)}
                     className="h-7 text-xs"
                   >
                     {filters.find(f => f.id === filterId)?.label} ×
@@ -131,7 +131,7 @@ export default function CatalogPage() {
 
             <div className="flex sm:flex-row xs:justify-between sm:justify-between lg:justify-between gap-4 mb-6">
               <div>
-                <Select value={sortBy} onValueChange={setSortBy}>
+                <Select value={sort} onValueChange={setSort}>
                   <SelectTrigger className="w-44">
                     <SelectValue placeholder="Сортировка" />
                   </SelectTrigger>
@@ -149,10 +149,10 @@ export default function CatalogPage() {
                       <MobileFiltersSheet
                         priceRange={priceRange}
                         setPriceRange={setPriceRange}
-                        selectedFilters={selectedFilters}
-                        toggleFilter={toggleFilter}
-                        selectedCategory={selectedCategory}
-                        setSelectedCategory={setSelectedCategory}
+                        selectedFilters={selectedTags}
+                        toggleFilter={toggleTag}
+                        selectedCategory={selectedCategoryId}
+                        setSelectedCategory={setSelectedCategoryId}
                         resetFilters={resetFilters}
                         filters={filters}
                       />
@@ -191,6 +191,7 @@ export default function CatalogPage() {
                   <DishCard 
                     key={product.id}
                     product={product}
+                    price={product.price}
                     variant="grid"
                   />
                 ))}
@@ -201,6 +202,7 @@ export default function CatalogPage() {
                   <DishCard 
                     key={product.id}
                     product={product}
+                    price={product.price}
                     variant="list"
                   />
                 ))}
@@ -264,54 +266,51 @@ function DesktopFiltersSidebar({
       <div className="flex justify-between items-center">
         <h2 className="font-semibold text-lg">Фильтры</h2>
       </div>
-
       <div className="space-y-3">
         <h3 className="font-medium">Категории</h3>
-       <div className="space-y-1">
-  {CATEGORIES.map(category => {
-    const Icon = category.icon;
-    const isAllCategories = category.name === "Все категории";
-    
-    const isSelected = isAllCategories 
-      ? selectedCategory === "all"
-      : selectedCategory === category.id.toString();
+        <div className="space-y-1">
+          <Button
+            variant={selectedCategory === 0 ? "secondary" : "ghost"}
+            className={`
+              justify-start gap-2 w-full
+              ${selectedCategory === 0
+                ? "bg-berd-primary hover:bg-berd-primary/90 text-white"
+                : "hover:bg-gray-100 text-gray-700"}
+              transition-colors duration-200
+            `}
+            onClick={() => setSelectedCategory(0)}
+          >
+            <span className="flex-1 text-left">Все категории</span>
+            {selectedCategory !== 0 && (
+              <span className="ml-auto font-normal text-gray-400 text-xs">
+                (сбросить)
+              </span>
+            )}
+          </Button>
 
-    return (
-      <Button
-        key={category.id}
-        variant={isSelected ? "secondary" : "ghost"}
-        className={`
-          justify-start gap-2 w-full
-          ${isSelected 
-            ? 'bg-berd-primary hover:bg-berd-primary/90 text-white' 
-            : 'hover:bg-gray-100 text-gray-700'
-          }
-          transition-colors duration-200
-        `}
-        onClick={() => {
-          if (isAllCategories) {
-            setSelectedCategory("all"); 
-          } else {
-            setSelectedCategory(category.id.toString()); 
-          }
-        }}
-      >
-        <Icon className={`w-4 h-4 ${isSelected ? 'text-white' : 'text-gray-500'}`} />
-        <span className="flex-1 text-left">{category.name}</span>
-        
-        {isAllCategories && selectedCategory !== "all" && (
-          <span className="ml-auto font-normal text-gray-400 text-xs">
-            (сбросить)
-          </span>
-        )}
-        
-        {isSelected && !isAllCategories && (
-          <div className="bg-white/80 ml-auto rounded-full w-2 h-2" />
-        )}
-      </Button>
-    );
-  })}
-</div>
+          {CATEGORIES.map(category => {
+            const Icon = category.icon;
+            const isSelected = selectedCategory === category.id;
+
+            return (
+              <Button
+                key={category.id}
+                variant={isSelected ? "secondary" : "ghost"}
+                className={`
+                  justify-start gap-2 w-full
+                  ${isSelected
+                    ? "bg-berd-primary hover:bg-berd-primary/90 text-white"
+                    : "hover:bg-gray-100 text-gray-700"}
+                  transition-colors duration-200
+                `}
+                onClick={() => setSelectedCategory(category.id)}
+              >
+              <Icon className={`w-4 h-4 ${isSelected ? "text-white" : "text-gray-700"}`} />
+                <span className="flex-1 text-left">{category.name}</span>
+                {isSelected && <div className="bg-white ml-auto rounded-full w-2 h-2"/>}
+              </Button>
+            );
+          })} 
       </div>
       <div className="space-y-3">
         <h3 className="font-medium">Дополнительно</h3>
@@ -359,6 +358,7 @@ function DesktopFiltersSidebar({
           <span>2600 ₽</span>
         </div>
       </div>
+    </div>
     </div>
   );
 }

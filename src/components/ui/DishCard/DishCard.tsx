@@ -1,6 +1,5 @@
 "use client"
 
-import React, { useState } from 'react';
 import { DishCardProps } from '@/types';
 import { AddToCartButton } from './AddToCartButton';
 import { Heart } from 'lucide-react';
@@ -16,24 +15,31 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { CarouselWithDots } from '../carousel-with-dots';
+import {useFavoritesStore} from "@/stores/favorites.store";
+import { useMemo } from 'react';
 
 export const DishCard: React.FC<DishCardProps> = ({
   product,
+  price,
   variant = 'grid',
   className = '',
 }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
-  
   const productImages = product.images || [];
+  const toggleFavorite = useFavoritesStore(state => state.toggleFavorite);
+  const hasHydratedFav = useFavoritesStore(state => state.hasHydrated);
+  const favIds = useFavoritesStore((s) => s.ids)
+  const isFav = useMemo(() => favIds.includes(product.id), [favIds, product.id])
+
+
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite(product.id);
+  }
 
   if (!product) {
     return <ProductSkeleton variant={variant} className={className} />;
   }
-
-  const handleToggleFavorite = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsFavorite(!isFavorite);
-  };
 
 if (variant === 'grid') {
   return (
@@ -68,9 +74,9 @@ if (variant === 'grid') {
         >
           <Heart className={cn(
             "w-3.5 sm:w-4 h-3.5 sm:h-4 transition-colors",
-            isFavorite
-              ? "fill-red-500 text-red-500"
-              : "text-muted-foreground hover:fill-red-500 hover:text-red-500"
+            hasHydratedFav && isFav
+            ? "fill-red-500 text-red-500"
+            : "text-muted-foreground hover:fill-red-500 hover:text-red-500"
           )} />
         </Button>
       </div>
@@ -103,12 +109,13 @@ if (variant === 'grid') {
               {product.weight}г
             </span>
             <span className="font-bold text-xs sm:text-sm lg:text-base leading-tight">
-              {product.price} ₽
+              {price} ₽
             </span>
           </div>
           <AddToCartButton
-            dishId={product.id}
-            variant={variant}
+            product={product}
+            price={price}
+            variant="grid"
             size="sm"
           />
         </div>
@@ -151,7 +158,9 @@ if (variant === 'grid') {
           >
             <Heart className={cn(
               "w-3.5 xs:w-3.5 sm:w-4 h-3.5 xs:h-3.5 sm:h-4 transition-colors",
-              isFavorite ? "fill-red-500 text-red-500" : "text-muted-foreground"
+              hasHydratedFav && isFav
+              ? "fill-red-500 text-red-500"
+              : "text-muted-foreground hover:fill-red-500 hover:text-red-500"
             )} />
           </Button>
         </div>
@@ -162,7 +171,7 @@ if (variant === 'grid') {
               {product.name}
             </CardTitle>
             <span className="font-bold text-sm xs:text-sm sm:text-base lg:text-lg whitespace-nowrap">
-              {product.price} ₽
+              {price} ₽
             </span>
           </div>
 
@@ -188,7 +197,8 @@ if (variant === 'grid') {
               Вес: {product.weight}г
             </span>
             <AddToCartButton
-              dishId={product.id}
+              product={product}
+              price={price}
               variant={variant}
               size="sm"
               className="xs:px-2 sm:px-3 xs:py-1 sm:py-1.5 xs:h-7 sm:h-8 xs:text-[10px] sm:text-xs"
@@ -233,12 +243,13 @@ if (variant === 'grid') {
               {product.weight}г
             </span>
             <span className="font-bold text-xs xs:text-xs sm:text-sm">
-              {product.price} ₴
+              {price} ₽
             </span>
           </div>
           
           <AddToCartButton
-            dishId={product.id}
+            product={product}
+            price={price}
             variant="compact"
             size="sm"
             className="xs:px-1.5 sm:px-2 xs:py-0.5 sm:py-1 xs:h-6 sm:h-7 xs:text-[10px] sm:text-xs"

@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { CategoryCard } from './CategoryCard';
-import { CATEGORIES } from '@/lib/constants';
+import { allCategory, CATEGORIES } from '@/lib/constants';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { SwiperControls } from './SwiperControls';
@@ -44,13 +44,15 @@ export const CategoriesSwiper = () => {
           }}
         className="!pb-2"
       >
+        <SwiperSlide key={allCategory.id}>
+          <CategoryCard {...allCategory} />
+        </SwiperSlide>
         {CATEGORIES.map((category) => (
           <SwiperSlide key={category.id}>
             <CategoryCard {...category} />
           </SwiperSlide>
         ))}
       </Swiper>
-      
       <SwiperControls />
     </div>
   );

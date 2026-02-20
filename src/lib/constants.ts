@@ -2,15 +2,22 @@ import { Category, Product } from "@/types";
 import { Beef, Box, CakeSlice, ChefHat, CookingPot, Fish, Grid3X3, Home, Info, Package, PartyPopper, Store } from "lucide-react";
 
 export const CATEGORIES: Category[] = [
-  { id: 1, name: "Все категории", icon: ChefHat, href: "/catalog" },
-  { id: 2, name: "Полуфабрикаты", icon: Package, href: "/catalog/semi-finished" },
-  { id: 3, name: "Готовая еда", icon: CookingPot, href: "/catalog/ready-meals" },
-  { id: 4, name: "Мясная продукция", icon: Beef, href: "/catalog/meat" },
-  { id: 5, name: "Рыба", icon: Fish, href: "/catalog/fish" },
-  { id: 6, name: "Хлебобулочные изделия", icon: CakeSlice, href: "/catalog/bakery" },
-  { id: 7, name: "Заготовки", icon: Box, href: "/catalog/preserves" },
-  { id: 8, name: "Праздничные блюда", icon: PartyPopper, href: "/catalog/holiday" },
-];
+  { id: 1, name: "Полуфабрикаты", icon: Package, slug: "semi-finished" },
+  { id: 2, name: "Готовая еда", icon: CookingPot, slug: "ready-meals" },
+  { id: 3, name: "Мясная продукция", icon: Beef, slug: "meat" },
+  { id: 4, name: "Рыба", icon: Fish, slug: "fish" },
+  { id: 5, name: "Хлебобулочные изделия", icon: CakeSlice, slug: "bakery" },
+  { id: 6, name: "Заготовки", icon: Box, slug: "preserves" },
+  { id: 7, name: "Праздничные блюда", icon: PartyPopper, slug: "holiday" },
+]
+
+export const allCategory = {
+    id: 0,                 
+    name: 'Все товары',
+    icon: ChefHat,
+    slug: 'all',                  
+  }
+
 
 export const filters = [
   { id: "new", label: "Новинки", condition: (product: Product) => product.isNew },
@@ -25,3 +32,5 @@ export const mobileNavItems = [
 ];
 
 export const RESTAURANT_PHONE = "+79637042858";
+
+export const DEFAULT_PRICE_RANGE: [number, number] = [50, 2600]

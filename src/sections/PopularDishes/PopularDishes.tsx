@@ -15,7 +15,7 @@ export const PopularDishes = () => {
 
       <div className="gap-2 sm:gap-3 lg:gap-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {popProducts.map((product) => (
-          <DishCard key={product.id} product={product} variant="grid" />
+          <DishCard key={product.id} price={product.price} product={product} variant="grid" />
         ))}
       </div>
     </section>

@@ -5,7 +5,7 @@ export interface Category {
   id: number;
   name: string;
   icon: LucideIcon;
-  href: string;
+  slug: string;
 }
 
 export interface Product {
@@ -21,6 +21,9 @@ export interface Product {
   quantity?: number;
   content?: string;
   isNew: boolean;
+  isHit: boolean;
+  isPopular: boolean;
+  isRecommended: boolean;
   tags?: string[];
 }
 
@@ -28,7 +31,7 @@ export interface CartItem {
   id: number;
   name: string;
   price: number;
-  weight: number;
+  weight: string;
   image: string;
   quantity: number;
 }
@@ -41,22 +44,22 @@ export interface CategoryDropdownProps {
 
 
 export interface DesktopFiltersSidebarProps {
-  priceRange: number[];
-  setPriceRange: (range: number[]) => void;
+  priceRange: [number, number];
+  setPriceRange: (range: [number, number]) => void;
   selectedFilters: string[];
   toggleFilter: (id: string) => void;
-  selectedCategory: string;
-  setSelectedCategory: (id: string) => void;
+  selectedCategory: number | null;
+  setSelectedCategory: (id: number | null) => void;
   resetFilters: () => void;
 }
 
 export interface MobileFiltersSheetProps {
-  priceRange: number[];
-  setPriceRange: (range: number[]) => void;
+  priceRange: [number, number];
+  setPriceRange: (range: [number, number]) => void;
   selectedFilters: string[];
   toggleFilter: (id: string) => void;
-  selectedCategory: string;
-  setSelectedCategory: (id: string) => void;
+  selectedCategory: number | null;
+  setSelectedCategory: (id: number | null) => void;
   resetFilters: () => void;
   filters: Array<{
     id: string;
@@ -66,7 +69,8 @@ export interface MobileFiltersSheetProps {
 }
 
 export interface AddToCartButtonProps {
-  dishId: number;
+  product: Product;
+  price: number;
   variant?: 'grid' | 'list' | 'compact';
   className?: string;
   size?: 'default' | 'sm' | 'lg';
@@ -81,7 +85,8 @@ export interface SizeStyle {
 };
 
 export interface DishCardProps {
-  product: Product; 
+  product: Product;
+  price: number; 
   variant?: 'grid' | 'list' | 'detailed';
   className?: string;
 }
@@ -92,3 +97,28 @@ export interface CarouselWithDotsProps {
   readonly className?: string
   readonly imageClassName?: string
 }
+export type SortKey = "rating" | "price-asc" | "price-desc" | "new"
+export type ViewMode = "grid" | "list"
+
+export type CatalogState = {
+  products: Product[]
+  categories: Category[]
+
+  viewMode: ViewMode
+  priceRange: [ number, number ]
+  selectedCategoryId: number | null
+  selectedTags: string[]
+  sort: SortKey
+
+
+  setProducts: (products: Product[]) => void
+  setCategories: (categories: Category[]) => void
+
+  setViewMode: (viewMode: ViewMode) => void
+  setPriceRange: (priceRange: [ number, number ]) => void
+  setSelectedCategoryId: (categoryId: number | null) => void
+  toggleTag: (tag: string) => void
+  setSort: (sort: SortKey) => void
+  resetFilters: () => void
+}
+

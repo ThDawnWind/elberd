@@ -9,13 +9,19 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import { CartItem } from "@/types";
-import { mockCartItems } from "@/lib/products";
+import { useCartStore } from "@/stores/cart.store";
 
 const RESTAURANT_PHONE = "+79637042858";
 
 export default function CartPage() {
+  const cartItems = useCartStore((s) => s.items);
+  const removeFromCart = useCartStore((s) => s.removeFromCart);
+  const updateQuantity = useCartStore((s) => s.updateQuantity);
+  const clearCart = useCartStore((s) => s.clearCart);
+  const totalItems = useCartStore((s) => s.totalItems());
+  const totalAmount = useCartStore((s) => s.totalAmount());
+
   const router = useRouter();
-  const [cartItems, setCartItems] = useState<CartItem[]>(mockCartItems);
   const [deliveryInfo, setDeliveryInfo] = useState({
     address: "",
     name: "",
@@ -24,6 +30,7 @@ export default function CartPage() {
   });
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
+  
 
   useEffect(() => {
     if (showSuccessModal || showClearConfirm) {
@@ -38,30 +45,6 @@ export default function CartPage() {
     };
   }, [showSuccessModal, showClearConfirm]);
 
-  const totalAmount = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
-  const itemsAmount = cartItems.length
-
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const clearCart = () => {
-    setCartItems([]);
-    setShowClearConfirm(false);
-  };
 
   const isFormValid = 
     deliveryInfo.name.trim().length >= 2 &&
@@ -81,7 +64,7 @@ export default function CartPage() {
 
   const handleCloseModalAndRedirect = () => {
     setShowSuccessModal(false);
-    setCartItems([]);
+    
     setDeliveryInfo({
       address: "",
       name: "",
@@ -107,6 +90,11 @@ export default function CartPage() {
       `*WhatsApp:* ${deliveryInfo.whatsapp}`
     );
   };
+
+  const onHandleClearCart = () => {
+    clearCart();
+    setShowClearConfirm(false);
+  }
 
   return (
     <div className="bg-gray-50 min-h-screen font-sans">
@@ -140,17 +128,10 @@ export default function CartPage() {
       <div className={cn(
         "mx-auto px-4 pb-12",
         "s:px-2 xs:px-2 sm:px-2 lg:px-8",
-        "s:max-w-full  xs:max-w-full sm:max-w-full lg:max-w-7xl"
+        "s:max-w-full  xs:max-w-full sm:max-w-full lg:max-w-7xl justify-center items-center"
       )}>
-        
-        <div className="flex flex-row sm:flex-row xs:flex-col lg:flex-grow justify-between gap-6 sm:gap-2 lg:gap-8">
-          <div className="space-y-4 mb-10 xs:mb-2 sm:w-3/5 lg:w-1/2">
-            {cartItems.length > 0 && (
-              <h2 className="font-mono xs:text-base text-lg">Ваши товары</h2>
-            )}
-
-            {cartItems.length === 0 ? (
-               <div className="flex justify-center items-center min-h-[60vh]">
+           {cartItems.length === 0 && (
+               <div className="flex justify-center items-center mt-44">
                   <Card className="p-8 w-full max-w-md text-center">
                     <ShoppingCart className="mx-auto mb-4 w-16 xs:w-7 h-16 xs:h-7 text-gray-300" />
                     <p className="text-gray-500 xs:text-base text-lg">Корзина пуста</p>
@@ -162,14 +143,22 @@ export default function CartPage() {
                     </Button>
                   </Card>
               </div>
-            ) : (
+            )}
+
+        <div className="flex flex-row sm:flex-row xs:flex-col lg:flex-grow justify-between gap-6 sm:gap-2 lg:gap-8">
+          <div className="space-y- mb-10 xs:mb-2 sm:w-3/5 lg:w-1/2 4">
+            {cartItems.length > 0 && (
+              <h2 className="font-mono xs:text-base text-lg">Ваши товары</h2>
+            )}
+
+        {cartItems.length > 0 && (
               <div className="xs:h-96 xs:overflow-auto">
                 {cartItems.map((item) => (
                   <CartItemCard
                     key={item.id}
                     item={item}
                     onUpdateQuantity={updateQuantity}
-                    onRemove={removeItem}
+                    onRemove={removeFromCart}
                   />
                 ))}
               </div>
@@ -240,7 +229,7 @@ export default function CartPage() {
                     <div className="flex justify-between">
                       <span className="font-medium s:text-sm xs:text-sm">Кол-во:</span>
                       <span className="font-bold s:text-sm xs:text-sm text-xl">
-                        {itemsAmount}
+                        {totalItems} шт.
                       </span>
                     </div>
                     <div className="flex justify-between">
@@ -278,7 +267,7 @@ export default function CartPage() {
 
       {showClearConfirm && (
         <ClearCartModal 
-          onConfirm={clearCart}
+          onConfirm={onHandleClearCart}
           onCancel={() => setShowClearConfirm(false)}
         />
       )}

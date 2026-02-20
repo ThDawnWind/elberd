@@ -54,17 +54,17 @@ export function MobileFiltersSheet({
                 const Icon = category.icon;
                 const isAllCategories = category.name === "Все категории";
                 const isSelected = isAllCategories
-                  ? selectedCategory === "all"
-                  : selectedCategory === category.id.toString();
+                  ? selectedCategory === 0
+                  : selectedCategory === category.id;
 
                 return (
                   <button
                     key={category.id}
                     onClick={() => {
                       if (isAllCategories) {
-                        setSelectedCategory("all");
+                        setSelectedCategory(0);
                       } else {
-                        setSelectedCategory(category.id.toString());
+                        setSelectedCategory(category.id);
                       }
                     }}
                     className={`

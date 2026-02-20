@@ -1,17 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react"; // 👈 добавляем useEffect
+import { useState, useEffect, useMemo } from "react"; 
 import { DishCard } from "@/components/ui/DishCard";
 import { Heart, ShoppingBag, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { favProducts } from "@/lib/products";
 import { cn } from "@/lib/utils";
+import { useFavoritesStore } from "@/stores/favorites.store";
+import { Products } from "@/lib/products";
 
 export default function FavoritesPage() {
-  const [favorites, setFavorites] = useState(favProducts);
-  const [showClearConfirm, setShowClearConfirm] = useState(false); 
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
+  const ids = useFavoritesStore((s) => s.ids)
+  const totalItems = useFavoritesStore((s) => s.totalItems())
+
+
+  const favoriteProducts = useMemo(
+    () => Products.filter((p) => ids.includes(p.id)),
+    [ids]
+  )
+
 
   useEffect(() => {
     if (showClearConfirm) {
@@ -25,7 +34,7 @@ export default function FavoritesPage() {
   }, [showClearConfirm]);
 
   const clearAllFavorites = () => {
-    setFavorites([]);
+    useFavoritesStore.getState().clearFavorites();
     setShowClearConfirm(false);
   };
 
@@ -45,10 +54,10 @@ export default function FavoritesPage() {
             
             <div className="flex justify-between items-center gap-2 sm:gap-3 w-full">
               <Badge className="bg-berd-primary px-3 sm:px-4 lg:px-4 py-1.5 sm:py-2 font-sans text-white text-xs sm:text-sm whitespace-nowrap">
-                {favorites.length} товаров
+                {totalItems} товаров
               </Badge>
-              
-              {favorites.length > 0 && (
+
+              {favoriteProducts.length > 0 && (
                 <Button
                   variant="outline"
                   size="sm"
@@ -65,7 +74,7 @@ export default function FavoritesPage() {
           <div className="bg-gray-200 w-full h-px"></div>
         </div>
 
-        {favorites.length === 0 ? (
+        {favoriteProducts.length === 0 ? (
           <div className="py-8 sm:py-12 lg:py-16 text-center">
             <div className="flex justify-center items-center bg-gray-100 mx-auto mb-4 sm:mb-6 lg:mb-6 rounded-full w-16 sm:w-20 lg:w-20 h-16 sm:h-20 lg:h-20">
               <Heart className="w-8 sm:w-10 lg:w-10 h-8 sm:h-10 lg:h-10 text-gray-300" />
@@ -90,9 +99,9 @@ export default function FavoritesPage() {
         ) : (
           <div className="w-full">
             <div className="justify-items-center gap-3 sm:gap-4 lg:gap-4 grid xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 s:grid-cols-1">
-              {favorites.map(product => (
+              {favoriteProducts.map(product => (
                 <div key={product.id} className="relative w-full">
-                  <DishCard product={product} variant="grid" />
+                  <DishCard product={product} price={product.price} variant="grid" />
                 </div>
               ))}
             </div>

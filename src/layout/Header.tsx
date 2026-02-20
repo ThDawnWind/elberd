@@ -1,11 +1,15 @@
+'use client';
+
 import Link from "next/link";
 import Image from 'next/image';
 import { Heart, Phone, ShoppingCart } from 'lucide-react';
 import { SearchBar } from "../components/ui/search-bar";
+import { useFavoritesStore } from "@/stores/favorites.store";
+import { useCartStore } from "@/stores/cart.store";
 
 export const Header = () => {
-  const favoritesCount = 5;
-  const cartCount = 7;
+  const favoritesCount = useFavoritesStore((s) => s.totalItems());
+  const cartCount = useCartStore((s) => s.totalItems());
 
   return (
     <header className="top-0 z-50 sticky bg-white/95 supports-[backdrop-filter]:bg-white/60 backdrop-blur border-b w-full font-mono">
