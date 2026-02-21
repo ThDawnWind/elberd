@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useFavoritesStore } from "@/stores/favorites.store";
-import { Products } from "@/lib/products";
+import { PRODUCTS } from "@/lib/products";
 
 export default function FavoritesPage() {
   const [showClearConfirm, setShowClearConfirm] = useState(false);
@@ -17,7 +17,7 @@ export default function FavoritesPage() {
 
 
   const favoriteProducts = useMemo(
-    () => Products.filter((p) => ids.includes(p.id)),
+    () => PRODUCTS.filter((p) => ids.includes(p.id)),
     [ids]
   )
 

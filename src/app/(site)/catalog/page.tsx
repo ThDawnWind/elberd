@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { Grid3X3, List } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Products } from "@/lib/products";
+import { PRODUCTS } from "@/lib/products";
 import { MobileFiltersSheet } from "@/components/ui/MobileFiltersSheet";
 import { useCatalogStore } from "@/stores/catalog.store";
 import { DesktopFiltersSidebarProps } from "@/types";
@@ -28,11 +28,11 @@ export default function CatalogPage() {
   const setProducts = useCatalogStore(state => state.setProducts);
 
   useEffect(() => {
-    setProducts(Products);
+    setProducts(PRODUCTS);
   }, [setProducts]);
 
   const filteredProducts = useMemo(() => {
-    let result = [...Products];
+    let result = [...PRODUCTS];
 
     if (selectedCategoryId !== null) {
       const category = CATEGORIES.find(c => c.id === selectedCategoryId);
@@ -63,7 +63,6 @@ export default function CatalogPage() {
           if (a.isNew && !b.isNew) return -1;
           if (!a.isNew && b.isNew) return 1;
           return 0;
-        case "rating":
         default: 
           return (b.rating || 0) - (a.rating || 0);
       }
@@ -136,9 +135,9 @@ export default function CatalogPage() {
                     <SelectValue placeholder="Сортировка" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="popular">По популярности</SelectItem>
-                    <SelectItem value="price-asc">По цене (возр.)</SelectItem>
-                    <SelectItem value="price-desc">По цене (убыв.)</SelectItem>
+                    <SelectItem value="rating">По популярности</SelectItem>
+                    <SelectItem value="price-asc">Цена выше</SelectItem>
+                    <SelectItem value="price-desc">Цена ниже</SelectItem>
                     <SelectItem value="new">Сначала новинки</SelectItem>
                   </SelectContent>
                 </Select>

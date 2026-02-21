@@ -73,7 +73,7 @@ export const AddToCartButton = ({
         "flex justify-center items-center gap-2 xs:gap-1.5 bg-berd-primary hover:bg-black active:bg-berd-primary/80 disabled:opacity-70 xs:py-1.5 py-2.5 xs:px-3 px-4 rounded-lg font-medium text-white transition-all duration-300 ease-in-out w-full shadow-sm hover:shadow xs:text-xs text-sm",
       quantityContainer: "bg-berd-primary/10 rounded-lg p-1 xs:p-0.5",
       quantityButton:
-        "w-8 h-8 xs:w-6 xs:h-6 rounded-md bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 shadow-sm",
+        "w-7 h-7 xs:w-6 xs:h-6 rounded-md bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 shadow-sm",
       iconSize: "w-4 h-4 xs:w-3 xs:h-3",
       textSize: "text-xs xs:text-[10px] font-medium",
       successButton: "bg-green-500 hover:bg-green-600",
@@ -85,7 +85,7 @@ export const AddToCartButton = ({
         "flex justify-center items-center gap-2 bg-berd-primary text-white hover:bg-black active:bg-berd-primary/80 disabled:opacity-70 py-3 px-6 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow",
       quantityContainer: "bg-berd-primary/10 rounded-lg p-2",
       quantityButton:
-        "w-9 h-9 rounded-md bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 shadow-sm",
+        "w-7 h-7rounded-md bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 shadow-sm",
       iconSize: "w-4 h-4",
       textSize: "text-sm font-semibold",
       successButton: "bg-green-500 hover:bg-green-600",

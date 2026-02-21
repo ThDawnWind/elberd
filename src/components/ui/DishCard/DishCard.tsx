@@ -82,7 +82,7 @@ if (variant === 'grid') {
       </div>
 
       <CardHeader className='p-2'>
-        <CardTitle className="font-mono text-sm sm:text-base lg:text-lg">
+        <CardTitle className="font-mono sm:text-base lg:text-base">
           {product.name}
         </CardTitle>
       </CardHeader>
@@ -106,10 +106,10 @@ if (variant === 'grid') {
         <div className="flex justify-between items-center gap-1 mt-auto pt-2 border-t">
           <div className="flex flex-col">
             <span className="text-[10px] text-muted-foreground sm:text-xs leading-tight">
-              {product.weight}г
+             Вес: {product.weight}
             </span>
             <span className="font-bold text-xs sm:text-sm lg:text-base leading-tight">
-              {price} ₽
+              {price}₽
             </span>
           </div>
           <AddToCartButton
@@ -194,7 +194,7 @@ if (variant === 'grid') {
 
           <div className="flex justify-between items-center pt-3 border-t">
             <span className="text-black xs:text-[10px] sm:text-xs text-base">
-              Вес: {product.weight}г
+              Вес: {product.weight}
             </span>
             <AddToCartButton
               product={product}
@@ -240,10 +240,10 @@ if (variant === 'grid') {
         <div className="flex justify-between items-center">
           <div>
             <span className="block text-[10px] text-muted-foreground xs:text-[10px] sm:text-xs">
-              {product.weight}г
+              Вес: {product.weight}
             </span>
-            <span className="font-bold text-xs xs:text-xs sm:text-sm">
-              {price} ₽
+            <span className="font-bold xs:text-xs text-sm">
+              {price}₽
             </span>
           </div>
           

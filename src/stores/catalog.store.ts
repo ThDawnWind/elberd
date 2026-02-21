@@ -5,7 +5,6 @@ import { DEFAULT_PRICE_RANGE } from "@/lib/constants"
 export const useCatalogStore = create<CatalogState>((set, get) => ({
   products: [],
   categories: [],
-
   viewMode: "grid",
   priceRange: DEFAULT_PRICE_RANGE,
   selectedCategoryId: null,
