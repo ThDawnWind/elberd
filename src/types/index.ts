@@ -145,3 +145,14 @@ export type FavoritesState = {
   isFavorite: (id: number) => boolean
   totalItems: () => number
 }
+
+export type ModalProps = {
+  product: Product
+  onClose: () => void
+}
+
+export type ProductModalState = {
+  product: Product | null
+  open: (product: Product) => void
+  close: () => void
+}

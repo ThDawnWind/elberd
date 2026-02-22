@@ -20,6 +20,7 @@ export default function SiteLayout({
 
       <main className="flex-1">
         {children}
+
       </main>
 
       <Footer />

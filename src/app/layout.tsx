@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { StoreHydration } from "@/components/StoreHydration"
 import "./globals.css";
+import { GlobalProductModal } from "@/components/GlobalProductModal";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className="antialiased">
         <StoreHydration />
         {children}
+        <GlobalProductModal />
       </body>
     </html>
   );

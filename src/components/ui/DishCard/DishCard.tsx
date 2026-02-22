@@ -17,19 +17,20 @@ import { Button } from '@/components/ui/button';
 import { CarouselWithDots } from '../carousel-with-dots';
 import {useFavoritesStore} from "@/stores/favorites.store";
 import { useMemo } from 'react';
+import { useProductModalStore } from '@/stores/product-modal.store';
 
 export const DishCard: React.FC<DishCardProps> = ({
   product,
   price,
   variant = 'grid',
-  className = '',
+  className = ''
 }) => {
   const productImages = product.images || [];
   const toggleFavorite = useFavoritesStore(state => state.toggleFavorite);
   const hasHydratedFav = useFavoritesStore(state => state.hasHydrated);
-  const favIds = useFavoritesStore((s) => s.ids)
-  const isFav = useMemo(() => favIds.includes(product.id), [favIds, product.id])
-
+  const favIds = useFavoritesStore((s) => s.ids);
+  const isFav = useMemo(() => favIds.includes(product.id), [favIds, product.id]);
+  const openModal = useProductModalStore((s) => s.open)
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -43,11 +44,13 @@ export const DishCard: React.FC<DishCardProps> = ({
 
 if (variant === 'grid') {
   return (
-    <Card key={product.id} className={cn(
+    <Card  onClick={() => openModal(product)}
+    key={product.id} className={cn(
       "group overflow-hidden transition-all duration-300",
       "hover:shadow-lg hover:-translate-y-1 hover:shadow-berd-primary",
       "border-border/60",
       "flex flex-col h-full",
+      "cursor-pointer",
       className
     )}>
       <div className="relative aspect-square overflow-hidden">
@@ -126,7 +129,7 @@ if (variant === 'grid') {
 
   if (variant === 'list') {
     return (
-      <Card key={product.id} className={cn(
+      <Card onClick={() => openModal(product)} key={product.id} className={cn(
         "group overflow-hidden transition-all duration-300",
         "hover:shadow-lg",
         "border-border/40",
@@ -210,7 +213,7 @@ if (variant === 'grid') {
   }
 
   return (
-    <Card className={cn(
+    <Card onClick={() => openModal(product)} className={cn(
       "overflow-hidden transition-all duration-300",
       "hover:shadow-md",
       "border-border/30",
