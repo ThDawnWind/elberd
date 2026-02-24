@@ -4,7 +4,7 @@ import { Category } from "@/types";
 import Link from "next/link";
 
 export const CategoryCard = ({ name, icon: Icon, slug }: Category) => {
-  const href = slug ? `/catalog/${slug}` : "/catalog";
+  const href = slug ? `/catalog?category=${slug}` : "/catalog";
 
   return (
     <Link

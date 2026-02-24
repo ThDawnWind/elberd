@@ -13,6 +13,7 @@ import { MobileFiltersSheet } from "@/components/ui/MobileFiltersSheet"
 import { useCatalogStore } from "@/stores/catalog.store"
 import { DesktopFiltersSidebarProps } from "@/types"
 import { motion, AnimatePresence, cubicBezier } from "motion/react"
+import { useSearchParams } from "next/dist/client/components/navigation"
 
 
 const pageFade = {
@@ -57,10 +58,20 @@ export default function CatalogPage() {
   const setSort = useCatalogStore((state) => state.setSort)
   const resetFilters = useCatalogStore((state) => state.resetFilters)
   const setProducts = useCatalogStore((state) => state.setProducts)
+  const searchParams = useSearchParams();
+  const categorySlug = searchParams.get("category");
 
   useEffect(() => {
     setProducts(PRODUCTS)
-  }, [setProducts])
+    if (categorySlug) {
+    const category = CATEGORIES.find((c) => c.slug === categorySlug)
+      if (category) {
+        setSelectedCategoryId(category.id)
+      } else {
+        setSelectedCategoryId(0)
+      }
+    }
+  }, [setProducts, setSelectedCategoryId, categorySlug])
 
   const filteredProducts = useMemo(() => {
     let result = [...PRODUCTS]

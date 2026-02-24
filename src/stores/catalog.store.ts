@@ -2,6 +2,8 @@ import { create } from "zustand"
 import type { CatalogState } from "../types"
 import { DEFAULT_PRICE_RANGE } from "@/lib/constants"
 
+
+
 export const useCatalogStore = create<CatalogState>((set, get) => ({
   products: [],
   categories: [],
