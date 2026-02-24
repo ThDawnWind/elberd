@@ -1,9 +1,13 @@
+import Link from "next/link"
+import { MapPin } from "lucide-react"
+
 export default function WhereToBuyPage() {
   return (
     <section className="bg-white w-full min-h-screen">
       <div className="mx-auto px-4 xs:py-10 lg:py-16 s:py-8 sm:py-12 max-w-5xl">
+        
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center bg-amber-100 px-3 py-1 rounded-full font-medium text-amber-800 s:text-xs xs:text-sm sm:text-sm lg:text-base">
+          <span className="inline-flex items-center bg-amber-100 px-3 py-1 rounded-full font-medium text-amber-800 s:text-xs xs:text-sm sm:text-sm lg:text-base animate-pulse">
             Скоро
           </span>
         </div>
@@ -12,19 +16,34 @@ export default function WhereToBuyPage() {
           Где купить
         </h1>
 
-        <div className="bg-gradient-to-br from-gray-50 to-white shadow-sm mt-5 sm:mt-6 lg:mt-8 p-4 xs:p-5 sm:p-7 lg:p-10 border border-gray-200 rounded-2xl">
-          <p className="font-sans text-gray-700 s:text-sm xs:text-base sm:text-lg lg:text-xl leading-relaxed">
+        <div className="bg-gradient-to-br from-gray-50 to-white shadow-sm hover:shadow-md mt-5 sm:mt-6 lg:mt-8 p-4 xs:p-5 sm:p-7 lg:p-10 border border-gray-200 rounded-2xl transition">
+          
+          <div className="flex justify-center mb-6">
+            <div className="flex justify-center items-center bg-amber-100 rounded-full w-16 h-16">
+              <MapPin className="w-8 h-8 text-amber-600" />
+            </div>
+          </div>
+
+          <p className="font-sans text-gray-700 s:text-sm xs:text-base sm:text-lg lg:text-xl text-center leading-relaxed">
             Раздел «Где купить» находится в разработке.
             <br />
             В ближайшее время здесь появится полный список точек продаж.
           </p>
 
-          <p className="mt-3 text-gray-500 s:text-xs xs:text-sm sm:text-sm lg:text-base">
+          <p className="mt-3 text-gray-500 s:text-xs xs:text-sm sm:text-sm lg:text-base text-center">
             Спасибо за ваше терпение 💛
           </p>
+
+          <div className="flex justify-center mt-6">
+            <Link
+              href="/catalog"
+              className="inline-flex justify-center items-center bg-berd-primary hover:bg-berd-primary/90 px-6 py-3 rounded-lg font-semibold text-gray-900 transition"
+            >
+              Перейти в каталог
+            </Link>
+          </div>
         </div>
       </div>
     </section>
-  );
+  )
 }
-

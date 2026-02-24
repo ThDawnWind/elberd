@@ -3,13 +3,7 @@ import animate from 'tailwindcss-animate'
 
 const config: Config = {
     darkMode: ["class"],
-    content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-	"./src/sections/**/*.{js,ts,jsx,tsx,mdx}", 
-	"./src/layout/**/*.{js,ts,jsx,tsx,mdx}", 
-  ],
+	content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
   	extend: {
   		colors: {
@@ -71,8 +65,8 @@ const config: Config = {
 			xs: {'min': '491px', 'max': '767px'},
 			sm: {'min': '768px', 'max': '1023px'},
 			lg: {'min': '1024px'},
-      }
-  	}
+      },
+    },
   },
   plugins: [
 	animate

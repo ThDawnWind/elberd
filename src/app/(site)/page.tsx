@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <>
       <WallaperSwiper />
-
       <CategoriesSwiper />
       <PopularDishes />
       <Advantages />

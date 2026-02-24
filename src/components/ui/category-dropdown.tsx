@@ -8,6 +8,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { CategoryDropdownProps } from "@/types";
+import { motion } from "motion/react";
 
 export function CategoryDropdown({
   selectedCategory,
@@ -32,7 +33,13 @@ export function CategoryDropdown({
         align="start"
         sideOffset={8}
       >
-        <div className="py-1 max-h-[400px] overflow-y-auto">
+        <motion.div
+        initial={{ opacity: 0, y: 8, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 8, scale: 0.98 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+      >
+            <div className="py-1 max-h-[400px] overflow-y-auto">
           {CATEGORIES.map((category) => {
             const Icon = category.icon;
             const isAllCategories = category.name === "Все категории";
@@ -65,6 +72,7 @@ export function CategoryDropdown({
             );
           })}
         </div>
+        </motion.div>
       </HoverCardContent>
     </HoverCard>
   );

@@ -7,6 +7,7 @@ import { AddToCartButton } from "./ui/DishCard"
 import { useFavoritesStore } from "@/stores/favorites.store"
 import { cn } from "@/lib/utils"
 import { CarouselWithDots } from "./ui/carousel-with-dots"
+import {motion} from "motion/react"
 
 export function ProductModal({ product, onClose }: ModalProps) {
   const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite)
@@ -24,9 +25,13 @@ export function ProductModal({ product, onClose }: ModalProps) {
       className="z-50 fixed inset-0 flex justify-center items-center bg-black/50 p-2"
       onClick={onClose}
     >
-      <div
+      <motion.div
         className="relative flex bg-white shadow-2xl rounded-2xl w-full xs:w-[70vw] sm:w-[70vw] max-w-3xl h-[384px] xs:h-[268px] sm:h-[269px]"
         onClick={(e) => e.stopPropagation()}
+        initial={{ opacity: 0, scale: 0.96, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 10 }}
+        transition={{ duration: 0.18, ease: "easeOut" }}
       >
         <button
           onClick={(e) => {
@@ -122,7 +127,7 @@ export function ProductModal({ product, onClose }: ModalProps) {
             />
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

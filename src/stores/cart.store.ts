@@ -7,6 +7,8 @@ export const useCartStore = create<CartState>()(
     (set, get) => ({
       items: [],
       hasHydrated: false,
+      skipHydration: true,
+      onRehydrateStorage: () => (state: { setHasHydrated: (arg0: boolean) => void }) => state?.setHasHydrated(true),
       setHasHydrated: (v) => set({ hasHydrated: v }),
 
       addToCart: (id, name, price, weight, image, qty = 1) => {

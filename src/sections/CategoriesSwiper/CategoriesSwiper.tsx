@@ -7,11 +7,18 @@ import { allCategory, CATEGORIES } from '@/lib/constants';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { SwiperControls } from './SwiperControls';
+import { motion } from 'motion/react';
 
 export const CategoriesSwiper = () => {
   return (
-    <div className="relative lg:px-4">
-      <Swiper
+    <motion.section
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="relative lg:px-4"
+    >
+            <Swiper
         modules={[Navigation]}
         navigation={{
           nextEl: '.custom-next',
@@ -54,6 +61,6 @@ export const CategoriesSwiper = () => {
         ))}
       </Swiper>
       <SwiperControls />
-    </div>
+    </motion.section>
   );
 };

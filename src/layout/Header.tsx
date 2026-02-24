@@ -6,6 +6,7 @@ import { Heart, Phone, ShoppingCart } from 'lucide-react';
 import { SearchBar } from "../components/ui/search-bar";
 import { useFavoritesStore } from "@/stores/favorites.store";
 import { useCartStore } from "@/stores/cart.store";
+import { AnimatePresence, motion } from "motion/react";
 
 export const Header = () => {
   const favoritesCount = useFavoritesStore((s) => s.totalItems());
@@ -50,11 +51,20 @@ export const Header = () => {
             >
               <div className="relative">
                 <Heart className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-gray-700" />
+             <AnimatePresence initial={false}>
                 {favoritesCount > 0 && (
-                  <span className="-top-1.5 sm:-top-2 -right-1.5 sm:-right-2 absolute flex justify-center items-center bg-red-500 rounded-full w-3.5 sm:w-4 lg:w-5 h-3.5 sm:h-4 lg:h-5 font-semibold text-[9px] text-white sm:text-[10px]">
+                  <motion.span
+                    key={favoritesCount}
+                    initial={{ opacity: 0, scale: 0.6, y: -4 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.6, y: -4 }}
+                    transition={{ duration: 0.18 }}
+                    className="-top-1.5 sm:-top-2 -right-1.5 sm:-right-2 absolute flex justify-center items-center bg-red-500 rounded-full w-3.5 sm:w-4 lg:w-5 h-3.5 sm:h-4 lg:h-5 font-semibold text-[9px] text-white sm:text-[10px]"
+                  >
                     {favoritesCount}
-                  </span>
+                  </motion.span>
                 )}
+              </AnimatePresence>
               </div>
               <span className="s:hidden xs:hidden font-medium text-gray-700 hover:text-berd-primary text-sm transition-duration-300 ease-in-out">
                 Избранное
@@ -67,11 +77,20 @@ export const Header = () => {
             >
               <div className="relative">
                 <ShoppingCart className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-gray-700" />
-                {cartCount > 0 && (
-                  <span className="-top-1.5 sm:-top-2 -right-1.5 sm:-right-2 absolute flex justify-center items-center bg-berd-primary rounded-full w-3.5 sm:w-4 lg:w-5 h-3.5 sm:h-4 lg:h-5 font-semibold text-[9px] text-black sm:text-[10px]">
-                    {cartCount}
-                  </span>
-                )}
+                <AnimatePresence initial={false}>
+                  {cartCount > 0 && (
+                    <motion.span
+                      key={cartCount}
+                      initial={{ opacity: 0, scale: 0.6, y: -4 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.6, y: -4 }}
+                      transition={{ duration: 0.18 }}
+                      className="-top-1.5 sm:-top-2 -right-1.5 sm:-right-2 absolute flex justify-center items-center bg-berd-primary rounded-full w-3.5 sm:w-4 lg:w-5 h-3.5 sm:h-4 lg:h-5 font-semibold text-[9px] text-black sm:text-[10px]"
+                    >
+                      {cartCount}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
               </div>
               <span className="s:hidden xs:hidden font-medium text-gray-700 hover:text-berd-primary text-sm transition-duration-300 ease-in-out">
                 Корзина

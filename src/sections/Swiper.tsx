@@ -9,6 +9,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useCallback } from "react";
 import "swiper/css";
 import "swiper/css/effect-fade";
+import { motion } from "motion/react";
 
 const slides = [
   {
@@ -57,6 +58,13 @@ export const WallaperSwiper = () => {
   }, [swiperInstance]);
 
   return (
+    <motion.section
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="w-full"
+    >
     <div className="group relative w-full h-[400px] sm:h-[500px] lg:h-[700px] overflow-hidden">
       <Swiper
         onSwiper={setSwiperInstance}
@@ -148,5 +156,6 @@ export const WallaperSwiper = () => {
         ))}
       </div>
     </div>
+    </motion.section>
   );
 };
