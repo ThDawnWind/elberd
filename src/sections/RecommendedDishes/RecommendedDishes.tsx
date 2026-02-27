@@ -20,7 +20,7 @@ export const RecommendedDishes = () => {
         </p>
       </header>
 
-      <div className="gap-2 sm:gap-3 lg:gap-4 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      <ul className="gap-2 sm:gap-3 lg:gap-4 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {recommendedProducts.map((product) => (
           <li key={product.id}>
             <Reveal>
@@ -32,7 +32,7 @@ export const RecommendedDishes = () => {
             </Reveal>
           </li>
         ))}
-      </div>
+      </ul>
     </section>
   )
 }
