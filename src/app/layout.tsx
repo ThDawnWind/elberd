@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { StoreHydration } from "@/components/StoreHydration"
 import "./globals.css";
 import { GlobalProductModal } from "@/components/GlobalProductModal";
+import Script from "next/dist/client/script";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,8 +17,89 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Эльберд - Доставка еды",
-  description: "Заказывайте вкусные готовые блюда с доставкой",
+  title: "Эльберд — доставка еды",
+  description: "Доставка еды в вашем городе",
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  // Можно списком: Яндекс/Google это нормально переваривают
+  "@type": ["LocalBusiness", "Store", "GroceryStore"],
+
+  "@id": "https://example.com/#elberd",
+  name: "EL’BERD",
+  url: "https://example.com",
+  description: "Магазин готовых продуктов и полуфабрикатов с доставкой и самовывозом в Грозном.",
+
+  // бренд/логотип/картинка
+  logo: "https://example.com/logo.png",
+  image: [
+    "https://example.com/og-image.jpg",
+    "https://example.com/storefront.jpg"
+  ],
+
+  telephone: "+7-989-919-48-71",
+  email: "info@example.com",
+
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "проспект Исаева, 3",
+    addressLocality: "Грозный",
+    addressRegion: "Чеченская Республика",
+    postalCode: "364000",
+    addressCountry: "RU"
+  },
+
+  // Координаты точки самовывоза (замени на реальные)
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 43.317000,
+    longitude: 45.698000
+  },
+
+  // Ссылка на карту (можно Яндекс/Google)
+  hasMap: "https://yandex.ru/maps/?text=ELBERD%20%D0%93%D1%80%D0%BE%D0%B7%D0%BD%D1%8B%D0%B9",
+
+  // Режим работы лучше так, чем openingHours строкой
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"
+      ],
+      opens: "09:00",
+      closes: "20:00"
+    }
+  ],
+
+  // География доставки
+  areaServed: [
+    { "@type": "City", name: "Грозный" }
+  ],
+
+  // Доставка / самовывоз (как “service”)
+  makesOffer: [
+    {
+      "@type": "Offer",
+      name: "Доставка по городу",
+      availability: "https://schema.org/InStock",
+      areaServed: { "@type": "City", name: "Грозный" }
+    },
+    {
+      "@type": "Offer",
+      name: "Самовывоз из точки",
+      availability: "https://schema.org/InStock",
+      areaServed: { "@type": "City", name: "Грозный" }
+    }
+  ],
+
+  sameAs: [
+    "https://www.instagram.com/el.berd_",
+    "https://wa.me/79899194871"
+  ]
 };
 
 export default function RootLayout({
@@ -30,6 +112,12 @@ export default function RootLayout({
       <body className="antialiased">
         <StoreHydration />
         {children}
+      <Script
+          id="ld-json-restaurant"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <GlobalProductModal />
       </body>
     </html>

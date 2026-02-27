@@ -66,6 +66,16 @@ const config: Config = {
 			sm: {'min': '768px', 'max': '1023px'},
 			lg: {'min': '1024px'},
       },
+	    keyframes: {
+			pop: {
+				"0%": { transform: "scale(0.6)", opacity: "0" },
+				"60%": { transform: "scale(1.15)", opacity: "1" },
+				"100%": { transform: "scale(1)" },
+			},
+		},
+		animation: {
+			pop: "pop 0.25s ease-out",
+		},
     },
   },
   plugins: [

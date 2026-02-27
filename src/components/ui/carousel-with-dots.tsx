@@ -16,6 +16,7 @@ export function CarouselWithDots({
   alt,
   className,
   imageClassName,
+  
 }: CarouselWithDotsProps) {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
@@ -46,7 +47,7 @@ export function CarouselWithDots({
           alt={alt}
           fill
           className={cn("object-cover", imageClassName)}
-          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          sizes="(max-width: 500px)"
         />
       </div>
     )
@@ -64,7 +65,7 @@ export function CarouselWithDots({
                   alt={`${alt} - фото ${index + 1}`}
                   fill
                   className={cn("object-cover", imageClassName)}
-                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  sizes="(max-width: 500px)"
                 />
               </div>
             </CarouselItem>

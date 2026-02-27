@@ -41,7 +41,7 @@ export function CartItemCard({
         </div>
 
         <div className="flex flex-col flex-1 min-w-0">
-          <div className="flex justify-between items-start">
+          <div className="flex justify-between items-start font-sans font-semibold">
             <h3 className={cn(
               "font-medium line-clamp-2",
               "s:text-xs",
@@ -63,11 +63,11 @@ export function CartItemCard({
             </button>
           </div>
 
-          <p className="mt-0.5 text-gray-500 text-xs">{item.weight}г</p>
+          <p className="mt-0.5 font-sans text-gray-500 text-xs">{item.weight}</p>
 
           <div className="flex justify-between items-center mt-auto">
             <span className={cn(
-              "font-bold text-berd-primary",
+              "font-sans font-bold",
               "s:text-[12px]",
               "xs:text-[12px]",
               "sm:text-[13px]"

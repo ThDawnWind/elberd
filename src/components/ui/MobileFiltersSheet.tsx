@@ -29,16 +29,17 @@ export function MobileFiltersSheet({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           size="sm"
-          className="lg:hidden flex xs:flex items-center gap-2"
+          className="lg:hidden flex items-center gap-2 font-sans font-semibold"
         >
-          <Filter className="w-4 h-4" />
+          <Filter aria-hidden="true" className="w-4 h-4" />
           <span>Фильтры</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="bottom" className="w-[65vw] sm:max-w-md" >
+
+      <SheetContent side="bottom" className="w-[65vw] sm:max-w-md font-mono font-normal">
         <SheetHeader className="text-left">
           <SheetTitle>Фильтры</SheetTitle>
           <SheetDescription>
@@ -49,34 +50,48 @@ export function MobileFiltersSheet({
         <div className="space-y-6 mb-11 py-6 max-h-[calc(100vh-200px)] overflow-y-auto">
           <div className="space-y-3">
             <h3 className="font-medium text-sm">Категории</h3>
+
             <div className="space-y-2">
-              {CATEGORIES.map(category => {
+              <button
+                type="button"
+                onClick={() => setSelectedCategory(0)}
+                className={`
+                  flex items-center gap-3 w-full p-3 rounded-lg text-left transition-colors
+                  ${
+                    selectedCategory === 0
+                      ? "bg-berd-primary/10 text-berd-primary border border-berd-primary/20"
+                      : "hover:bg-gray-100 text-gray-700 border border-transparent"
+                  }
+                `}
+              >
+                <span className="flex-1">Все категории</span>
+                {selectedCategory === 0 && (
+                  <div className="bg-berd-primary rounded-full w-2 h-2" />
+                )}
+              </button>
+
+              {CATEGORIES.map((category) => {
                 const Icon = category.icon;
-                const isAllCategories = category.name === "Все категории";
-                const isSelected = isAllCategories
-                  ? selectedCategory === 0
-                  : selectedCategory === category.id;
+                const isSelected = selectedCategory === category.id;
 
                 return (
                   <button
+                    type="button"
                     key={category.id}
-                    onClick={() => {
-                      if (isAllCategories) {
-                        setSelectedCategory(0);
-                      } else {
-                        setSelectedCategory(category.id);
-                      }
-                    }}
+                    onClick={() => setSelectedCategory(category.id)}
                     className={`
-                      flex items-center gap-3 w-full p-3 rounded-lg text-left
-                      transition-colors
-                      ${isSelected
-                        ? 'bg-berd-primary/10 text-berd-primary border border-berd-primary/20'
-                        : 'hover:bg-gray-100 text-gray-700 border border-transparent'
+                      flex items-center gap-1 font-sans font-medium w-full p-1 rounded-lg text-left transition-colors
+                      ${
+                        isSelected
+                          ? "bg-berd-primary/10 text-berd-primary border border-berd-primary/20"
+                          : "hover:bg-gray-100 text-gray-700 border border-transparent"
                       }
                     `}
                   >
-                    <Icon className={`w-4 h-4 ${isSelected ? 'text-berd-primary' : 'text-gray-500'}`} />
+                    <Icon
+                      aria-hidden="true"
+                      className={`w-4 h-4 ${isSelected ? "text-berd-primary" : "text-gray-500"}`}
+                    />
                     <span className="flex-1">{category.name}</span>
                     {isSelected && (
                       <div className="bg-berd-primary rounded-full w-2 h-2" />
@@ -88,9 +103,9 @@ export function MobileFiltersSheet({
           </div>
 
           <div className="space-y-3">
-            <h3 className="font-medium text-sm">Дополнительно</h3>
+            <h3 className="font-sans font-medium text-sm">Дополнительно</h3>
             <div className="space-y-2">
-              {filters.map(filter => (
+              {filters.map((filter) => (
                 <div key={filter.id} className="flex items-center space-x-3">
                   <input
                     type="checkbox"
@@ -110,15 +125,16 @@ export function MobileFiltersSheet({
             </div>
           </div>
 
-          <div className="space-y-4">
+    
+          <div className="space-y-4 font-sans font-light">
             <div className="flex justify-between items-center">
-              <h3 className="font-medium text-sm">Цена, ₴</h3>
+              <h3 className="font-medium text-sm">Цена, ₽</h3>
               <span className="text-muted-foreground text-sm">
-                {priceRange[0]} - {priceRange[1]}
+                {priceRange[0]} – {priceRange[1]} ₽
               </span>
             </div>
+
             <Slider
-              defaultValue={priceRange}
               min={50}
               max={2600}
               step={50}
@@ -127,6 +143,7 @@ export function MobileFiltersSheet({
               className="my-4"
               aria-label="Диапазон цен"
             />
+
             <div className="flex justify-between items-center text-muted-foreground text-xs">
               <span>50 ₽</span>
               <span>2600 ₽</span>
@@ -134,12 +151,8 @@ export function MobileFiltersSheet({
           </div>
         </div>
 
-        <SheetFooter className="flex-row gap-3">
-          <Button
-            variant="outline"
-            onClick={resetFilters}
-            className="flex-1"
-          >
+        <SheetFooter className="flex-row gap-3 font-mono font-semibold">
+          <Button variant="outline" onClick={resetFilters} className="flex-1">
             Сбросить
           </Button>
           <SheetClose asChild>

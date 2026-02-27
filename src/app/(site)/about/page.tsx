@@ -10,21 +10,23 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "О нас | EL.BERD - Доставка продуктов в Грозном",
-  description: "Производство и продажа продуктов питания с доставкой в Грозном",
+export const metadata: Metadata = {
+  title: "О нас | EL’BERD — доставка продуктов в Грозном",
+  description: "EL’BERD — семейное производство и продажа продуктов питания с доставкой в Грозном. Самовывоз и доставка ежедневно.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
   return (
-    <div className="bg-gradient-to-b from-white to-gray-50 min-w-screen">
+    <div className="bg-gradient-to-b from-white to-gray-50 min-h-screen">
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-berd-primary/10 to-amber-100/30" />
         
         <div className="relative mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16 max-w-7xl">
           <div className="text-center">
-            <h1 className="mb-3 sm:mb-4 font-sans font-bold text-berd-primaryq text-2xl sm:text-3xl lg:text-4xl">
+            <h1 className="mb-3 sm:mb-4 font-sans font-bold text-berd-primary text-2xl sm:text-3xl lg:text-4xl">
               <span className="text-berd-primary">EL&apos;BERD</span>
             </h1>
             <p className="mx-auto max-w-3xl font-sans text-gray-600 text-base sm:text-lg lg:text-xl">
@@ -114,7 +116,7 @@ export default function AboutPage() {
                   <div>
                     <div className="font-sans text-gray-500 text-xs">Телефон</div>
                     <a 
-                      href="tel:+79380031333" 
+                      href="tel:+79899194871" 
                       className="font-sans font-bold text-gray-900 hover:text-berd-primary text-base sm:text-lg transition-colors"
                     >
                       +7 (989) 919-48-71
@@ -181,9 +183,9 @@ export default function AboutPage() {
 
         <div className="mt-12 sm:mt-14 text-center">
           <div className="bg-gradient-to-r from-berd-primary/10 to-amber-50 p-4 sm:p-6 lg:p-8 border border-berd-primary/20 rounded-xl sm:rounded-2xl">
-            <h3 className="mb-2 sm:mb-3 font-sans font-bold text-gray-900 text-lg sm:text-xl lg:text-2xl">
+            <h2 className="mb-2 sm:mb-3 font-sans font-bold text-gray-900 text-lg sm:text-xl lg:text-2xl">
               Готовы сделать заказ?
-            </h3>
+            </h2>
             <p className="mx-auto mb-4 sm:mb-6 max-w-2xl font-sans text-gray-600 text-sm sm:text-base">
               Присоединяйтесь к тысячам довольных клиентов, которые уже оценили
               качество наших продуктов и скорость доставки
@@ -224,14 +226,14 @@ export default function AboutPage() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 sm:gap-2"
               >
-                <Instagram className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
+                <Instagram aria-hidden='true' className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
                 <span className="font-medium text-xs sm:text-sm">Instagram</span>
               </a>
             </Button>
             
             <Button asChild variant="outline" className="hover:bg-green-50 border-gray-200 hover:border-green-200">
               <a
-                href="https://wa.me/79380031333"
+                href="https://wa.me/79899194871"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 sm:gap-2"

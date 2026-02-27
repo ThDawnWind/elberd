@@ -2,36 +2,44 @@
 
 import Link from "next/link";
 import { ChevronDown, Home, Menu} from "lucide-react";
-import { useState } from "react";
 import { CategoryDropdown } from "@/components/ui/category-dropdown";
 import { mobileNavItems } from "@/lib/constants";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const SubHeader = () => {
-  const [activeLink, setActiveLink] = useState("/");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const pathname = usePathname();
+  const router = useRouter(); 
+  const searchParams =  useSearchParams();
+  const isCatalog = pathname.startsWith("/catalog");
+  const selectedCategory = searchParams.get("category") || "all";
 
   return (
     <>
-      <nav className="xs:hidden bg-white border-b w-full">
+      <nav aria-label="Подменю" className="xs:hidden bg-white border-b w-full">
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-6 lg:gap-8 h-12">
             <div className="flex items-center gap-6 lg:gap-8">
               <div className="relative">
                 <CategoryDropdown 
                   selectedCategory={selectedCategory}
-                  setSelectedCategory={setSelectedCategory}
+                  setSelectedCategory={(next) => {
+                    const url = next === "all" ? "/catalog" : `/catalog?category=${next}`;
+                    router.push(url);
+                  }}
                 trigger={
                     <Link 
                       href="/catalog"
-                      onClick={() => setActiveLink("/catalog")}
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                        activeLink === "/catalog" 
+                        isCatalog 
                           ? "bg-berd-primary text-black" 
                           : "hover:bg-berd-primary/10 text-gray-800"
                       }`}
+                      aria-label="Открыть меню каталога"
+                      title="Каталог"
+                      aria-current={isCatalog ? "page" : undefined}
                     >
                       <Menu className="w-4 h-4" />
-                      <span className="font-medium text-sm">
+                      <span className="font-sans font-normal text-sm">
                         Меню
                       </span>
                       <ChevronDown className="w-4 h-4" />
@@ -41,18 +49,19 @@ export const SubHeader = () => {
               </div>
               <Link
                 href="/"
-                onClick={() => setActiveLink("/")}
                 className={`relative group flex items-center gap-2 py-1 font-medium text-sm transition-colors ${
-                  activeLink === "/"
+                  pathname === "/"
                     ? "text-berd-primary"
                     : "text-gray-700 hover:text-berd-primary"
                 }`}
+                aria-label="Перейти на главную страницу"
+                aria-current={pathname === "/" ? "page" : undefined}
               >
                 <Home className="w-4 h-4" />
-                <span>Главная</span>
+                <span className="font-sans font-normal text-sm">Главная</span>
                 <span 
                   className={`bottom-0 left-0 absolute bg-berd-primary h-0.5 transition-all duration-300 ${
-                    activeLink === "/"
+                     pathname === "/"
                       ? "w-full"
                       : "w-0 group-hover:w-full"
                   }`}
@@ -63,33 +72,34 @@ export const SubHeader = () => {
             <div className="flex items-center gap-6 lg:gap-8 ml-auto">
               <Link
                 href="/about"
-                onClick={() => setActiveLink("/about")}
                 className={`group relative py-1 font-medium text-sm transition-colors ${
-                  activeLink === "/about"
+                  pathname === "/about"
                     ? "text-berd-primary"
                     : "text-gray-700 hover:text-berd-primary"
                 }`}
+                aria-label="Перейти к разделу 'О нас'"
+                aria-current={pathname === "/about" ? "page" : undefined}
               >
-                <span>О нас</span>
+                <span className="font-sans font-normal text-sm">О нас</span>
                 <span className={`absolute bottom-0 left-0 bg-berd-primary h-0.5 transition-all duration-300 ${
-                    activeLink === "/about" ? "w-full" : "w-0 group-hover:w-full"
+                    pathname === "/about" ? "w-full" : "w-0 group-hover:w-full"
                   }`}
                 />
               </Link>
-
               <Link
                 href="/where-to-buy"
-                onClick={() => setActiveLink("/where-to-buy")}
                 className={`group relative py-1 font-medium text-sm transition-colors ${
-                  activeLink === "/stores"
+                  pathname === "/where-to-buy"
                     ? "text-berd-primary"
                     : "text-gray-700 hover:text-berd-primary"
                 }`}
+                aria-label="Перейти к разделу 'Магазины'"
+                aria-current={pathname === "/where-to-buy" ? "page" : undefined}
               >
-                <span>Магазины</span> 
+                <span className="font-sans font-normal text-sm">Магазины</span> 
                 <span 
                   className={`absolute bottom-0 left-0  bg-berd-primary h-0.5 transition-all duration-300 ${
-                    activeLink === "/where-to-buy" ? "w-full" : "w-0 group-hover:w-full"
+                    pathname === "/where-to-buy" ? "w-full" : "w-0 group-hover:w-full"
                   }`}
                 />
               </Link>
@@ -102,18 +112,19 @@ export const SubHeader = () => {
         <div className="flex justify-around items-center px-1 h-16">
           {mobileNavItems.map((item) => {
             const Icon = item.icon;
-            const isActive = activeLink === item.href;
+            const isActive = pathname === item.href;
             
             return (
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={() => setActiveLink(item.href)}
                 className={`flex flex-col justify-center items-center gap-1 px-2 py-1 rounded-xl min-w-[60px] transition-colors ${
                   isActive
                     ? "text-berd-primary"
                     : "text-gray-600 hover:text-berd-primary"
                 }`}
+                aria-label={`Перейти к разделу ${item.name}`}
+                aria-current={isActive ? "page" : undefined}
               >
                 <div className="relative">
                   <Icon className="w-5 h-5" />

@@ -70,7 +70,7 @@ export const AddToCartButton = ({
     grid: {
       container: "",
       button:
-        "flex justify-center items-center gap-2 xs:gap-1.5 bg-berd-primary hover:bg-black active:bg-berd-primary/80 transition duration-300 ease-in-out disabled:opacity-70 xs:py-1.5 py-2.5 xs:px-3 px-4 rounded-lg font-medium text-white transition-all duration-300 ease-in-out w-full shadow-sm hover:shadow xs:text-xs text-sm",
+        "flex justify-center font-sans items-center gap-2 xs:gap-1.5 bg-berd-primary hover:bg-black active:bg-berd-primary/80 transition duration-300 ease-in-out disabled:opacity-70 xs:py-1.5 py-2.5 xs:px-3 px-4 rounded-lg font-medium text-white transition-all duration-300 ease-in-out w-full shadow-sm hover:shadow xs:text-xs text-sm",
       quantityContainer: "bg-berd-primary/10 rounded-lg p-1 xs:p-0.5",
       quantityButton:
         "w-7 h-7 xs:w-6 xs:h-6 rounded-md bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 shadow-sm",
@@ -82,7 +82,7 @@ export const AddToCartButton = ({
     list: {
       container: "",
       button:
-        "flex justify-center items-center gap-2 bg-berd-primary text-white transition duration-300 ease-in-out hover:bg-black active:bg-berd-primary/80 disabled:opacity-70 py-3 px-6 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow",
+        "flex justify-center items-center font-sans gap-2 bg-berd-primary text-white transition duration-300 ease-in-out hover:bg-black active:bg-berd-primary/80 disabled:opacity-70 py-3 px-6 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow",
       quantityContainer: "bg-berd-primary/10 rounded-lg p-2",
       quantityButton:
         "w-7 h-7rounded-md bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 shadow-sm",
@@ -94,7 +94,7 @@ export const AddToCartButton = ({
     compact: {
       container: "",
       button:
-        "flex items-center justify-center gap-1 xs:gap-1 bg-gray-100 hover:bg-black disabled:opacity-70 xs:py-1 py-1.5 xs:px-2 px-3 rounded-md xs:text-xs text-sm font-medium text-gray-700 hover:text-white transition-all duration-200 active:scale-95",
+        "flex items-center justify-center font-sans gap-1 xs:gap-1 bg-gray-100 hover:bg-black disabled:opacity-70 xs:py-1 py-1.5 xs:px-2 px-3 rounded-md xs:text-xs text-sm font-medium text-gray-700 hover:text-white transition-all duration-200 active:scale-95",
       quantityContainer: "bg-berd-primary/10 rounded-md p-1 xs:p-0.5",
       quantityButton:
         "w-7 h-7 xs:w-5 xs:h-5 rounded bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100",

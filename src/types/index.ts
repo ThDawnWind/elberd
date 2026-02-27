@@ -48,24 +48,30 @@ export interface DesktopFiltersSidebarProps {
   setPriceRange: (range: [number, number]) => void;
   selectedFilters: string[];
   toggleFilter: (id: string) => void;
-  selectedCategory: number | null;
-  setSelectedCategory: (id: number | null) => void;
+  selectedCategory: number;
+  setSelectedCategory: (id: number) => void;
   resetFilters: () => void;
 }
+
+export type FilterItem = {
+  id: string;
+  label: string;
+  condition: (product: Product) => boolean;
+};
 
 export interface MobileFiltersSheetProps {
   priceRange: [number, number];
   setPriceRange: (range: [number, number]) => void;
+
   selectedFilters: string[];
   toggleFilter: (id: string) => void;
-  selectedCategory: number | null;
-  setSelectedCategory: (id: number | null) => void;
+
+  selectedCategory: number;
+  setSelectedCategory: (id: number) => void;
+
   resetFilters: () => void;
-  filters: Array<{
-    id: string;
-    label: string;
-    condition: (product: Product) => boolean;
-  }>;
+
+  filters: FilterItem[];
 }
 
 export interface AddToCartButtonProps {
@@ -106,7 +112,7 @@ export type CatalogState = {
 
   viewMode: ViewMode
   priceRange: [ number, number ]
-  selectedCategoryId: number | null
+  selectedCategoryId: number
   selectedTags: string[]
   sort: SortKey
 
@@ -116,10 +122,11 @@ export type CatalogState = {
 
   setViewMode: (viewMode: ViewMode) => void
   setPriceRange: (priceRange: [ number, number ]) => void
-  setSelectedCategoryId: (categoryId: number | null) => void
+  setSelectedCategoryId: (categoryId: number) => void
   toggleTag: (tag: string) => void
   setSort: (sort: SortKey) => void
   resetFilters: () => void
+  setSelectedTags: (tags: string[]) => void
 }
 
 export type CartState = {

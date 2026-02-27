@@ -6,7 +6,6 @@ import { Heart, Phone, ShoppingCart } from 'lucide-react';
 import { SearchBar } from "../components/ui/search-bar";
 import { useFavoritesStore } from "@/stores/favorites.store";
 import { useCartStore } from "@/stores/cart.store";
-import { AnimatePresence, motion } from "motion/react";
 
 export const Header = () => {
   const favoritesCount = useFavoritesStore((s) => s.totalItems());
@@ -17,23 +16,24 @@ export const Header = () => {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-18 lg:h-20">
           <div className="flex flex-shrink-0 items-center">
-            <Link href="/" className="flex items-center gap-1 sm:gap-2 lg:gap-3">
+            <Link href="/" aria-label="На главную — Эльберд" title="Эльберд — доставка еды" className="flex items-center gap-1 sm:gap-2 lg:gap-3">
               <div className="relative max-w-[50px] sm:max-w-[55px] lg:max-w-[58px] max-h-[50px] sm:max-h-[55px] lg:max-h-[58px]">
                 <Image
                   src="/logo.png"
-                  alt="Эльберд"
+                  alt="Эльберд - доставка еды"
                   width={695}
                   height={792}
                   priority
                   className="w-full h-full object-contain scale-110 sm:scale-125 lg:scale-150"
+                  
                 />
               </div>
 
               <div className="flex flex-col">
-                <span className="font-bold text-berd-primary text-base sm:text-lg lg:text-2xl">
+                <span className="font-mono font-bold text-berd-primary text-base sm:text-lg lg:text-2xl">
                   Эльберд
                 </span>
-                <p className="text-gray-500 text-xs sm:text-sm">
+                <p className="font-sans font-light text-gray-500 text-xs sm:text-sm">
                   Доставка еды
                 </p>
               </div>
@@ -44,29 +44,24 @@ export const Header = () => {
             <SearchBar />
           </div>
 
-          <div className="flex flex-shrink-0 items-center gap-2 xs:gap-6 sm:gap-3 lg:gap-6"> 
+          <nav aria-label="Навигация: избранное, корзина, телефон" className="flex flex-shrink-0 items-center gap-2 xs:gap-6 sm:gap-3 lg:gap-6"> 
             <Link 
               href="/favorites" 
               className="relative flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 hover:text-red-500 transition-colors"
+              aria-label={`Избранное: ${favoritesCount} товаров`}
             >
               <div className="relative">
                 <Heart className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-gray-700" />
-             <AnimatePresence initial={false}>
-                {favoritesCount > 0 && (
-                  <motion.span
+              {favoritesCount > 0 && (
+                  <span
                     key={favoritesCount}
-                    initial={{ opacity: 0, scale: 0.6, y: -4 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.6, y: -4 }}
-                    transition={{ duration: 0.18 }}
-                    className="-top-1.5 sm:-top-2 -right-1.5 sm:-right-2 absolute flex justify-center items-center bg-red-500 rounded-full w-3.5 sm:w-4 lg:w-5 h-3.5 sm:h-4 lg:h-5 font-semibold text-[9px] text-white sm:text-[10px]"
+                    className="-top-1.5 sm:-top-2 -right-1.5 sm:-right-2 absolute flex justify-center items-center bg-red-500 rounded-full w-3.5 sm:w-4 lg:w-5 h-3.5 sm:h-4 lg:h-5 font-semibold text-[9px] text-white sm:text-[10px] animate-pop"
                   >
                     {favoritesCount}
-                  </motion.span>
+                  </span>
                 )}
-              </AnimatePresence>
               </div>
-              <span className="s:hidden xs:hidden font-medium text-gray-700 hover:text-berd-primary text-sm transition-duration-300 ease-in-out">
+              <span className="s:hidden xs:hidden font-mono font-medium text-gray-700 hover:text-berd-primary text-sm duration-300 ease-in-out">
                 Избранное
               </span>
             </Link>
@@ -74,25 +69,20 @@ export const Header = () => {
             <Link 
               href="/cart" 
               className="relative flex items-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-colors"
+              aria-label={`Корзина: ${cartCount} товаров`}
             >
               <div className="relative">
                 <ShoppingCart className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-gray-700" />
-                <AnimatePresence initial={false}>
                   {cartCount > 0 && (
-                    <motion.span
+                    <span
                       key={cartCount}
-                      initial={{ opacity: 0, scale: 0.6, y: -4 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.6, y: -4 }}
-                      transition={{ duration: 0.18 }}
-                      className="-top-1.5 sm:-top-2 -right-1.5 sm:-right-2 absolute flex justify-center items-center bg-berd-primary rounded-full w-3.5 sm:w-4 lg:w-5 h-3.5 sm:h-4 lg:h-5 font-semibold text-[9px] text-black sm:text-[10px]"
+                      className="-top-1.5 sm:-top-2 -right-1.5 sm:-right-2 absolute flex justify-center items-center bg-berd-primary rounded-full w-3.5 sm:w-4 lg:w-5 h-3.5 sm:h-4 lg:h-5 font-semibold text-[9px] text-black sm:text-[10px] animate-pop"
                     >
                       {cartCount}
-                    </motion.span>
+                    </span>
                   )}
-                </AnimatePresence>
               </div>
-              <span className="s:hidden xs:hidden font-medium text-gray-700 hover:text-berd-primary text-sm transition-duration-300 ease-in-out">
+              <span className="s:hidden xs:hidden font-mono font-medium text-gray-700 hover:text-berd-primary text-sm duration-300 ease-in-out">
                 Корзина
               </span>
             </Link>
@@ -106,7 +96,7 @@ export const Header = () => {
                 <Phone className="w-4 sm:w-5 h-4 sm:h-5 text-gray-700" />
               </a>
               
-              <div className="hidden lg:flex items-center gap-3">
+              <div className="hidden lg:flex items-center gap-3 font-mono">
                 <a 
                   href="tel:+79899194871" 
                   className="flex items-center gap-2 bg-berd-primary hover:bg-black px-4 py-2 rounded-lg font-semibold text-white text-sm transition duration-300 ease-in-out"
@@ -117,16 +107,16 @@ export const Header = () => {
                 </a>
                 
                 <div className="flex flex-col">
-                  <span className="font-bold text-gray-900 text-sm">
+                  <span className="font-sans font-bold text-gray-900 text-sm">
                     +7 (989) 919-48-71
                   </span>
-                  <p className="text-gray-500 text-xs">
+                  <p className="font-sans font-light text-gray-500 text-xs">
                     время работы: 9:00-20:00
                   </p>
                 </div>
               </div>
             </div>
-          </div>
+          </nav>
         </div>
       </div>
     </header>

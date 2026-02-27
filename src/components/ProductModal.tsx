@@ -72,11 +72,11 @@ export function ProductModal({ product, onClose }: ModalProps) {
         </div>
 
         <div className="flex flex-col p-2 w-1/2 h-full">
-          <h2 className="mb-3 xs:mb-0 min-h-[3rem] font-bold text-gray-900 xs:text-sm sm:text-base text-xl text-end line-clamp-2 leading-tight tracking-tight">
+          <h2 className="mb-3 xs:mb-0 min-h-[3rem] font-mono font-bold text-gray-900 xs:text-sm sm:text-base text-xl text-end line-clamp-2 leading-tight tracking-tight">
             {product.name}
           </h2>
 
-          <div className="flex justify-between items-center gap-4 sm:mb-1 lg:mb-3 xs:text-xs sm:text-xs text-sm">
+          <div className="flex justify-between items-center gap-4 sm:mb-1 lg:mb-3 font-sans font-normal xs:text-xs sm:text-xs text-sm">
             <span className="bg-gray-50 px-3 xs:px-2 py-1 border border-gray-200 rounded-full font-mono text-gray-700 xs:text-[10px] text-xs">
               <span className="text-green-500">Категория:</span>{" "}
               <span className="font-semibold text-gray-900">{product.category}</span>
@@ -87,11 +87,10 @@ export function ProductModal({ product, onClose }: ModalProps) {
               <span className="font-semibold text-gray-900">{product.weight}</span>
             </span>
           </div>
-
           <div className="mb-2 border-t h-3" />
 
           {product.content && (
-            <div className="xs:mb-3 lg:mb-4 xs:text-[9px] sm:text-[10px] text-sm">
+            <div className="xs:mb-3 lg:mb-4 font-sans font-light xs:text-[9px] sm:text-[10px] text-sm">
               <h3 className="mb-2 xs:mb-1 sm:mb-1 lg:mb-2 font-semibold text-black uppercase tracking-wide">
                 Состав:
               </h3>
@@ -101,7 +100,7 @@ export function ProductModal({ product, onClose }: ModalProps) {
             </div>
           )}
 
-          <div className="mb-5 xs:mb-1 sm:mb-0 lg:mb-3 xs:text-[10px] sm:text-[10px] text-sm">
+          <div className="mb-5 xs:mb-1 sm:mb-0 lg:mb-3 font-sans font-light xs:text-[10px] sm:text-[10px] text-sm">
             <h3 className="mb-1 font-semibold text-black uppercase tracking-wide">
               Срок хранения:
             </h3>
@@ -115,7 +114,7 @@ export function ProductModal({ product, onClose }: ModalProps) {
               <span className="text-muted-foreground xs:text-[10px] sm:text-[10px] text-xs">
                 Цена
               </span>
-              <span className="font-bold text-gray-900 sm:text-base xs:text-xl text-2xl lg:text-3xl">
+              <span className="font-mono font-bold text-gray-900 sm:text-base xs:text-xl text-2xl lg:text-3xl">
                 {product.price} ₽
               </span>
             </div>
