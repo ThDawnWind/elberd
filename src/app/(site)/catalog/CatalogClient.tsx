@@ -125,7 +125,7 @@ export default function CatalogClient({ initialCategorySlug }: { initialCategory
     <motion.div className="bg-background min-h-screen font-sans" variants={pageFade} initial="hidden" animate="show">
       <CatalogHeader title="Каталог" />
 
-      <div className="mx-4 sm:mx-[60px] px-4 py-6">
+      <div className="mx-4 sm:mx-[60px] px-4 xs:px-0 py-6 xs:py-1">
         <div className="flex lg:flex-row flex-col gap-6">
           <aside className="hidden lg:block lg:w-1/4">
             <FiltersSidebar
@@ -174,7 +174,6 @@ export default function CatalogClient({ initialCategorySlug }: { initialCategory
               resetFilters={resetFilters}
               filters={filters}
             />
-
 <LayoutGroup id="catalog">
 
        {filteredProducts.length === 0 ? (

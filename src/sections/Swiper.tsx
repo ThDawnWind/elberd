@@ -76,7 +76,7 @@ export const WallaperSwiper = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="mb-2 w-full"
+      className="mb-[64px] xs:mb-[32px] w-full"
       aria-label="Промо-блок доставки еды EL’BERD"
     >
       <div className="group relative w-full h-[400px] sm:h-[500px] lg:h-[700px] overflow-hidden">

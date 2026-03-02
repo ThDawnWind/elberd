@@ -16,7 +16,7 @@ export const CategoriesSwiper = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="relative lg:px-4"
+      className="relative mb-[64px] xs:mb-[32px] lg:px-4"
     >
             <Swiper
         modules={[Navigation]}

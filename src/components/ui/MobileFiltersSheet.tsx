@@ -112,7 +112,7 @@ export function MobileFiltersSheet({
                     id={`mobile-${filter.id}`}
                     checked={selectedFilters.includes(filter.id)}
                     onChange={() => toggleFilter(filter.id)}
-                    className="border-gray-300 rounded focus:ring-berd-primary w-5 h-5 text-berd-primary"
+                    className="border-gray-300 rounded w-5 h-5 text-berd-primary accent-berd-primary"
                   />
                   <label
                     htmlFor={`mobile-${filter.id}`}

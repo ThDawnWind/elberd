@@ -61,8 +61,7 @@ const config: Config = {
 			mono: ['var(--font-geist-mono)', 'monospace'],
         },
 		 screens: {
-			s:{'min': '320px', 'max': '490px'},
-			xs: {'min': '491px', 'max': '767px'},
+			xs: {'min': '320px', 'max': '767px'},
 			sm: {'min': '768px', 'max': '1023px'},
 			lg: {'min': '1024px'},
       },

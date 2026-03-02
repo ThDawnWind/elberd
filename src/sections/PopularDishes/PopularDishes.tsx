@@ -5,7 +5,7 @@ import { Reveal } from "./Reveal";
 export const PopularDishes = () => {
   return (
     <section
-      className="mt-8 px-4 sm:px-6 lg:px-8"
+      className="mb-[64px] xs:mb-[32px] px-4 sm:px-6 lg:px-8"
       aria-labelledby="popular-dishes-title"
     >
       <header className="mb-8 sm:mb-10 lg:mb-12">
@@ -15,12 +15,9 @@ export const PopularDishes = () => {
         >
           Популярные блюда
         </h2>
-        <p className="mt-2 font-mono text-gray-500 text-xs sm:text-sm lg:text-base">
-          Самые любимые блюда наших гостей — проверенный выбор для идеального ужина
-        </p>
       </header>
 
-      <ul className="gap-2 sm:gap-3 lg:gap-4 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+     <ul className="gap-[4px] grid grid-cols-[repeat(auto-fill,minmax(265px,1fr))]">
         {popularProducts.map((product) => (
           <li key={product.id}>
             <Reveal>

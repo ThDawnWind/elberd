@@ -26,7 +26,6 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  // Можно списком: Яндекс/Google это нормально переваривают
   "@type": ["LocalBusiness", "Store", "GroceryStore"],
 
   "@id": "https://example.com/#elberd",
@@ -34,7 +33,6 @@ const jsonLd = {
   url: "https://example.com",
   description: "Магазин готовых продуктов и полуфабрикатов с доставкой и самовывозом в Грозном.",
 
-  // бренд/логотип/картинка
   logo: "https://example.com/logo.png",
   image: [
     "https://example.com/og-image.jpg",
@@ -53,17 +51,14 @@ const jsonLd = {
     addressCountry: "RU"
   },
 
-  // Координаты точки самовывоза (замени на реальные)
   geo: {
     "@type": "GeoCoordinates",
     latitude: 43.317000,
     longitude: 45.698000
   },
 
-  // Ссылка на карту (можно Яндекс/Google)
   hasMap: "https://yandex.ru/maps/?text=ELBERD%20%D0%93%D1%80%D0%BE%D0%B7%D0%BD%D1%8B%D0%B9",
 
-  // Режим работы лучше так, чем openingHours строкой
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
@@ -75,12 +70,10 @@ const jsonLd = {
     }
   ],
 
-  // География доставки
   areaServed: [
     { "@type": "City", name: "Грозный" }
   ],
 
-  // Доставка / самовывоз (как “service”)
   makesOffer: [
     {
       "@type": "Offer",

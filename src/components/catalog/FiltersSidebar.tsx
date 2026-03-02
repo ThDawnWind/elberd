@@ -72,7 +72,7 @@ export default function FiltersSidebar({
                   id={`desktop-${filter.id}`}
                   checked={selectedFilters.includes(filter.id)}
                   onChange={() => toggleFilter(filter.id)}
-                  className="border-gray-300 rounded focus:ring-berd-primary w-4 h-4 text-berd-primary"
+                  className="border-gray-300 rounded w-4 h-4 accent-berd-primary"
                 />
                 <label htmlFor={`desktop-${filter.id}`} className="text-sm leading-none cursor-pointer">
                   {filter.label}
@@ -89,7 +89,6 @@ export default function FiltersSidebar({
               {priceRange[0]} – {priceRange[1]} ₽
             </span>
           </div>
-
           <Slider
             defaultValue={priceRange}
             min={50}

@@ -47,7 +47,7 @@ export function CarouselWithDots({
           alt={alt}
           fill
           className={cn("object-cover", imageClassName)}
-          sizes="(max-width: 500px)"
+          sizes="510px"
         />
       </div>
     )
@@ -59,13 +59,13 @@ export function CarouselWithDots({
         <CarouselContent>
           {images.map((img, index) => (
             <CarouselItem key={index}>
-              <div className="relative aspect-square">
+              <div className="relative w-full h-[220px] aspect-square">
                 <Image
                   src={img}
                   alt={`${alt} - фото ${index + 1}`}
                   fill
                   className={cn("object-cover", imageClassName)}
-                  sizes="(max-width: 500px)"
+                  sizes="510px"
                 />
               </div>
             </CarouselItem>

@@ -24,7 +24,7 @@ const advantages = [
 export const Advantages = () => {
   return (
     <section
-      className="bg-gradient-to-b from-white to-berd-primary/5 px-4 sm:px-6 lg:px-8 py-12 sm:py-14 lg:py-16 font-sans"
+      className="bg-gradient-to-b from-white to-berd-primary/5 mb-[64px] xs:mb-[32px] px-4 sm:px-6 lg:px-8 py-12 sm:py-14 lg:py-16 font-sans"
       aria-labelledby="advantages-title"
     >
       <div className="mx-auto max-w-7xl">

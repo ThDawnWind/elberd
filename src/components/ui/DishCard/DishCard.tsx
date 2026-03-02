@@ -65,22 +65,21 @@ export const DishCard: React.FC<DishCardProps> = ({
         itemType="https://schema.org/Product"
         onClick={() => openModal(product)}
         className={cn(
-          "group overflow-hidden transition-all duration-300",
+          "group p-[4px] overflow-hidden transition-all duration-300",
           "hover:shadow-lg hover:-translate-y-1 hover:shadow-berd-primary",
           "border-border/60",
-          "flex flex-col h-[455px]",
+          "flex flex-col h-[430px] w-[265px]",
           "cursor-pointer",
           className
         )}
       >
         <ProductMicrodata />
 
-        <div className="relative mb-1 aspect-square overflow-hidden">
+        <div className="relative rounded-t-[8px] overflow-hidden">
           <div className="w-full">
             <CarouselWithDots
               images={productImages}
               alt={imgAlt}
-              className="aspect-square"
               imageClassName="object-cover group-hover:scale-110 transition-transform duration-500"
             />
           </div>        
@@ -111,34 +110,35 @@ export const DishCard: React.FC<DishCardProps> = ({
           </Button>
         </div>
 
-        <CardHeader className="mb-6 p-2 h-[30px]">
-          <CardTitle className="font-mono font-semibold text-[14px]">
+        <CardHeader className="mt-[4px] p-[4px] h-[55px]">
+          <CardTitle className="mb-[3px] h-full font-mono font-semibold text-[15px]">
             {product.name}
           </CardTitle>
         </CardHeader>
-
-        <CardContent className="flex flex-col flex-1 px-2 sm:px-3 pb-3 sm:pb-4">
-          <CardDescription className="mb-3 h-[20px] font-sans font-normal text-xs line-clamp-2">
+       
+          <div className="bg-berd-primary shadow-md shadow-orange-200/40 mb-[3px] rounded-sm w-full h-[2px]" />
+        
+        <CardContent className="flex flex-col flex-1 p-[4px]">
+        <CardDescription className="mb-[10px] font-sans font-normal text-xs line-clamp-2">
             Срок годности: {product.shelfLife}
-          </CardDescription>
-
+        </CardDescription>
           {product.content && (
-            <div className="mb-1 h-[35px]">
-              <p className="flex items-start gap-1 sm:mb-0.5 font-sans text-xs sm:text-sm leading-tight">
+            <div className="mb-auto h-[48px]">
+              <p className="flex items-start gap-1 font-sans text-[13px] leading-tight">
                 <span className="whitespace-nowrap">Состав:</span>
-                <span className="flex-1 sm:text-xs break-words line-clamp-2">
+                <span className="flex-1 break-words line-clamp-2">
                   {product.content}
                 </span>
               </p>
             </div>
           )}
 
-          <div className="flex justify-between items-center gap-1 mt-auto pt-2 border-t">
+          <div className="flex justify-between items-center gap-1 pt-2 border-t">
             <div className="flex flex-col font-sans">
-              <span className="text-[10px] text-muted-foreground sm:text-xs leading-tight">
+              <span className="text-[14px] text-muted-foreground sm:text-xs leading-tight">
                 Вес: {product.weight}
               </span>
-              <span className="font-bold text-xs sm:text-sm lg:text-base leading-tight">
+              <span className="font-bold text-[19px]">
                 {price}₽
               </span>
             </div>
@@ -205,10 +205,10 @@ export const DishCard: React.FC<DishCardProps> = ({
 
         <div className="flex flex-col flex-grow px-3">
           <div className="flex flex-row justify-between">
-            <CardTitle className="mb-5 font-semibold text-sm xs:text-sm lg:text-lg line-clamp-2">
+            <CardTitle className="mb-5 font-semibold text-[16px] line-clamp-2">
               {product.name}
             </CardTitle>
-            <span className="font-bold text-sm xs:text-sm sm:text-base lg:text-lg whitespace-nowrap">
+            <span className="font-bold text-[19px] whitespace-nowrap">
               {price} ₽
             </span>
           </div>
@@ -231,7 +231,7 @@ export const DishCard: React.FC<DishCardProps> = ({
           </div>
 
           <div className="flex justify-between items-center pt-3 border-t">
-            <span className="text-black xs:text-[10px] sm:text-xs text-base">
+            <span className="text-black xs:text-[14px] sm:text-xs text-base">
               Вес: {product.weight}
             </span>
             <AddToCartButton

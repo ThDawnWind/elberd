@@ -7,7 +7,7 @@ import { Reveal } from "./Reveal"
 export const RecommendedDishes = () => {
   return (
     <section
-      className="mt-8 mb-2 px-4 sm:px-6 lg:px-8"
+      className="mb-[64px] xs:mb-[32px] px-4 sm:px-6 lg:px-8"
       aria-labelledby="recommended-dishes-title"
     >
 
@@ -15,12 +15,9 @@ export const RecommendedDishes = () => {
         <h2 className="font-mono font-bold text-gray-900 text-xl sm:text-2xl lg:text-3xl">
           Рекомендуем попробовать
         </h2>
-        <p className="mt-2 font-mono text-gray-500 text-xs sm:text-sm lg:text-base">
-          Особенные блюда от нашего шеф-повара — лучший выбор для гурманов
-        </p>
       </header>
 
-      <div className="gap-2 sm:gap-3 lg:gap-4 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+     <ul className="gap-[4px] grid grid-cols-[repeat(auto-fill,minmax(265px,1fr))]">
         {recommendedProducts.map((product) => (
           <li key={product.id}>
             <Reveal>
@@ -32,7 +29,7 @@ export const RecommendedDishes = () => {
             </Reveal>
           </li>
         ))}
-      </div>
+      </ul>
     </section>
   )
 }

@@ -24,8 +24,7 @@ export const Header = () => {
                   width={695}
                   height={792}
                   priority
-                  className="w-full h-full object-contain scale-110 sm:scale-125 lg:scale-150"
-                  
+                  className="w-full h-full object-contain scale-110 sm:scale-125 lg:scale-150"          
                 />
               </div>
 
@@ -51,7 +50,7 @@ export const Header = () => {
               aria-label={`Избранное: ${favoritesCount} товаров`}
             >
               <div className="relative">
-                <Heart className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-gray-700" />
+                <Heart className="w-4 xs:w-6 sm:w-6 lg:w-6 h-4 xs:h-6 sm:h-6 lg:h-6 text-gray-700" />
               {favoritesCount > 0 && (
                   <span
                     key={favoritesCount}
@@ -72,7 +71,7 @@ export const Header = () => {
               aria-label={`Корзина: ${cartCount} товаров`}
             >
               <div className="relative">
-                <ShoppingCart className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-gray-700" />
+                <ShoppingCart className="w-4 xs:w-6 sm:w-6 lg:w-6 h-4 xs:h-6 sm:h-6 lg:h-6 text-gray-700" />
                   {cartCount > 0 && (
                     <span
                       key={cartCount}
@@ -93,7 +92,7 @@ export const Header = () => {
                 className="lg:hidden flex justify-center items-center hover:bg-gray-100 rounded-full w-9 sm:w-10 h-9 sm:h-10 transition-colors"
                 aria-label="Позвонить +7 (989) 919-48-71"
               >
-                <Phone className="w-4 sm:w-5 h-4 sm:h-5 text-gray-700" />
+                <Phone className="w-4 xs:w-6 sm:w-5 h-4 xs:h-6 sm:h-5 text-gray-700" />
               </a>
               
               <div className="hidden lg:flex items-center gap-3 font-mono">

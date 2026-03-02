@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown, Home, Menu} from "lucide-react";
+import { Home, Menu} from "lucide-react";
 import { CategoryDropdown } from "@/components/ui/category-dropdown";
 import { mobileNavItems } from "@/lib/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -42,7 +42,6 @@ export const SubHeader = () => {
                       <span className="font-sans font-normal text-sm">
                         Меню
                       </span>
-                      <ChevronDown className="w-4 h-4" />
                     </Link>
                   }
                 />

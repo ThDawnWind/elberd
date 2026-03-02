@@ -16,9 +16,10 @@ export default function CatalogPage({
   const category = typeof searchParams.category === "string" ? searchParams.category : undefined;
 
   return  <Suspense fallback={null}>
-            <CatalogClient initialCategorySlug={category} />
-          </Suspense>
-      
+            <div className="mx-auto px-4 max-w-[1440px]">
+              <CatalogClient initialCategorySlug={category} />
+            </div>
+          </Suspense>     
 }
 
   

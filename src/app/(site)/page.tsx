@@ -8,10 +8,13 @@ export default function Home() {
   return (
     <>
       <WallaperSwiper />
-      <CategoriesSwiper />
-      <PopularDishes />
-      <Advantages />
-      <RecommendedDishes />
+
+      <div className="mx-auto px-4 max-w-[1440px]">
+        <CategoriesSwiper />
+        <PopularDishes />
+        <Advantages />
+        <RecommendedDishes />
+      </div>
     </>
   );
 }

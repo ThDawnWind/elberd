@@ -15,17 +15,18 @@ export default function SiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col mx-auto w-full max-w-[1440px]">
+ <div className="flex flex-col w-full">
       <Header />
-      
+
       <div className="lg:hidden max-md:block mx-3 md:mx-6 mt-3 mb-2.5">
         <SearchBar />
       </div>
-      
-      <Suspense fallback={null}>
-        <SubHeader />
-      </Suspense>
-      
+
+      <div className="mx-auto px-4 w-full max-w-[1440px]">
+        <Suspense fallback={null}>
+          <SubHeader />
+        </Suspense>
+      </div>
 
       <main className="flex-1">
         {children}

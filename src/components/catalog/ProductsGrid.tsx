@@ -15,7 +15,7 @@ const item = {
 export default function ProductsGrid({ products }: { products: Product[] }) {
   return (
     <motion.ul
-      className="gap-2 xs:gap-3 sm:gap-4 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4"
+      className="gap-2 xs:gap-3 sm:gap-4 grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-4"
       variants={list}
       initial="hidden"
       animate="show"
