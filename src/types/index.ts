@@ -77,9 +77,9 @@ export interface MobileFiltersSheetProps {
 export interface AddToCartButtonProps {
   product: Product;
   price: number;
-  variant?: 'grid' | 'list' | 'compact';
+  variant?: 'grid' | 'list' | 'compact' | 'modal';
   className?: string;
-  size?: 'default' | 'sm' | 'lg';
+  size?: 'default' | 'sm' | 'lg' | 'xl';
   initialQuantity?: number;
   onQuantityChange?: (dishId: number, quantity: number) => void;
 }
@@ -88,6 +88,7 @@ export interface SizeStyle {
   button?: string;
   quantityButton?: string;
   iconSize?: string;
+  cartText?:string;
 };
 
 export interface DishCardProps {
@@ -102,6 +103,8 @@ export interface CarouselWithDotsProps {
   readonly alt: string
   readonly className?: string
   readonly imageClassName?: string
+  readonly heightClass: string
+  readonly sizes?: string
 }
 export type SortKey = "rating" | "price-asc" | "price-desc" | "new"
 export type ViewMode = "grid" | "list"
@@ -127,6 +130,7 @@ export type CatalogState = {
   setSort: (sort: SortKey) => void
   resetFilters: () => void
   setSelectedTags: (tags: string[]) => void
+  hasActiveFilters: () => boolean
 }
 
 export type CartState = {

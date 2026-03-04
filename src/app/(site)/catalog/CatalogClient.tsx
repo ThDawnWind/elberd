@@ -125,9 +125,9 @@ export default function CatalogClient({ initialCategorySlug }: { initialCategory
     <motion.div className="bg-background min-h-screen font-sans" variants={pageFade} initial="hidden" animate="show">
       <CatalogHeader title="Каталог" />
 
-      <div className="mx-4 sm:mx-[60px] px-4 xs:px-0 py-6 xs:py-1">
+      <div className="mx-1 sm:mx-[60px] px-4 xs:px-0 py-6 xs:py-1">
         <div className="flex lg:flex-row flex-col gap-6">
-          <aside className="hidden lg:block lg:w-1/4">
+          <aside className="hidden lg:block lg:w-1/5">
             <FiltersSidebar
               priceRange={priceRange}
               setPriceRange={setPriceRange}
@@ -139,7 +139,7 @@ export default function CatalogClient({ initialCategorySlug }: { initialCategory
             />
           </aside>
 
-          <div className="lg:w-3/4">
+          <div className="lg:w-2/2">
             <div className="flex sm:flex-row flex-col justify-between items-start sm:items-center gap-4 mb-6">
               <div>
                 <h2 className="font-sans font-semibold text-lg">{selectedCategoryName}</h2>

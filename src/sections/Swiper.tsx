@@ -111,26 +111,26 @@ export const WallaperSwiper = () => {
                   />
                 </div>
 
-                <div className="z-20 relative flex flex-col justify-end p-4 sm:p-8 lg:p-16 h-full">
+                <div className="z-20 relative flex flex-col justify-end sm:p-8 lg:p-16 px-3 py-8 h-full">
                   <div className="max-w-2xl">
-                    <div className="mb-2 sm:mb-4">
-                      <span className="inline-block bg-berd-primary px-3 py-1 rounded-full font-sans font-medium text-gray-900 text-xs sm:text-sm">
+                    <div className="mb-2 xs:mb-2 sm:mb-4 lg:mb-6">
+                      <span className="inline-block bg-berd-primary px-2 py-1 rounded-full font-sans font-medium text-[clamp(0.676rem,3vw,1.2rem)] text-gray-900">
                         {slide.subtitle}
                       </span>
                     </div>
 
-                    <h2 className="mb-2 sm:mb-6 font-mono font-medium text-white text-xl sm:text-3xl lg:text-5xl">
+                    <h2 className="mb-1 sm:mb-4 lg:mb-6 font-mono font-medium text-[clamp(0.876rem,3vw,1.5rem)] text-white">
                       {slide.title}
                     </h2>
 
-                    <p className="mb-4 sm:mb-8 max-w-xl font-mono font-light text-white/90 text-sm sm:text-base lg:text-xl">
+                    <p className="mb-1 sm:mb-8 lg:mb-9 max-w-xl font-mono font-light text-[clamp(0.676rem,3vw,1.3rem)] text-white/90">
                       {slide.description}
                     </p>
 
                     <Link
                       href={slide.buttonLink}
                       aria-label={slide.buttonAriaLabel}
-                      className="inline-flex items-center gap-2 bg-berd-primary shadow-lg hover:shadow-xl px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-lg font-semibold text-gray-900 hover:text-white text-sm sm:text-base transition-all duration-300"
+                      className="inline-flex items-center gap-2 bg-berd-primary shadow-lg hover:shadow-xl px-1 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-lg font-semibold text-[clamp(0.767rem,3vw,1.2rem)] text-gray-900 hover:text-white transition-all duration-300"
                     >
                       {slide.buttonText}
                       <ChevronRight className="w-3 sm:w-4 lg:w-5 h-3 sm:h-4 lg:h-5" />

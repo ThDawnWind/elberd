@@ -1,88 +1,90 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react'
-import { cn } from "@/lib/utils"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselApi,
-} from "@/components/ui/carousel"
-import Image from 'next/image'
-import { CarouselWithDotsProps } from '@/types'
+} from "@/components/ui/carousel";
+import { CarouselWithDotsProps } from "@/types";
+
 
 export function CarouselWithDots({
   images,
   alt,
   className,
   imageClassName,
-  
+  heightClass = "h-[220px]",
+  sizes = "510px",
 }: CarouselWithDotsProps) {
-  const [api, setApi] = useState<CarouselApi>()
-  const [current, setCurrent] = useState(0)
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    if (!api) {
-      return
-    }
+    if (!api) return;
 
-    setCurrent(api.selectedScrollSnap())
+    setCurrent(api.selectedScrollSnap());
 
     api.on("select", () => {
-      setCurrent(api.selectedScrollSnap())
-    })
-  }, [api])
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
 
   const handleDotClick = (index: number) => {
-    if (api) {
-      api.scrollTo(index)
-    }
-  }
+    api?.scrollTo(index);
+  };
 
-  if (images.length <= 1) {
+  const safeImages = images?.length ? images : ["/images/product.jpg"];
+
+  if (safeImages.length <= 1) {
     return (
-      <div className={cn("relative aspect-square", className)}>
+      <div className={cn("relative w-full h-full overflow-hidden", heightClass, className)}>
         <Image
-          src={images[0] || '/images/placeholder.jpg'}
+          src={safeImages[0]}
           alt={alt}
           fill
           className={cn("object-cover", imageClassName)}
-          sizes="510px"
+          sizes={sizes}
+          priority={false}
         />
       </div>
-    )
+    );
   }
 
   return (
-    <div className={cn("relative", className)}>
-      <Carousel setApi={setApi} className="w-full">
+    <div className={cn("relative w-full h-full", className)}>
+      <Carousel setApi={setApi} className="w-full h-full">
         <CarouselContent>
-          {images.map((img, index) => (
-            <CarouselItem key={index}>
-              <div className="relative w-full h-[220px] aspect-square">
+          {safeImages.map((img, index) => (
+            <CarouselItem key={`${img}-${index}`}>
+              <div className={cn("relative w-full h-full overflow-hidden", heightClass)}>
                 <Image
                   src={img}
                   alt={`${alt} - фото ${index + 1}`}
-                  fill
+                  height={577}
+                  width={577}
                   className={cn("object-cover", imageClassName)}
-                  sizes="510px"
+                  sizes={sizes}
+                  priority={false}
                 />
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
 
-        <div className="right-0 bottom-3 left-0 z-10 absolute flex justify-center">
-          <div className="flex gap-1.5 bg-black/20 backdrop-blur-sm px-2 py-1.5">
-            {images.map((_, index) => (
+        <div className="right-0 bottom-3 left-0 z-10 absolute flex justify-center pointer-events-none">
+          <div className="flex gap-1.5 bg-black/20 backdrop-blur-sm px-2 py-1.5 rounded-md pointer-events-auto">
+            {safeImages.map((_, index) => (
               <button
                 key={index}
+                type="button"
                 onClick={() => handleDotClick(index)}
                 className={cn(
-                  "rounded-full w-1.5 h-1.5 transition-all duration-300",
-                  current === index 
-                    ? "bg-white w-3"
-                    : "bg-white/60 hover:bg-white"
+                  "rounded-full h-1.5 transition-all duration-300",
+                  current === index ? "bg-white w-3" : "bg-white/60 hover:bg-white w-1.5"
                 )}
                 aria-label={`Перейти к фото ${index + 1}`}
               />
@@ -91,5 +93,5 @@ export function CarouselWithDots({
         </div>
       </Carousel>
     </div>
-  )
+  );
 }

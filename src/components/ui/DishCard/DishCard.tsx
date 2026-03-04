@@ -80,6 +80,7 @@ export const DishCard: React.FC<DishCardProps> = ({
             <CarouselWithDots
               images={productImages}
               alt={imgAlt}
+              heightClass="h-[220px]"
               imageClassName="object-cover group-hover:scale-110 transition-transform duration-500"
             />
           </div>        

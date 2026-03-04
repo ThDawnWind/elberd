@@ -3,6 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { CATEGORIES, filters } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import { useCatalogStore } from "@/stores/catalog.store";
 import type { DesktopFiltersSidebarProps } from "@/types";
 
 export default function FiltersSidebar({
@@ -14,11 +16,22 @@ export default function FiltersSidebar({
   setSelectedCategory,
   resetFilters,
 }: Readonly<DesktopFiltersSidebarProps> & { resetFilters: () => void }) {
+  const hasActiveFilters = useCatalogStore(s => s.hasActiveFilters)
+
   return (
     <div className="top-24 sticky space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="font-semibold text-lg">Фильтры</h2>
-        <Button variant="ghost" size="sm" onClick={resetFilters}>
+        <Button 
+        variant="ghost" 
+        size="sm" 
+        onClick={resetFilters}
+        className={cn(
+            "text-gray-500 hover:text-black text-sm",
+            "text-sm text-gray-500 hover:text-black",
+            !hasActiveFilters && "hidden"
+        )}
+        >
           Сброс
         </Button>
       </div>
@@ -96,7 +109,7 @@ export default function FiltersSidebar({
             step={50}
             value={priceRange}
             onValueChange={setPriceRange}
-            className="my-4"
+            className="bg-berd-primary my-4"
             aria-label="Диапазон цен"
           />
 
