@@ -3,6 +3,8 @@
 import { motion } from "motion/react";
 import { DishCard } from "@/components/ui/DishCard";
 import { Product } from "@/types";
+import { useState } from "react";
+import {  DishCardListSkeleton } from "../ui/DishCardSkeleton";
 
 const list = { hidden: {}, show: { transition: { staggerChildren: 0.04 } } };
 const EASE_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -13,10 +15,21 @@ const item = {
 };
 
 export default function ProductsList({ products }: { products: Product[] }) {
+    const [loading, setLoading] = useState<boolean>(true)
+  
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000)
+    
   return (
     <motion.ul className="space-y-4" variants={list} initial="hidden" animate="show" layout>
-      {products.map((product) => (
-        <motion.li
+        {loading 
+              ? Array.from({ length: 8 }).map((_, i) => (
+              <li key={i}>
+                <DishCardListSkeleton/>
+              </li>
+            )) : products.map((product) => (
+                <motion.li
           key={product.id}
           variants={item}
           layout="position"
@@ -24,7 +37,7 @@ export default function ProductsList({ products }: { products: Product[] }) {
         >
           <DishCard product={product} price={product.price} variant="list" />
         </motion.li>
-      ))}
+              ))}
     </motion.ul>
   );
 }

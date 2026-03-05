@@ -32,10 +32,6 @@ export const DishCard: React.FC<DishCardProps> = ({
   const isFav = useMemo(() => favIds.includes(product?.id), [favIds, product?.id]);
   const openModal = useProductModalStore((s) => s.open);
 
-  if (!product) {
-    return <ProductSkeleton variant={variant} className={className} />;
-  }
-
   const imgAlt = `${product.name} — доставка EL’BERD`;
   const favAriaLabel = hasHydratedFav && isFav ? "Убрать из избранного" : "Добавить в избранное";
 
@@ -300,65 +296,3 @@ export const DishCard: React.FC<DishCardProps> = ({
   );
 };
 
-const ProductSkeleton = ({
-  variant = "grid",
-  className = "",
-}: {
-  variant?: "grid" | "list" | "detailed";
-  className?: string;
-}) => {
-  if (variant === "grid") {
-    return (
-      <Card className={cn("h-full overflow-hidden animate-pulse", className)}>
-        <div className="bg-muted aspect-square" />
-        <CardContent className="space-y-2 p-2 xs:p-2 sm:p-3">
-          <div className="bg-muted rounded h-3 xs:h-3 sm:h-4" />
-          <div className="bg-muted rounded w-3/4 h-2 xs:h-2 sm:h-3" />
-          <div className="flex justify-between items-center pt-2">
-            <div className="space-y-1">
-              <div className="bg-muted rounded w-10 h-2 xs:h-2 sm:h-3" />
-              <div className="bg-muted rounded w-12 h-3 xs:h-3 sm:h-4" />
-            </div>
-            <div className="bg-muted rounded w-16 xs:w-14 sm:w-20 h-7 xs:h-6 sm:h-8" />
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (variant === "list") {
-    return (
-      <Card className={cn("flex sm:flex-row flex-col overflow-hidden animate-pulse", className)}>
-        <div className="bg-muted sm:w-48 lg:w-56 xl:w-64 aspect-square sm:aspect-square" />
-        <div className="flex-1 space-y-2 p-3 xs:p-3 sm:p-4">
-          <div className="bg-muted rounded w-3/4 h-4 xs:h-4 sm:h-5" />
-          <div className="bg-muted rounded w-1/2 h-3 xs:h-3 sm:h-4" />
-          <div className="bg-muted rounded h-12 xs:h-10 sm:h-14" />
-          <div className="flex justify-between items-center pt-2">
-            <div className="space-y-1">
-              <div className="bg-muted rounded w-10 h-2 xs:h-2 sm:h-3" />
-              <div className="bg-muted rounded w-16 h-3 xs:h-3 sm:h-4" />
-            </div>
-            <div className="bg-muted rounded w-20 xs:w-20 sm:w-24 h-8 xs:h-7 sm:h-9" />
-          </div>
-        </div>
-      </Card>
-    );
-  }
-
-  return (
-    <Card className={cn("flex items-center p-2 xs:p-2 sm:p-3 animate-pulse", className)}>
-      <div className="bg-muted mr-2 xs:mr-2 sm:mr-3 rounded-lg w-12 xs:w-12 sm:w-14 h-12 xs:h-12 sm:h-14" />
-      <div className="flex-1 space-y-1">
-        <div className="bg-muted rounded w-3/4 h-3 xs:h-3 sm:h-4" />
-        <div className="flex justify-between">
-          <div className="space-y-1">
-            <div className="bg-muted rounded w-8 h-2 xs:h-2 sm:h-3" />
-            <div className="bg-muted rounded w-10 h-3 xs:h-3 sm:h-4" />
-          </div>
-          <div className="bg-muted rounded w-14 xs:w-12 sm:w-16 h-6 xs:h-5 sm:h-7" />
-        </div>
-      </div>
-    </Card>
-  );
-};

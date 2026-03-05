@@ -9,9 +9,16 @@ import { cn } from "@/lib/utils"
 import { useFavoritesStore } from "@/stores/favorites.store"
 import { PRODUCTS } from "@/lib/products"
 import { DishCard } from "@/components/ui/DishCard"
+import { DishCardGridSkeleton } from "@/components/ui/DishCardSkeleton"
+import { Reveal } from "@/sections/PopularDishes/Reveal"
 
 export default function FavoritesClient() {
   const [showClearConfirm, setShowClearConfirm] = useState(false)
+   const [loading, setLoading] = useState<boolean>(true)
+  
+    setTimeout(() => {
+      setLoading(false)
+    }, 5000)
 
   const hydrated = useFavoritesStore((s) => s.hasHydrated)
   const ids = useFavoritesStore((s) => s.ids)
@@ -97,16 +104,19 @@ export default function FavoritesClient() {
             </Button>
           </div>
         ) : (
-          <ul className="gap-4 grid xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
-            {favoriteProducts.map((product) => (
-              <li key={product.id} className="w-full">
-                <DishCard
-                  product={product}
-                  price={product.price}
-                  variant="grid"
-                />
-              </li>
-            ))}
+          <ul className="gap-4 grid grid-cols-[repeat(auto-fill,minmax(265px,1fr))]">
+            {loading 
+                ? Array.from({ length: 12 }).map((_, i) => (
+                <li key={i}>
+                  <DishCardGridSkeleton />
+                </li>
+              )) : favoriteProducts.map((product) => (
+                  <li key={product.id}>
+                    <Reveal>
+                      <DishCard price={product.price} product={product} variant="grid" />
+                    </Reveal>
+                  </li>
+                ))}
           </ul>
         )}
       </div>
