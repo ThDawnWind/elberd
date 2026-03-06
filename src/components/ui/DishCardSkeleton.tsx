@@ -44,7 +44,7 @@ export function DishCardGridSkeleton() {
 }
 export function DishCardListSkeleton() {
   return (
-    <div className="flex flex-row border border-border/40 rounded-xl w-[861px] overflow-hidden animate-pulse">
+    <div className="flex flex-row border border-border/40 rounded-xl overflow-hidden animate-pulse">
 
       <div className="relative flex-shrink-0 my-3 ml-3 w-2 sm:w-48 lg:w-56 xl:w-64">
         <div className="bg-gray-200 rounded-lg w-full aspect-square" />

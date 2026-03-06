@@ -105,12 +105,12 @@ export default function RootLayout({
       <body className="antialiased">
         <StoreHydration />
         {children}
-      <Script
-          id="ld-json-restaurant"
-          type="application/ld+json"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <Script
+            id="ld-json-restaurant"
+            type="application/ld+json"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
         <GlobalProductModal />
       </body>
     </html>

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import InputMask from "react-input-mask";
 import {
   ShoppingCart,
   MapPin,
@@ -11,20 +12,36 @@ import {
   CheckCircle,
   Send,
   Trash,
-  UserPen
+  UserPen,
 } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { CartItem } from "@/types";
+import type { CartItem } from "@/types";
 import { useCartStore } from "@/stores/cart.store";
 import { CartItemCard } from "@/components/CartItemCard";
 import { NewtonLoader } from "@/components/ui/loader/NewtonLoader";
-import { isCheckoutValid } from "@/lib/cart/validators";
 import { buildWhatsAppMessage } from "@/lib/cart/whatsapp";
 
+// Если хочешь оставить свою существующую функцию isCheckoutValid, можешь.
+// Я тут делаю валидацию локально, чтобы точно работало с маской и touched.
 const RESTAURANT_PHONE = "+79637042858";
+
+type DeliveryInfo = {
+  address: string;
+  name: string;
+  phone: string;
+  whatsapp: string;
+};
+
+type TouchedState = {
+  address: boolean;
+  name: boolean;
+  phone: boolean;
+  whatsapp: boolean;
+};
 
 export default function CartClient() {
   const items = useCartStore((s) => s.items);
@@ -37,15 +54,54 @@ export default function CartClient() {
 
   const router = useRouter();
 
-  const [deliveryInfo, setDeliveryInfo] = useState({
+  const [deliveryInfo, setDeliveryInfo] = useState<DeliveryInfo>({
     address: "",
     name: "",
     phone: "",
     whatsapp: "",
   });
 
+  const [touched, setTouched] = useState<TouchedState>({
+    address: false,
+    name: false,
+    phone: false,
+    whatsapp: false,
+  });
+
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const selectAllRef = useRef<HTMLInputElement>(null);
+
+  const allSelected = items.length > 0 && selectedIds.length === items.length;
+
+  useEffect(() => {
+    setSelectedIds((prev) => prev.filter((id) => items.some((i) => i.id === id)));
+  }, [items]);
+
+  const toggleSelectAll = () => {
+    setSelectedIds((prev) => {
+      const all = items.map((i) => i.id);
+      const isAll = items.length > 0 && prev.length === items.length;
+      return isAll ? [] : all;
+    });
+  };
+
+  const clearSelection = () => setSelectedIds([]);
+
+  const toggleSelected = (id: number) => {
+    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  };
+
+  const removeSelected = () => {
+    selectedIds.forEach((id) => removeFromCart(id));
+    setSelectedIds([]);
+  };
+
+  const handleRemoveOne = (id: number) => {
+    removeFromCart(id);
+    setSelectedIds((prev) => prev.filter((x) => x !== id));
+  };
 
   useEffect(() => {
     document.body.style.overflow = showSuccessModal || showClearConfirm ? "hidden" : "";
@@ -59,21 +115,58 @@ export default function CartClient() {
   const handleCloseModalAndRedirect = () => {
     setShowSuccessModal(false);
     setDeliveryInfo({ address: "", name: "", phone: "", whatsapp: "" });
+    setTouched({ address: false, name: false, phone: false, whatsapp: false });
     router.push("/catalog");
   };
 
-  const isFormValid = useMemo(() => isCheckoutValid(deliveryInfo, items.length), [deliveryInfo, items.length]);
+  const onHandleClearCart = () => {
+    clearCart();
+    setSelectedIds([]);
+    setDeliveryInfo({ address: "", name: "", phone: "", whatsapp: "" });
+    setTouched({ address: false, name: false, phone: false, whatsapp: false });
+    setShowClearConfirm(false);
+  };
+
+  const isPhoneComplete = deliveryInfo.phone.length === 18;
+  const isWhatsappComplete = deliveryInfo.whatsapp.length === 18;
+
+  const fieldErrors = useMemo(() => {
+    const addressError = deliveryInfo.address.trim().length === 0 ? "Укажите адрес доставки" : "";
+    const nameError = deliveryInfo.name.trim().length === 0 ? "Введите имя" : "";
+    const phoneError = !isPhoneComplete ? "Введите телефон полностью" : "";
+    const whatsappError = !isWhatsappComplete ? "Введите WhatsApp полностью" : "";
+
+    return {
+      address: addressError,
+      name: nameError,
+      phone: phoneError,
+      whatsapp: whatsappError,
+    };
+  }, [deliveryInfo.address, deliveryInfo.name, isPhoneComplete, isWhatsappComplete]);
+
+  const isFormValid = useMemo(() => {
+    return (
+      items.length > 0 &&
+      deliveryInfo.address.trim().length > 0 &&
+      deliveryInfo.name.trim().length > 0 &&
+      isPhoneComplete &&
+      isWhatsappComplete
+    );
+  }, [deliveryInfo, items.length, isPhoneComplete, isWhatsappComplete]);
+
+  const anyTouched = useMemo(() => Object.values(touched).some(Boolean), [touched]);
+
+  const addressInvalid = touched.address && !!fieldErrors.address;
+  const nameInvalid = touched.name && !!fieldErrors.name;
+  const phoneInvalid = touched.phone && !!fieldErrors.phone;
+  const whatsappInvalid = touched.whatsapp && !!fieldErrors.whatsapp;
+
+  const inputErrorClass = "border-red-500 focus-visible:ring-red-500";
 
   const whatsappMessage = useMemo(
     () => buildWhatsAppMessage({ items, totalAmount, deliveryInfo }),
     [items, totalAmount, deliveryInfo]
   );
-
-  const onHandleClearCart = () => {
-    clearCart();
-    setDeliveryInfo({ address: "", name: "", phone: "", whatsapp: "" });
-    setShowClearConfirm(false);
-  };
 
   if (!hasHydrated) {
     return (
@@ -96,22 +189,35 @@ export default function CartClient() {
             "s:max-w-full xs:max-w-full sm:max-w-3xl lg:max-w-7xl"
           )}
         >
-          <div className="flex justify-between items-center">
+          <div className="grid grid-cols-[repeat(auto-fill)]">
             <div className="flex items-center gap-2">
               <ShoppingCart className="w-6 xs:w-5 h-6 xs:h-5 text-berd-primary" aria-hidden="true" />
               <h1 className="font-mono font-bold xs:text-lg text-2xl tracking-tight">Корзина</h1>
             </div>
 
             {items.length > 0 && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowClearConfirm(true)}
-                className="flex items-center gap-2 hover:bg-red-50 border-red-200 text-red-500 hover:text-red-600"
-              >
-                <Trash className="w-4 xs:w-3 h-4 xs:h-3" aria-hidden="true" />
-                <span className="s:hidden block font-sans xs:text-xs">Очистить корзину</span>
-              </Button>
+              <div className="flex justify-end items-center gap-2 mt-3">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={removeSelected}
+                  disabled={selectedIds.length === 0}
+                  className="flex items-center gap-2 hover:bg-red-50 disabled:opacity-50 border-red-200 text-red-500 hover:text-red-600"
+                >
+                  <Trash className="w-4 xs:w-3 h-4 xs:h-3" aria-hidden="true" />
+                  <span className="font-sans text-[clamp(0.576rem,3vw,0.876rem)]">Удалить выбранные</span>
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowClearConfirm(true)}
+                  className="flex items-center gap-2 hover:bg-red-50 border-red-200 text-red-500 hover:text-red-600"
+                >
+                  <Trash className="w-4 xs:w-3 h-4 xs:h-3" aria-hidden="true" />
+                  <span className="font-sans text-[clamp(0.576rem,3vw,0.876rem)]">Очистить корзину</span>
+                </Button>
+              </div>
             )}
           </div>
         </div>
@@ -121,95 +227,171 @@ export default function CartClient() {
         className={cn(
           "mx-auto px-4 pb-12",
           "s:px-2 xs:px-2 sm:px-2 lg:px-8",
-          "s:max-w-full xs:max-w-full sm:max-w-full lg:max-w-7xl"
+          "s:max-w-full xs:max-w-full sm:max-w-full lg:max-w-7xl rounded-none"
         )}
       >
         <div className="flex sm:flex-row s:flex-col xs:flex-col justify-between gap-6 sm:gap-2 lg:gap-8">
-          <div className="space-y-4 mb-10 xs:mb-2 sm:w-3/5 lg:w-1/2">
-            {items.length > 0 && <h2 className="mt-2 font-mono xs:text-base text-lg">Ваши товары</h2>}
-
+          <div className="space-y-4 mb-10 xs:mb-2 w-full max-w-[790px]">
             {items.length > 0 && (
-              <ul className="space-y-3 mt-2 xs:h-96 xs:overflow-auto">
-                {items.map((item) => (
-                  <li key={item.id}>
-                    <CartItemCard
-                      item={item}
-                      onUpdateQuantity={updateQuantity}
-                      onRemove={removeFromCart}
-                      className="animate-in fade-in"
-                    />
-                  </li>
-                ))}
-              </ul>
+              <div className="flex flex-col mt-2">
+                <h2 className="mb-3 font-mono xs:text-base text-lg">Ваши товары</h2>
+
+                <div className="bg-white p-2">
+                  <div className="flex justify-between gap-3">
+                      <label className="inline-flex items-center gap-2 ml-3 cursor-pointer">
+                        <input
+                          ref={selectAllRef}
+                          type="checkbox"
+                          checked={allSelected}
+                          onChange={toggleSelectAll}
+                          className="border-gray-300 rounded w-4 h-4 accent-berd-primary cursor-pointer"
+                          aria-label="Выбрать все товары"
+                        />
+                        <span className="xs:text-xs text-sm">Выбрать все</span>
+                      </label>
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={clearSelection}
+                        disabled={selectedIds.length === 0}
+                        className="disabled:opacity-50 xs:text-xs"
+                      >
+                        Снять выбор
+                      </Button>
+                    </div>
+                  <div>
+                    {items.length > 0 && (
+                        <ul className="space-y-3 mt-3 xs:h-96 xs:overflow-auto">
+                          {items.map((item) => (
+                            <li key={item.id}>
+                              <CartItemCard
+                                item={item}
+                                onUpdateQuantity={updateQuantity}
+                                onRemove={handleRemoveOne}
+                                selected={selectedIds.includes(item.id)}
+                                onToggleSelected={toggleSelected}
+                              />
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                  </div>
+                </div>
+              </div>
             )}
           </div>
 
           {items.length > 0 && (
-            <div className="space-y-4 sm:mt-11 lg:mt-11 sm:w-1/2 lg:w-2/6">
-              <Card className="top-24 sticky space-y-4 p-4 sm:p-6">
-                <h2 className="font-mono font-semibold text-lg">Данные для доставки</h2>
+            <div className="mt-14 w-full max-w-[336px]">
+              <Card className="top-2-4 sticky space-y-4 p-4 sm:p-6">
+                <h2 className="font-mono font-semibold text-[clamp(0.876rem,3vw,1.2rem)]">Данные для доставки</h2>
 
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <label htmlFor="delivery-address" className="flex items-center gap-2 font-medium text-sm">
+                    <label htmlFor="delivery-address" className="flex items-center gap-2 font-medium text-[clamp(0.676rem,3vw,0.876rem)]">
                       <MapPin className="w-4 h-4 font-sans text-gray-500" aria-hidden="true" />
                       Адрес доставки
                     </label>
+
                     <Input
                       id="delivery-address"
                       placeholder="ул. Примерная, д. 1, кв. 1"
                       value={deliveryInfo.address}
                       onChange={(e) => setDeliveryInfo({ ...deliveryInfo, address: e.target.value })}
-                      className="w-full"
+                      className={cn("w-full", addressInvalid && inputErrorClass)}
                       autoComplete="street-address"
+                      onBlur={() => setTouched((prev) => ({ ...prev, address: true }))}
+                      aria-invalid={addressInvalid}
                     />
+
+                    {addressInvalid && (
+                      <p className="font-sans text-red-500 text-xs">{fieldErrors.address}</p>
+                    )}
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="delivery-name" className="flex items-center gap-2 font-sans font-medium text-sm">
+                    <label htmlFor="delivery-name" className="flex items-center gap-2 font-sans font-medium text-[clamp(0.676rem,3vw,0.876rem)]">
                       <UserPen className="w-4 h-4 text-gray-500" aria-hidden="true" />
                       Ваше имя
                     </label>
+
                     <Input
                       id="delivery-name"
                       placeholder="Иван"
                       value={deliveryInfo.name}
                       onChange={(e) => setDeliveryInfo({ ...deliveryInfo, name: e.target.value })}
-                      className="w-full"
+                      className={cn("w-full", nameInvalid && inputErrorClass)}
                       autoComplete="name"
+                      onBlur={() => setTouched((prev) => ({ ...prev, name: true }))}
+                      aria-invalid={nameInvalid}
                     />
+
+                    {nameInvalid && (
+                      <p className="font-sans text-red-500 text-xs">{fieldErrors.name}</p>
+                    )}
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="delivery-phone" className="flex items-center gap-2 font-sans font-medium text-sm">
+                    <label htmlFor="delivery-phone" className="flex items-center gap-2 font-sans font-medium text-[clamp(0.676rem,3vw,0.876rem)]">
                       <Phone className="w-4 h-4 text-gray-500" aria-hidden="true" />
                       Номер телефона
                     </label>
-                    <Input
-                      id="delivery-phone"
-                      placeholder="+7 (XXX) XXX-XX-XX"
+
+                    <InputMask
+                      mask="+7 (999) 999-99-99"
                       value={deliveryInfo.phone}
+                      maskChar={null}
                       onChange={(e) => setDeliveryInfo({ ...deliveryInfo, phone: e.target.value })}
-                      className="w-full"
-                      inputMode="tel"
-                      autoComplete="tel"
-                    />
+                      onBlur={() => setTouched((prev) => ({ ...prev, phone: true }))}
+                    >
+                      {(inputProps) => (
+                        <Input
+                          {...inputProps}
+                          id="delivery-phone"
+                          placeholder="+7 (XXX) XXX-XX-XX"
+                          className={cn("w-full", phoneInvalid && inputErrorClass)}
+                          inputMode="tel"
+                          autoComplete="tel"
+                          aria-invalid={phoneInvalid}
+                        />
+                      )}
+                    </InputMask>
+
+                    {phoneInvalid && (
+                      <p className="font-sans text-red-500 text-xs">{fieldErrors.phone}</p>
+                    )}
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="delivery-whatsapp" className="flex items-center gap-2 font-sans font-medium text-sm">
+                    <label htmlFor="delivery-whatsapp" className="flex items-center gap-2 font-sans font-medium text-[clamp(0.676rem,3vw,0.876rem)]">
                       <MessageSquare className="w-4 h-4 text-gray-500" aria-hidden="true" />
                       WhatsApp (для связи)
                     </label>
-                    <Input
-                      id="delivery-whatsapp"
-                      placeholder="+7 (XXX) XXX-XX-XX"
+
+                    <InputMask
+                      mask="+7 (999) 999-99-99"
                       value={deliveryInfo.whatsapp}
+                      maskChar={null}
                       onChange={(e) => setDeliveryInfo({ ...deliveryInfo, whatsapp: e.target.value })}
-                      className="w-full"
-                      inputMode="tel"
-                      autoComplete="tel"
-                    />
+                      onBlur={() => setTouched((prev) => ({ ...prev, whatsapp: true }))}
+                    >
+                      {(inputProps) => (
+                        <Input
+                          {...inputProps}
+                          id="delivery-whatsapp"
+                          placeholder="+7 (XXX) XXX-XX-XX"
+                          className={cn("w-full", whatsappInvalid && inputErrorClass)}
+                          inputMode="tel"
+                          autoComplete="tel"
+                          aria-invalid={whatsappInvalid}
+                        />
+                      )}
+                    </InputMask>
+
+                    {whatsappInvalid && (
+                      <p className="font-sans text-red-500 text-xs">{fieldErrors.whatsapp}</p>
+                    )}
                   </div>
                 </div>
 
@@ -225,12 +407,18 @@ export default function CartClient() {
                       <span className="font-mono font-bold s:text-sm xs:text-sm text-xl">{totalAmount} ₽</span>
                     </div>
                   </div>
-                    {!isFormValid && (
-                      <p className="mb-4 font-sans font-light text-red-500 text-xs">
-                        Пожалуйста, заполните все поля, чтобы оформить заказ.
-                      </p>
-                    )}
-                  <Button onClick={handleSubmitOrder} disabled={!isFormValid} className="bg-berd-primary hover:bg-black w-full transition-colors animate-pop">
+
+                  {anyTouched && !isFormValid && (
+                    <p className="mb-4 font-sans font-light text-red-500 text-xs">
+                      Пожалуйста, заполните все поля, чтобы оформить заказ.
+                    </p>
+                  )}
+
+                  <Button
+                    onClick={handleSubmitOrder}
+                    disabled={!isFormValid}
+                    className="bg-berd-primary hover:bg-black w-full transition-colors animate-pop"
+                  >
                     Оформить заказ
                   </Button>
                 </div>
@@ -289,17 +477,17 @@ function SuccessModal({
   const whatsappLink = `https://wa.me/${RESTAURANT_PHONE.replace(/[^0-9]/g, "")}?text=${whatsappMessage}`;
 
   return (
-    <div className="z-50 fixed inset-0 flex justify-center items-center bg-black/50 p-4" onClick={handleOverlayClick}>
+    <div className="z-50 fixed inset-0 flex justify-center items-center bg-black/50" onClick={handleOverlayClick}>
       <div
         className={cn(
-          "bg-white shadow-xl rounded-2xl w-full max-w-[450px] max-h-[75vh] overflow-y-auto",
+          "bg-white shadow-xl p-[18px] rounded-2xl w-full max-w-[755px] max-h-[75vh] overflow-y-auto",
           "animate-in fade-in zoom-in duration-300"
         )}
       >
         <div className="relative p-4 sm:p-6">
           <button
             onClick={onClose}
-            className="top-2 sm:top-4 right-2 sm:right-4 z-10 absolute text-gray-400 hover:text-gray-600 transition-colors"
+            className="top-2 sm:top-4 right-2 sm:right-4 z-10 absolute text-gray-400 hover:text-red-600 transition duration-300 ease-in-out"
             aria-label="Закрыть"
           >
             <X className="w-5 h-5" aria-hidden="true" />
@@ -368,7 +556,7 @@ function SuccessModal({
 
           <div className="flex sm:flex-row flex-col gap-3">
             <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex-1">
-              <Button className="bg-green-600 hover:bg-green-700 w-full">
+              <Button className="bg-green-600 hover:bg-green-700 w-full h-[52px] font-semibold">
                 <Send className="mr-2 w-4 h-4" aria-hidden="true" />
                 Отправить заказ в WhatsApp
               </Button>

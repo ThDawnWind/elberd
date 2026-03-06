@@ -107,36 +107,38 @@ export const SubHeader = () => {
         </div>
       </nav>
 
-      <nav className="sm:hidden lg:hidden block right-0 bottom-0 left-0 z-50 fixed bg-white/95 shadow-lg backdrop-blur-lg border-t">
-        <div className="flex justify-around items-center px-1 h-16">
-          {mobileNavItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href;
-            
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`flex flex-col justify-center items-center gap-1 px-2 py-1 rounded-xl min-w-[60px] transition-colors ${
-                  isActive
-                    ? "text-berd-primary"
-                    : "text-gray-600 hover:text-berd-primary"
-                }`}
-                aria-label={`Перейти к разделу ${item.name}`}
-                aria-current={isActive ? "page" : undefined}
-              >
-                <div className="relative">
-                  <Icon className="w-5 h-5" />
-                  {isActive && (
-                    <div className="-top-1 -right-1 absolute bg-berd-primary rounded-full w-2 h-2"></div>
-                  )}
-                </div>
-                <span className="font-medium text-[10px] sm:text-xs">{item.name}</span>
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
+      <nav className="sm:hidden lg:hidden block right-0 bottom-0 left-0 z-50 fixed bg-white/95 shadow-lg backdrop-blur-lg border-t min-w-[320px]">
+          <div className="flex items-center h-16">
+            {mobileNavItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`flex flex-1 flex-col justify-center items-center gap-1 px-2 py-1 min-w-0 transition-colors ${
+                    isActive
+                      ? "text-berd-primary"
+                      : "text-gray-600 hover:text-berd-primary"
+                  }`}
+                  aria-label={`Перейти к разделу ${item.name}`}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  <div className="relative">
+                    <Icon className="w-5 h-5" />
+                    {isActive && (
+                      <div className="-top-1 -right-1 absolute bg-berd-primary rounded-full w-2 h-2" />
+                    )}
+                  </div>
+                  <span className="font-medium text-[10px] text-center leading-none">
+                    {item.name}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </nav>
 
       <div className="xs:hidden sm:hidden" />
     </>

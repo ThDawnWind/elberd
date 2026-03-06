@@ -110,7 +110,7 @@ export const Footer = () => {
               </div>
 
               <div>
-                <h3 className="mb-6 font-bold text-lg sm:text-xl">
+                <h3 className="mb-4 font-bold text-lg sm:text-xl">
                   Мы в соцсетях
                 </h3>
 
@@ -118,8 +118,7 @@ export const Footer = () => {
                   Подписывайтесь, чтобы не пропустить новинки и акции.
                 </p>
 
-                <div className="flex gap-4">
-
+                <div className="flex xs:justify-center gap-4 mb-3">
                   <a
                     href="https://wa.me/79899194871"
                     target="_blank"

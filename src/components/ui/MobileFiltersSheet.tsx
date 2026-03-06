@@ -32,14 +32,14 @@ export function MobileFiltersSheet({
         <Button
           variant="outline"
           size="sm"
-          className="lg:hidden flex items-center gap-2 font-sans font-semibold"
+          className="lg:hidden flex items-center gap-2"
         >
           <Filter aria-hidden="true" className="w-4 h-4" />
-          <span>Фильтры</span>
+          <span className="font-sans font-semibold">Фильтры</span>
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="bottom" className="w-[65vw] sm:max-w-md font-mono font-normal">
+      <SheetContent side="bottom" className="w-[95vw] sm:max-w-md font-mono font-normal">
         <SheetHeader className="text-left">
           <SheetTitle>Фильтры</SheetTitle>
           <SheetDescription>
@@ -80,7 +80,7 @@ export function MobileFiltersSheet({
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
                     className={`
-                      flex items-center gap-1 font-sans font-medium w-full p-1 rounded-lg text-left transition-colors
+                      flex items-center gap-1 font-sans font-normal text-sm w-full p-1 rounded-lg text-left transition-colors
                       ${
                         isSelected
                           ? "bg-berd-primary/10 text-berd-primary border border-berd-primary/20"
@@ -140,7 +140,7 @@ export function MobileFiltersSheet({
               step={50}
               value={priceRange}
               onValueChange={setPriceRange}
-              className="my-4"
+              className="bg-berd-primary my-4"
               aria-label="Диапазон цен"
             />
 

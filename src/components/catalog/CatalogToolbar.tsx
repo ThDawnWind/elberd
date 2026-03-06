@@ -41,7 +41,7 @@ export default function CatalogToolbar({
   filters,
 }: CatalogToolbarProps) {
   return (
-    <div className="flex sm:flex-row xs:flex-col xs:justify-between sm:justify-between lg:justify-between gap-4 mb-6 font-sans font-normal">
+    <div className="flex sm:flex-row xs:flex-col xs:justify-between sm:justify-between lg:justify-between gap-4 mb-6 w-full max-w-[1110px] font-sans font-normal">
       <div>
         <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
           <SelectTrigger className="w-44">

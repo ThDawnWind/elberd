@@ -22,7 +22,7 @@ export default function ProductsList({ products }: { products: Product[] }) {
     }, 2000)
     
   return (
-    <motion.ul className="space-y-4" variants={list} initial="hidden" animate="show" layout>
+    <motion.ul className="space-y-2" variants={list} initial="hidden" animate="show" layout>
         {loading 
               ? Array.from({ length: 8 }).map((_, i) => (
               <li key={i}>

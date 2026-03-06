@@ -139,7 +139,7 @@ export default function CatalogClient({ initialCategorySlug }: { initialCategory
             />
           </aside>
 
-          <div className="lg:w-2/2">
+          <div className="lg:w-full">
             <div className="flex sm:flex-row flex-col justify-between items-start sm:items-center gap-4 mb-6">
               <div>
                 <h2 className="font-sans font-semibold text-lg">{selectedCategoryName}</h2>
@@ -174,27 +174,26 @@ export default function CatalogClient({ initialCategorySlug }: { initialCategory
               resetFilters={resetFilters}
               filters={filters}
             />
-<LayoutGroup id="catalog">
 
-       {filteredProducts.length === 0 ? (
-              <div className="py-12 font-mono font-light text-center">
-                <h3 className="font-semibold text-lg">Товары не найдены</h3>
-                <p className="mt-2 text-muted-foreground">Попробуйте изменить фильтры или выбрать другую категорию</p>
-                <button onClick={resetFilters} className="mt-4 px-4 py-2 border rounded-md" type="button">
-                  Сбросить фильтры
-                </button>
-              </div>
-            ) : viewMode === "grid" ? (
-              <AnimatePresence mode="popLayout">
-                <ProductsGrid products={filteredProducts} />
-              </AnimatePresence>
-            ) : (
-              <AnimatePresence mode="popLayout">
-                <ProductsList products={filteredProducts} />
-              </AnimatePresence>
-            )}
-</LayoutGroup>
-       
+            <LayoutGroup id="catalog">
+                  {filteredProducts.length === 0 ? (
+                          <div className="py-12 font-mono font-light text-center">
+                            <h3 className="font-semibold text-lg">Товары не найдены</h3>
+                            <p className="mt-2 text-muted-foreground">Попробуйте изменить фильтры или выбрать другую категорию</p>
+                            <button onClick={resetFilters} className="mt-4 px-4 py-2 border rounded-md" type="button">
+                              Сбросить фильтры
+                            </button>
+                          </div>
+                        ) : viewMode === "grid" ? (
+                          <AnimatePresence mode="popLayout">
+                            <ProductsGrid products={filteredProducts} />
+                          </AnimatePresence>
+                        ) : (
+                          <AnimatePresence mode="popLayout">
+                            <ProductsList products={filteredProducts} />
+                          </AnimatePresence>
+                        )}
+            </LayoutGroup>
           </div>
         </div>
       </div>

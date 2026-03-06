@@ -18,6 +18,7 @@ import { CarouselWithDots } from "../carousel-with-dots";
 import { useFavoritesStore } from "@/stores/favorites.store";
 import { useMemo } from "react";
 import { useProductModalStore } from "@/stores/product-modal.store";
+import { formatPrice } from "@/lib/format";
 
 export const DishCard: React.FC<DishCardProps> = ({
   product,
@@ -136,7 +137,7 @@ export const DishCard: React.FC<DishCardProps> = ({
                 Вес: {product.weight}
               </span>
               <span className="font-bold text-[19px]">
-                {price}₽
+                {formatPrice(price)}
               </span>
             </div>
             <AddToCartButton product={product} price={price} variant="grid" size="sm" />
@@ -163,14 +164,13 @@ export const DishCard: React.FC<DishCardProps> = ({
         )}
       >
         <ProductMicrodata />
-        <div className="relative flex-row ml-3 sm:w-48 lg:w-56 xl:w-64">
+        <div className="relative flex-row ml-3 sm:w-48 lg:w-72">
           <div className="relative w-full aspect-square sm:aspect-square">
-            <Image
-              src={productImages[0]}
+            <CarouselWithDots
+              images={productImages}
               alt={imgAlt}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              heightClass="h-full"
+              imageClassName="object-cover group-hover:scale-110 transition-transform duration-500"
             />
           </div>
 
@@ -202,16 +202,16 @@ export const DishCard: React.FC<DishCardProps> = ({
 
         <div className="flex flex-col flex-grow px-3">
           <div className="flex flex-row justify-between">
-            <CardTitle className="mb-5 font-semibold text-[16px] line-clamp-2">
+            <CardTitle className="mb-2 font-semibold text-[16px] line-clamp-2">
               {product.name}
             </CardTitle>
             <span className="font-bold text-[19px] whitespace-nowrap">
-              {price} ₽
+                {formatPrice(price)}
             </span>
           </div>
 
-          <div className="flex flex-col mb-8 h-[100px] xs:h-[90px] sm:h-[110px] lg:h-[120px]">
-            <CardDescription className="mb-1 xs:mb-1 sm:mb-1.5 h-[40px] xs:h-[35px] sm:h-[42px] lg:h-[48px] text-muted-foreground xs:text-xs sm:text-sm text-base line-clamp-2">
+          <div className="flex flex-col h-[100px] xs:h-[90px] sm:h-[110px] lg:h-[120px]">
+            <CardDescription className="h-[40px] xs:h-[35px] sm:h-[42px] lg:h-[48px] text-muted-foreground xs:text-xs sm:text-sm text-base line-clamp-2">
               Срок годности: {product.shelfLife}
             </CardDescription>
 
@@ -227,7 +227,7 @@ export const DishCard: React.FC<DishCardProps> = ({
             )}
           </div>
 
-          <div className="flex justify-between items-center pt-3 border-t">
+          <div className="flex justify-between items-center mt-auto p-2 border-t">
             <span className="text-black xs:text-[14px] sm:text-xs text-base">
               Вес: {product.weight}
             </span>

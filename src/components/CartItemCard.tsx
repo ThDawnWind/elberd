@@ -1,124 +1,175 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Heart, Minus, Plus, Trash2 } from "lucide-react";
 import { Card } from "./ui/card";
-import { CartItem } from "@/types";
+import type { CartItem } from "@/types";
+import { Button } from "./ui/button";
+import { useFavoritesStore } from "@/stores/favorites.store";
+import { useMemo } from "react";
+import { formatPrice } from "@/lib/format";
 
-export function CartItemCard({ 
-  item, 
-  onUpdateQuantity, 
+export function CartItemCard({
+  item,
+  onUpdateQuantity,
   onRemove,
+  selected,
+  onToggleSelected,
   className,
-}: { 
-  item: CartItem; 
+}: {
+  item: CartItem;
   onUpdateQuantity: (id: number, quantity: number) => void;
   onRemove: (id: number) => void;
+  selected: boolean;
+  onToggleSelected: (id: number) => void;
   className?: string;
 }) {
+
+  const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
+  const hasHydratedFav = useFavoritesStore((state) => state.hasHydrated);
+  const favIds = useFavoritesStore((s) => s.ids);
+  const isFav = useMemo(() => favIds.includes(item?.id), [favIds, item?.id]);
+
+  const favAriaLabel =
+    hasHydratedFav && isFav ? "Убрать из избранного" : "Добавить в избранное";
+
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite(item.id);
+  };
+
   return (
-    <Card key={item.id} className={cn("mb-2 overflow-hidden", className)}>
-      <div className={cn(
-        "flex gap-3 p-3",
-        "s:gap-2 s:p-2",
-        "xs:gap-3 xs:p-3",
-        "sm:gap-4 sm:p-4",
-        "lg:gap-5 lg:p-5"
-      )}>
-        <div className={cn(
-          "relative flex-shrink-0 bg-gray-100 rounded-md overflow-hidden",
-          "s:w-16 s:h-16",
-          "xs:w-20 xs:h-20",
-          "sm:w-20 sm:h-20",
-          "lg:w-28 lg:h-28"
-        )}>
-          <Image
-            src={item.image}
-            alt={item.name}
-            fill
-            className="object-cover"
-            sizes="(max-width: 490px) 64px, (max-width: 767px) 80px, (max-width: 1023px) 96px, 112px"
-          />
+    <Card
+      key={item.id}
+      className={cn(
+        "relative shadow-none mb-2 border-none rounded-none w-full max-w-[900px] min-h-[120px] overflow-hidden",
+        className
+      )}
+    >
+      <div
+        className={cn(
+          "flex items-stretch gap-3 p-2 w-full",
+          "s:gap-2",
+          "xs:gap-3",
+          "sm:gap-4",
+          "lg:gap-5"
+        )}
+      >
+        <div className="flex items-center">
+          <div className="mr-3">
+            <input
+              type="checkbox"
+              checked={selected}
+              onChange={() => onToggleSelected(item.id)}
+              className="border-gray-300 rounded w-4 h-4 accent-berd-primary cursor-pointer"
+              aria-label="Выбрать товар"
+            />
+          </div>
+
+          <div
+            className={cn(
+              "relative flex-shrink-0 bg-gray-100 rounded-md overflow-hidden",
+              "xs:w-20 xs:h-20",
+              "sm:w-20 sm:h-20",
+              "lg:w-28 lg:h-28"
+            )}
+          >
+            <Image
+              src={item.image}
+              alt={item.name}
+              fill
+              className="object-cover"
+              sizes="(max-width: 490px) 64px, (max-width: 767px) 80px, (max-width: 1023px) 96px, 112px"
+            />
+          </div>
         </div>
 
         <div className="flex flex-col flex-1 min-w-0">
+
           <div className="flex justify-between items-start font-sans font-semibold">
-            <h3 className={cn(
-              "font-medium line-clamp-2",
-              "s:text-xs",
-              "xs:text-sm",
-              "sm:text-sm"
-            )}>
+            <h3
+              className={cn(
+                "flex-1 font-medium line-clamp-2",
+                "s:text-xs",
+                "xs:text-sm",
+                "sm:text-sm"
+              )}
+            >
               {item.name}
             </h3>
-            <button
-              onClick={() => onRemove(item.id)}
-              className="flex-shrink-0 p-1 text-gray-400 hover:text-red-500 transition-colors"
-              aria-label="Удалить товар"
-            >
-              <Trash2 className={cn(
-                "s:w-2.5 s:h-2.5",
-                "xs:w-3 xs:h-3",
-                "sm:w-3.5 sm:h-3.5"
-              )} />
-            </button>
+
+            <div className="flex items-center">
+              <Button
+                variant={"ghost"}
+                onClick={handleToggleFavorite}
+                aria-label={favAriaLabel}
+              >
+                <Heart
+                  className={cn(
+                    "transition-colors",
+                    hasHydratedFav && isFav
+                      ? "fill-red-500 text-red-500"
+                      : "text-muted-foreground hover:fill-red-500 hover:text-red-500"
+                  )}
+                />
+              </Button>
+
+              <Button
+                variant={"ghost"}
+                onClick={() => onRemove(item.id)}
+                className="text-gray-400 hover:text-red-500"
+                aria-label="Удалить товар"
+              >
+                <Trash2/>
+              </Button>
+            </div>
           </div>
 
-          <p className="mt-0.5 font-sans text-gray-500 text-xs">{item.weight}</p>
+          <p className="mt-2 font-sans text-gray-500 text-xs">
+            {item.weight}
+          </p>
 
-          <div className="flex justify-between items-center mt-auto">
-            <span className={cn(
-              "font-sans font-bold",
-              "s:text-[12px]",
-              "xs:text-[12px]",
-              "sm:text-[13px]"
-            )}>
-              {item.price * item.quantity} ₽
-            </span>
+          <div className="flex justify-end items-center gap-3 mt-auto">
 
             <div className="inline-flex items-center gap-3 p-1 xs:p-0.5 rounded-full">
+
               <button
                 onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
                 className={cn(
                   "flex justify-center items-center bg-white hover:bg-gray-50 active:bg-gray-100 shadow-sm border border-gray-200 rounded-full transition-colors",
-                  "s:w-5 s:h-5",
-                  "xs:w-6 xs:h-6",
+                  "xs:w-5 xs:h-5",
                   "sm:w-6 sm:h-6"
                 )}
                 aria-label="Уменьшить количество"
               >
-                <Minus className={cn(
-                  "s:w-2 s:h-2",
-                  "xs:w-2.5 xs:h-2.5",
-                  "sm:w-3 sm:h-3"
-                )} />
+                <Minus />
               </button>
-              
-              <span className={cn(
-                "font-medium text-center",
-                "s:w-6 s:text-xs",
-                "xs:w-8 xs:text-sm",
-                "sm:w-10 sm:text-base"
-              )}>
+
+              <span className="s:w-6 xs:w-8 sm:w-10 font-medium s:text-xs xs:text-sm sm:text-base text-center">
                 {item.quantity}
               </span>
-              
+
               <button
                 onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
                 className={cn(
                   "flex justify-center items-center bg-white hover:bg-gray-50 active:bg-gray-100 shadow-sm border border-gray-200 rounded-full transition-colors",
-                  "s:w-6 s:h-6",
-                  "xs:w-7 xs:h-7",
+                  "xs:w-5 xs:h-5",
                   "sm:w-6 sm:h-6"
                 )}
                 aria-label="Увеличить количество"
               >
-                <Plus className={cn(
-                  "s:w-2 s:h-2",
-                  "xs:w-2.5 xs:h-2.5",
-                  "sm:w-3 sm:h-3"
-                )} />
+                <Plus/>
               </button>
             </div>
+
+              <span
+              className={cn(
+                    "font-sans font-bold",
+                    " text-[clamp(0.576rem,3vw,1.3rem)]",
+                  )}
+                >
+              {formatPrice(item.price * item.quantity)}
+            </span>
           </div>
         </div>
       </div>
