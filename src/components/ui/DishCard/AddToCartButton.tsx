@@ -214,18 +214,9 @@ export const AddToCartButton = ({
             className={cn(
               getIconSize(),
               styles.inCartIcon,
-              "fill-current/10"
+              "fill-current/10 h-5  w-5"
             )}
           />
-          <span
-            className={cn(
-              "font-medium whitespace-nowrap",
-              styles.textSize,
-              styles.inCartText
-            )}
-          >
-            В корзине
-          </span>
         </div>
 
         <div className="flex items-center gap-1">

@@ -136,7 +136,7 @@ export const DishCard: React.FC<DishCardProps> = ({
               <span className="text-[14px] text-muted-foreground sm:text-xs leading-tight">
                 Вес: {product.weight}
               </span>
-              <span className="font-bold text-[19px]">
+              <span className="font-bold text-[18px]">
                 {formatPrice(price)}
               </span>
             </div>
