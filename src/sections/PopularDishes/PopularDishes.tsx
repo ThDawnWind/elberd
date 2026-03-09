@@ -21,7 +21,7 @@ export const PopularDishes = () => {
       <header className="mb-8 sm:mb-10 lg:mb-12">
         <h2
           id="popular-dishes-title"
-          className="font-mono font-bold text-gray-900 text-xl sm:text-2xl lg:text-3xl"
+          className="font-bold text-gray-900 text-xl sm:text-2xl lg:text-3xl"
         >
           Популярные блюда
         </h2>

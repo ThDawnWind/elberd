@@ -29,10 +29,10 @@ export const Header = () => {
               </div>
 
               <div className="flex flex-col">
-                <span className="font-mono font-bold text-berd-primary text-base sm:text-lg lg:text-2xl">
+                <span className="font-bold text-berd-primary text-base sm:text-lg lg:text-2xl">
                   Эльберд
                 </span>
-                <p className="font-sans font-light text-gray-500 text-xs sm:text-sm">
+                <p className="font-normal text-gray-500 text-xs sm:text-sm">
                   Доставка еды
                 </p>
               </div>
@@ -60,7 +60,7 @@ export const Header = () => {
                   </span>
                 )}
               </div>
-              <span className="s:hidden xs:hidden font-mono font-medium text-gray-700 hover:text-berd-primary text-sm duration-300 ease-in-out">
+              <span className="s:hidden xs:hidden font-medium text-gray-700 hover:text-berd-primary text-sm duration-300 ease-in-out">
                 Избранное
               </span>
             </Link>
@@ -81,7 +81,7 @@ export const Header = () => {
                     </span>
                   )}
               </div>
-              <span className="s:hidden xs:hidden font-mono font-medium text-gray-700 hover:text-berd-primary text-sm duration-300 ease-in-out">
+              <span className="s:hidden xs:hidden font-medium text-gray-700 hover:text-berd-primary text-sm duration-300 ease-in-out">
                 Корзина
               </span>
             </Link>
@@ -95,7 +95,7 @@ export const Header = () => {
                 <Phone className="w-4 xs:w-6 sm:w-5 h-4 xs:h-6 sm:h-5 text-gray-700" />
               </a>
               
-              <div className="hidden lg:flex items-center gap-3 font-mono">
+              <div className="hidden lg:flex items-center gap-3 font-medium">
                 <a 
                   href="tel:+79899194871" 
                   className="flex items-center gap-2 bg-berd-primary hover:bg-black px-4 py-2 rounded-lg font-semibold text-white text-sm transition duration-300 ease-in-out"
@@ -106,10 +106,10 @@ export const Header = () => {
                 </a>
                 
                 <div className="flex flex-col">
-                  <span className="font-sans font-bold text-gray-900 text-sm">
+                  <span className="font-bold text-gray-900 text-sm">
                     +7 (989) 919-48-71
                   </span>
-                  <p className="font-sans font-light text-gray-500 text-xs">
+                  <p className="font-medium text-gray-500 text-xs">
                     время работы: 9:00-20:00
                   </p>
                 </div>

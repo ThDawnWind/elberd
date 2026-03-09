@@ -122,7 +122,7 @@ export default function CatalogClient({ initialCategorySlug }: { initialCategory
     selectedCategoryId === 0 ? "Все товары" : CATEGORIES.find((c) => c.id === selectedCategoryId)?.name || "Каталог";
 
   return (
-    <motion.div className="bg-background min-h-screen font-sans" variants={pageFade} initial="hidden" animate="show">
+    <motion.div className="bg-background min-h-screen" variants={pageFade} initial="hidden" animate="show">
       <CatalogHeader title="Каталог" />
 
       <div className="mx-1 sm:mx-[60px] px-4 xs:px-0 py-6 xs:py-1">
@@ -142,8 +142,8 @@ export default function CatalogClient({ initialCategorySlug }: { initialCategory
           <div className="lg:w-full">
             <div className="flex sm:flex-row flex-col justify-between items-start sm:items-center gap-4 mb-6">
               <div>
-                <h2 className="font-sans font-semibold text-lg">{selectedCategoryName}</h2>
-                <p className="font-mono font-normal text-muted-foreground text-sm">Найдено {filteredProducts.length} товаров</p>
+                <h2 className="font-semibold text-lg">{selectedCategoryName}</h2>
+                <p className="font-light text-muted-foreground text-sm">Найдено {filteredProducts.length} товаров</p>
               </div>
 
               <div className="flex flex-wrap gap-2 font-sans font-semibold">

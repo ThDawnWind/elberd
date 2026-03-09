@@ -20,7 +20,7 @@ export const RecommendedDishes = () => {
     >
 
       <header className="mb-8 sm:mb-10 lg:mb-12">
-        <h2 className="font-mono font-bold text-gray-900 text-xl sm:text-2xl lg:text-3xl">
+        <h2 className="font-bold text-gray-900 text-xl sm:text-2xl lg:text-3xl">
           Рекомендуем попробовать
         </h2>
       </header>

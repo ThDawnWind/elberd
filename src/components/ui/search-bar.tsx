@@ -52,7 +52,7 @@ export const SearchBar = () => {
             ref={inputRef}
             type="text"
             placeholder="Поиск..."
-            className="shadow-none py-2 sm:py-2.5 pr-12 pl-4 sm:pl-5 border-0 focus-visible:ring-0 focus-visible:ring-offset-0 w-full h-auto text-sm sm:text-base"
+            className="shadow-none py-2 sm:py-2.5 pr-12 pl-4 sm:pl-5 border-0 focus-visible:ring-0 focus-visible:ring-offset-0 w-full h-auto font-normal text-sm sm:text-base"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setIsOpen(true)}

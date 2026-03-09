@@ -42,12 +42,12 @@ export default function CatalogToolbar({
 }: CatalogToolbarProps) {
   return (
     <div className="flex sm:flex-row xs:flex-col xs:justify-between sm:justify-between lg:justify-between gap-4 mb-6 w-full max-w-[1110px] font-sans font-normal">
-      <div>
+      <div className="font-medium">
         <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
           <SelectTrigger className="w-44">
             <SelectValue placeholder="Сортировка" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="font-medium">
             <SelectItem value="rating">По популярности</SelectItem>
             <SelectItem value="price-asc">Цена выше</SelectItem>
             <SelectItem value="price-desc">Цена ниже</SelectItem>

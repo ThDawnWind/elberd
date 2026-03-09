@@ -5,15 +5,31 @@ import "./globals.css";
 import { GlobalProductModal } from "@/components/GlobalProductModal";
 import Script from "next/dist/client/script";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const onest = localFont({
+  src: [
+    {
+      path: "./fonts/Onest-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Onest-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Onest-SemiBold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Onest-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-onest",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -101,7 +117,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html lang="ru" className={`${onest.variable} font-sans`} suppressHydrationWarning>
       <body className="antialiased">
         <StoreHydration />
         {children}

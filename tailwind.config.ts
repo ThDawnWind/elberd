@@ -57,8 +57,7 @@ const config: Config = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
 		 fontFamily: {
-			sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
-			mono: ['var(--font-geist-mono)', 'monospace'],
+			onest: ["var(--font-onest)", "sans-serif"],
         },
 		 screens: {
 			xs: {'min': '320px', 'max': '767px'},

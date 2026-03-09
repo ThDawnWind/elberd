@@ -27,7 +27,7 @@ export default function FiltersSidebar({
         size="sm" 
         onClick={resetFilters}
         className={cn(
-            "text-gray-500 hover:text-black text-sm",
+            "font-medium text-gray-500 hover:text-black text-sm",
             "text-sm text-gray-500 hover:text-black",
             !hasActiveFilters && "hidden"
         )}
@@ -37,19 +37,19 @@ export default function FiltersSidebar({
       </div>
 
       <div className="space-y-3">
-        <h3 className="font-medium">Категории</h3>
+        <h3 className="font-bold">Категории</h3>
 
         <div className="space-y-1">
           <Button
             variant={selectedCategory === 0 ? "secondary" : "ghost"}
-            className={`justify-start gap-2 w-full ${
+            className={`justify-start gap-2 w-full font-medium ${
               selectedCategory === 0
                 ? "bg-berd-primary hover:bg-berd-primary/90 text-white"
                 : "hover:bg-gray-100 text-gray-700"
             } transition-colors duration-200`}
             onClick={() => setSelectedCategory(0)}
           >
-            <span className="flex-1 text-left">Все категории</span>
+            <span className="flex-1 font-medium text-left">Все категории</span>
           </Button>
 
           {CATEGORIES.map((category) => {
@@ -68,7 +68,7 @@ export default function FiltersSidebar({
                 onClick={() => setSelectedCategory(category.id)}
               >
                 <Icon className={`w-4 h-4 ${isSelected ? "text-white" : "text-gray-700"}`} aria-hidden="true" />
-                <span className="flex-1 text-left">{category.name}</span>
+                <span className="flex-1 font-medium text-left">{category.name}</span>
                 {isSelected && <div className="bg-white ml-auto rounded-full w-2 h-2" />}
               </Button>
             );
@@ -76,7 +76,7 @@ export default function FiltersSidebar({
         </div>
 
         <div className="space-y-3">
-          <h3 className="font-medium">Дополнительно</h3>
+          <h3 className="font-bold">Дополнительно</h3>
           <div className="space-y-2">
             {filters.map((filter) => (
               <div key={filter.id} className="flex items-center space-x-2">
@@ -87,7 +87,7 @@ export default function FiltersSidebar({
                   onChange={() => toggleFilter(filter.id)}
                   className="border-gray-300 rounded w-4 h-4 accent-berd-primary"
                 />
-                <label htmlFor={`desktop-${filter.id}`} className="text-sm leading-none cursor-pointer">
+                <label htmlFor={`desktop-${filter.id}`} className="font-medium text-sm leading-none cursor-pointer">
                   {filter.label}
                 </label>
               </div>
@@ -97,7 +97,7 @@ export default function FiltersSidebar({
 
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <h3 className="font-medium">Цена, ₽</h3>
+            <h3 className="font-normal">Цена, ₽</h3>
             <span className="text-muted-foreground text-sm">
               {priceRange[0]} – {priceRange[1]} ₽
             </span>
@@ -109,11 +109,11 @@ export default function FiltersSidebar({
             step={50}
             value={priceRange}
             onValueChange={setPriceRange}
-            className="bg-berd-primary my-4"
+            className="bg-berd-primary my-4 font-medium"
             aria-label="Диапазон цен"
           />
 
-          <div className="flex justify-between items-center text-muted-foreground text-xs sm:text-sm">
+          <div className="flex justify-between items-center font-normal text-muted-foreground text-xs sm:text-sm">
             <span>50 ₽</span>
             <span>2600 ₽</span>
           </div>

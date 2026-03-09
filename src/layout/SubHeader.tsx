@@ -39,7 +39,7 @@ export const SubHeader = () => {
                       aria-current={isCatalog ? "page" : undefined}
                     >
                       <Menu className="w-4 h-4" />
-                      <span className="font-sans font-normal text-sm">
+                      <span className="font-medium text-sm">
                         Меню
                       </span>
                     </Link>
@@ -57,7 +57,7 @@ export const SubHeader = () => {
                 aria-current={pathname === "/" ? "page" : undefined}
               >
                 <Home className="w-4 h-4" />
-                <span className="font-sans font-normal text-sm">Главная</span>
+                <span className="font-medium text-sm">Главная</span>
                 <span 
                   className={`bottom-0 left-0 absolute bg-berd-primary h-0.5 transition-all duration-300 ${
                      pathname === "/"
@@ -79,7 +79,7 @@ export const SubHeader = () => {
                 aria-label="Перейти к разделу 'О нас'"
                 aria-current={pathname === "/about" ? "page" : undefined}
               >
-                <span className="font-sans font-normal text-sm">О нас</span>
+                <span className="font-medium text-sm">О нас</span>
                 <span className={`absolute bottom-0 left-0 bg-berd-primary h-0.5 transition-all duration-300 ${
                     pathname === "/about" ? "w-full" : "w-0 group-hover:w-full"
                   }`}
@@ -95,7 +95,7 @@ export const SubHeader = () => {
                 aria-label="Перейти к разделу 'Магазины'"
                 aria-current={pathname === "/where-to-buy" ? "page" : undefined}
               >
-                <span className="font-sans font-normal text-sm">Магазины</span> 
+                <span className="font-medium text-sm">Магазины</span> 
                 <span 
                   className={`absolute bottom-0 left-0  bg-berd-primary h-0.5 transition-all duration-300 ${
                     pathname === "/where-to-buy" ? "w-full" : "w-0 group-hover:w-full"

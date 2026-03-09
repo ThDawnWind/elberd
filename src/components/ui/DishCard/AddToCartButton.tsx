@@ -108,16 +108,19 @@ export const AddToCartButton = ({
       inCartIcon: "text-berd-primary",
     },
     modal: {
-      button: "flex w-full items-center justify-center gap-2 rounded-lg bg-berd-primary text-white hover:bg-black active:bg-berd-primary/80 py-4 px-6 font-medium shadow-sm transition-all hover:shadow",
-      quantityContainer: "rounded-lg p-3",
+      button:
+        "flex w-full items-center justify-center gap-2 rounded-lg bg-berd-primary text-white hover:bg-black active:bg-berd-primary/80 px-4 py-3 sm:px-6 sm:py-4 font-medium shadow-sm transition-all hover:shadow text-sm sm:text-base",
+     quantityContainer: "bg-berd-primary/10 rounded-lg p-2",
       quantityButton:
-        "h-8 w-8 xs:h-6 xs:h-6  xs:w-6 xs:w-6  rounded-md bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-100 shadow-sm",
-      iconSize: "w-[clamp(18px,2vw,28px)] h-[clamp(18px,2vw,28px)]",
-      textSize: "font-semibold text-[clamp(0.65rem,1.2vw,1.1rem)]",
+        "w-8 h-8 rounded-md bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 shadow-sm",
+      iconSize:
+        "w-4 h-4 sm:w-5 sm:h-5",
+      textSize:
+        "font-semibold text-sm sm:text-base",
       successButton: "bg-green-500 hover:bg-green-600",
       cartLabel: "В корзину",
-      inCartText: "text-black text-[clamp(0.675rem,1.2vw,1.25rem)]",
-      inCartIcon: "text-black",
+      inCartText: "text-berd-primary text-sm sm:text-base",
+      inCartIcon: "text-berd-primary mr-1 sm:mr-2",
     },
     compact: {
       button:
@@ -129,7 +132,7 @@ export const AddToCartButton = ({
       textSize: "text-xs font-semibold",
       successButton: "bg-green-500 hover:bg-green-600 text-white",
       cartLabel: "В корзину",
-      inCartText: "text-gray-700",
+      inCartText: "text-berd-primary",
       inCartIcon: "text-gray-700",
     },
   } as const;
@@ -143,13 +146,13 @@ export const AddToCartButton = ({
     default: {},
     lg: {
       button: "py-3 px-8 text-base",
-      quantityButton: "w-10 h-10",
+      quantityButton: "w-8 h-8",
       iconSize: "w-5 h-5",
     },
-    xl: {
-      button: "py-4 px-10 text-lg",
-      quantityButton: "max-w-12 w-full max-h-12 h-full",
-      iconSize: "max-w-6 w-full max-h-6 h-full",
+   xl: {
+      button: "py-3 px-4 text-sm sm:py-4 sm:px-6 sm:text-base",
+      quantityButton: "w-7 h-7 sm:w-8 sm:h-8",
+      iconSize: "w-4 h-4 sm:w-5 sm:h-5",
     },
   };
 
@@ -231,7 +234,7 @@ export const AddToCartButton = ({
 
           <span
             className={cn(
-              "px-1 min-w-[24px] font-bold text-center",
+              "px-1 min-w-[24px] font-medium text-center",
               styles.textSize,
               styles.inCartText
             )}

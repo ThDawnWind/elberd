@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="bg-black pb-4 font-sans text-white">
+    <footer className="bg-black pb-4 text-white">
       <div className="px-4 sm:px-6 lg:px-8 py-12 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-7xl">
           <div className="flex lg:flex-row flex-col gap-8 sm:gap-10 lg:gap-16 xl:gap-24">
@@ -20,12 +20,12 @@ export const Footer = () => {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <span className="font-mono font-semibold text-berd-primary text-xl sm:text-2xl">
+                <span className="font-bold text-berd-primary text-xl sm:text-2xl">
                   EL&apos;BERD
                 </span>
               </div>
 
-              <p className="mb-8 max-w-md font-sans font-light text-gray-300 text-sm sm:text-base">
+              <p className="mb-8 max-w-md font-medium text-gray-300 text-sm sm:text-base">
                 Ваш надежный сервис доставки вкусной и свежей еды в Грозном.
                 Гарантируем качество и заботимся о каждом клиенте.
               </p>
@@ -35,8 +35,8 @@ export const Footer = () => {
                 <div className="flex items-start gap-4">
                   <MapPin aria-hidden="true" className="flex-shrink-0 mt-0.5 w-5 h-5 text-berd-primary" />
                   <div>
-                    <p className="font-semibold text-gray-200">Адрес:</p>
-                    <p className="text-gray-400">
+                    <p className="font-bold text-gray-200">Адрес:</p>
+                    <p className="font-medium text-gray-400">
                       г. Грозный, пр. Исаева 3
                     </p>
                   </div>
@@ -45,10 +45,10 @@ export const Footer = () => {
                 <div className="flex items-start gap-4">
                   <Phone aria-hidden="true" className="flex-shrink-0 mt-0.5 w-5 h-5 text-berd-primary" />
                   <div>
-                    <p className="font-semibold text-gray-200">Телефон:</p>
+                    <p className="font-bold text-gray-200">Телефон:</p>
                     <a
                       href="tel:+79899194871"
-                      className="text-gray-400 hover:text-berd-primary transition-colors"
+                      className="font-medium text-gray-400 hover:text-berd-primary transition-colors"
                     >
                       +7 (989) 919-48-71
                     </a>
@@ -58,10 +58,10 @@ export const Footer = () => {
                 <div className="flex items-start gap-4">
                   <Mail aria-hidden="true" className="flex-shrink-0 mt-0.5 w-5 h-5 text-berd-primary" />
                   <div>
-                    <p className="font-semibold text-gray-200">Email:</p>
+                    <p className="font-bold text-gray-200">Email:</p>
                     <a
                       href="mailto:info@elberd.ru"
-                      className="text-gray-400 hover:text-berd-primary transition-colors"
+                      className="font-medium text-gray-400 hover:text-berd-primary transition-colors"
                     >
                       info@elberd.ru
                     </a>
@@ -71,9 +71,9 @@ export const Footer = () => {
                 <div className="flex items-start gap-4">
                   <Clock aria-hidden="true" className="flex-shrink-0 mt-0.5 w-5 h-5 text-berd-primary" />
                   <div>
-                    <p className="font-semibold text-gray-200">Часы работы:</p>
-                    <p className="text-gray-400">08:00 — 20:00</p>
-                    <p className="text-gray-400">Без выходных</p>
+                    <p className="font-bold text-gray-200">Часы работы:</p>
+                    <p className="font-medium text-gray-400">08:00 — 20:00</p>
+                    <p className="font-medium text-gray-40">Без выходных</p>
                   </div>
                 </div>
 
@@ -85,7 +85,7 @@ export const Footer = () => {
                   Навигация
                 </h3>
 
-                <ul className="space-y-3 text-sm sm:text-base">
+                <ul className="space-y-3 font-medium text-sm sm:text-base">
                   {[
                     { label: "Главная", href: "/" },
                     { label: "Каталог", href: "/catalog" },
@@ -114,7 +114,7 @@ export const Footer = () => {
                   Мы в соцсетях
                 </h3>
 
-                <p className="mb-6 text-gray-300 text-sm sm:text-base">
+                <p className="mb-6 font-medium text-gray-300 text-sm sm:text-base">
                   Подписывайтесь, чтобы не пропустить новинки и акции.
                 </p>
 

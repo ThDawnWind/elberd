@@ -31,11 +31,11 @@ export const Advantages = () => {
         <header className="mb-8 sm:mb-10 lg:mb-12 text-center">
           <h2
             id="advantages-title"
-            className="mb-3 sm:mb-4 font-mono font-bold text-gray-900 text-2xl sm:text-3xl lg:text-4xl"
+            className="mb-3 sm:mb-4 font-bold text-gray-900 text-2xl sm:text-3xl lg:text-4xl"
           >
             Почему выбирают именно нас?
           </h2>
-          <p className="mx-auto max-w-3xl font-sans font-normal text-gray-600 text-sm sm:text-base lg:text-lg">
+          <p className="mx-auto max-w-3xl font-medium text-gray-600 text-sm sm:text-base lg:text-lg">
             Мы создали сервис доставки, который станет вашим любимым.
           </p>
         </header>
@@ -52,11 +52,11 @@ export const Advantages = () => {
                     />
                   </div>
 
-                  <h3 className="mb-2 font-sans font-bold text-gray-900 group-hover:text-berd-primary text-base sm:text-lg transition-colors">
+                  <h3 className="mb-2 font-bold text-gray-900 group-hover:text-berd-primary text-base sm:text-lg transition-colors">
                     {item.title}
                   </h3>
 
-                  <p className="font-mono text-gray-500 text-sm leading-relaxed">
+                  <p className="font-medium text-gray-500 text-sm leading-relaxed">
                     {item.description}
                   </p>
                 </div>

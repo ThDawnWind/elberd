@@ -18,15 +18,13 @@ export const CategoryCard = ({ name, icon: Icon, slug }: Category) => {
       </div>
 
       <div className="mt-2 sm:mt-3 lg:mt-4 text-center">
-        <h3 className="font-sans font-medium text-gray-900 group-hover:text-berd-primary text-xs sm:text-sm lg:text-sm line-clamp-2 leading-tight transition-colors">
+        <h3 className="font-bold text-gray-900 group-hover:text-berd-primary text-xs sm:text-sm lg:text-sm line-clamp-2 leading-tight transition-colors">
           {name}
         </h3>
 
-        <span className="block mt-1 font-sans text-gray-500 group-hover:text-berd-primary/70 text-xs transition-colors">
+        <span className="block mt-1 font-medium text-gray-500 group-hover:text-berd-primary/70 text-xs transition-colors">
           в меню →
         </span>
-
-        <span className="sr-only">Открыть категорию: {name}</span>
       </div>
     </Link>
   );

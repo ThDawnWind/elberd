@@ -46,7 +46,7 @@ export function CategoryDropdown({
                       key={category.id}
                       className={`
                         flex items-center gap-2 w-full p-2 text-left text-sm
-                        hover:bg-berd-primary hover:text-white transition-colors
+                        hover:bg-berd-primary hover:text-white transition-colors font-medium
                         ${isSelected ? "bg-berd-primary/10 text-berd-primary" : ""}
                       `}
                       onClick={() => {

@@ -4,7 +4,6 @@ import { DishCardProps } from "@/types";
 import { AddToCartButton } from "./AddToCartButton";
 import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -82,9 +81,9 @@ export const DishCard: React.FC<DishCardProps> = ({
             />
           </div>        
 
-          <div className="top-2 sm:top-3 left-2 sm:left-3 absolute flex flex-col gap-1 sm:gap-2">
+          <div className="top-2 sm:top-3 left-2 absolute flex flex-col gap-1 sm:gap-2">
             {product.isNew && (
-              <Badge className="bg-berd-primary hover:bg-berd-primary/90 px-1.5 sm:px-2 py-0.5 sm:py-1 font-sans font-semibold text-[10px] sm:text-xs">
+              <Badge className="bg-berd-primary hover:bg-berd-primary/90 px-1.5 py-0.5 font-semibold text-[10px]">
                 Новинка
               </Badge>
             )}
@@ -101,15 +100,15 @@ export const DishCard: React.FC<DishCardProps> = ({
               className={cn(
                 "w-3.5 sm:w-4 h-3.5 sm:h-4 transition-colors",
                 hasHydratedFav && isFav
-                  ? "fill-red-500 text-red-500"
-                  : "text-muted-foreground hover:fill-red-500 hover:text-red-500"
+                  ? "fill-red-500 text-red-500 animate-pop"
+                  : "text-muted-foreground"
               )}
             />
           </Button>
         </div>
 
         <CardHeader className="mt-[4px] p-[4px] h-[55px]">
-          <CardTitle className="mb-[3px] h-full font-mono font-semibold text-[15px]">
+          <CardTitle className="mb-[3px] h-full font-semibold text- text-[18px] leading-tight">
             {product.name}
           </CardTitle>
         </CardHeader>
@@ -117,12 +116,12 @@ export const DishCard: React.FC<DishCardProps> = ({
           <div className="bg-berd-primary shadow-md shadow-orange-200/40 mb-[3px] rounded-sm w-full h-[2px]" />
         
         <CardContent className="flex flex-col flex-1 p-[4px]">
-        <CardDescription className="mb-[10px] font-sans font-normal text-xs line-clamp-2">
+        <CardDescription className="mb-[10px] font-normal text-xs line-clamp-2">
             Срок годности: {product.shelfLife}
         </CardDescription>
           {product.content && (
             <div className="mb-auto h-[48px]">
-              <p className="flex items-start gap-1 font-sans text-[13px] leading-tight">
+              <p className="flex items-start gap-1 font-normal text-[13px] leading-tight">
                 <span className="whitespace-nowrap">Состав:</span>
                 <span className="flex-1 break-words line-clamp-2">
                   {product.content}
@@ -133,7 +132,7 @@ export const DishCard: React.FC<DishCardProps> = ({
 
           <div className="flex justify-between items-center gap-1 pt-2 border-t">
             <div className="flex flex-col font-sans">
-              <span className="text-[14px] text-muted-foreground sm:text-xs leading-tight">
+              <span className="font-normal text-[14px] text-muted-foreground sm:text-xs leading-tight">
                 Вес: {product.weight}
               </span>
               <span className="font-bold text-[18px]">
@@ -176,7 +175,7 @@ export const DishCard: React.FC<DishCardProps> = ({
 
           <div className="top-2 xs:top-2 sm:top-3 left-2 xs:left-2 sm:left-3 absolute flex flex-col gap-1 xs:gap-1 sm:gap-2">
             {product.isNew && (
-              <Badge className="bg-berd-primary hover:bg-berd-primary/90 px-1.5 xs:px-1.5 sm:px-2 py-0.5 xs:py-0.5 sm:py-1 text-[10px] xs:text-[10px] sm:text-xs">
+              <Badge className="bg-berd-primary hover:bg-berd-primary/90 px-1.5 xs:px-1.5 sm:px-2 py-0.5 xs:py-0.5 sm:py-1 font-semibold text-[10px] xs:text-[10px] sm:text-xs">
                 Новинка
               </Badge>
             )}
@@ -191,10 +190,10 @@ export const DishCard: React.FC<DishCardProps> = ({
           >
             <Heart
               className={cn(
-                "w-3.5 xs:w-3.5 sm:w-4 h-3.5 xs:h-3.5 sm:h-4 transition-colors",
+                "hover:fill-red-500 w-3.5 xs:w-3.5 sm:w-4 h-3.5 xs:h-3.5 sm:h-4",
                 hasHydratedFav && isFav
-                  ? "fill-red-500 text-red-500"
-                  : "text-muted-foreground hover:fill-red-500 hover:text-red-500"
+                  ? "fill-red-500 text-red-500 animate-pop"
+                  : " hover:text-red-500"
               )}
             />
           </Button>
@@ -211,16 +210,16 @@ export const DishCard: React.FC<DishCardProps> = ({
           </div>
 
           <div className="flex flex-col h-[100px] xs:h-[90px] sm:h-[110px] lg:h-[120px]">
-            <CardDescription className="h-[40px] xs:h-[35px] sm:h-[42px] lg:h-[48px] text-muted-foreground xs:text-xs sm:text-sm text-base line-clamp-2">
+            <CardDescription className="h-[40px] xs:h-[35px] sm:h-[42px] lg:h-[48px] font-normal text-muted-foreground xs:text-xs sm:text-sm text-base line-clamp-2">
               Срок годности: {product.shelfLife}
             </CardDescription>
 
             {product.content && (
               <div className="flex flex-col h-[50px] xs:h-[45px] sm:h-[55px] lg:h-[60px]">
-                <p className="mb-1 xs:mb-0.5 font-medium xs:text-xs text-base">
+                <p className="mb-1 xs:mb-0.5 font-semibold xs:text-xs text-base">
                   Состав:
                 </p>
-                <p className="xs:text-[10px] sm:text-xs text-base line-clamp-2">
+                <p className="font-normal xs:text-[10px] sm:text-xs text-base line-clamp-2">
                   {product.content}
                 </p>
               </div>
@@ -228,14 +227,14 @@ export const DishCard: React.FC<DishCardProps> = ({
           </div>
 
           <div className="flex justify-between items-center mt-auto p-2 border-t">
-            <span className="text-black xs:text-[14px] sm:text-xs text-base">
+            <span className="font-medium text-black xs:text-[14px] sm:text-xs text-base">
               Вес: {product.weight}
             </span>
             <AddToCartButton
               product={product}
               price={price}
               variant={variant}
-              size="sm"
+              size="xl"
               className="xs:px-2 sm:px-3 xs:py-1 sm:py-1.5 xs:h-7 sm:h-8 xs:text-[10px] sm:text-xs"
             />
           </div>
@@ -243,56 +242,5 @@ export const DishCard: React.FC<DishCardProps> = ({
       </Card>
     );
   }
-
-  return (
-    <Card
-      id={`product-${product.id}`}
-      data-product-id={product.id}
-      itemScope
-      itemType="https://schema.org/Product"
-      onClick={() => openModal(product)}
-      className={cn(
-        "overflow-hidden transition-all duration-300",
-        "hover:shadow-md",
-        "border-border/30",
-        "flex items-center p-2 xs:p-2 sm:p-3",
-        className
-      )}
-    >
-      <ProductMicrodata />
-
-      <div className="relative flex-shrink-0 mr-2 xs:mr-2 sm:mr-3 rounded-lg w-12 xs:w-12 sm:w-14 lg:w-16 h-12 xs:h-12 sm:h-14 lg:h-16 overflow-hidden">
-        <Image src={productImages[0]} alt={imgAlt} fill className="object-cover" sizes="64px" />
-        {product.isNew && (
-          <Badge className="-top-1 -right-1 absolute p-0 w-4 xs:w-4 sm:w-5 h-4 xs:h-4 sm:h-5 text-[8px] xs:text-[8px] sm:text-[10px]">
-            NEW
-          </Badge>
-        )}
-      </div>
-
-      <div className="flex-1 min-w-0">
-        <CardTitle className="mb-0.5 xs:mb-0.5 sm:mb-1 font-medium text-xs xs:text-xs sm:text-sm line-clamp-1">
-          {product.name}
-        </CardTitle>
-
-        <div className="flex justify-between items-center">
-          <div>
-            <span className="block text-[10px] text-muted-foreground xs:text-[10px] sm:text-xs">
-              Вес: {product.weight}
-            </span>
-            <span className="font-bold xs:text-xs text-sm">{price}₽</span>
-          </div>
-
-          <AddToCartButton
-            product={product}
-            price={price}
-            variant="compact"
-            size="sm"
-            className="xs:px-1.5 sm:px-2 xs:py-0.5 sm:py-1 xs:h-6 sm:h-7 xs:text-[10px] sm:text-xs"
-          />
-        </div>
-      </div>
-    </Card>
-  );
 };
 
