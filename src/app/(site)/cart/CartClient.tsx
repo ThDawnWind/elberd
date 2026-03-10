@@ -24,6 +24,7 @@ import { useCartStore } from "@/stores/cart.store";
 import { CartItemCard } from "@/components/CartItemCard";
 import { NewtonLoader } from "@/components/ui/loader/NewtonLoader";
 import { buildWhatsAppMessage } from "@/lib/cart/whatsapp";
+import { formatPrice } from "@/lib/format";
 
 // Если хочешь оставить свою существующую функцию isCheckoutValid, можешь.
 // Я тут делаю валидацию локально, чтобы точно работало с маской и touched.
@@ -404,7 +405,7 @@ export default function CartClient() {
 
                     <div className="flex justify-between">
                       <span className="font-mono font-light s:text-sm xs:text-sm">Итого:</span>
-                      <span className="font-mono font-bold s:text-sm xs:text-sm text-xl">{totalAmount} ₽</span>
+                      <span className="font-mono font-bold s:text-sm xs:text-sm text-xl">{formatPrice(totalAmount)}</span>
                     </div>
                   </div>
 
@@ -513,7 +514,7 @@ function SuccessModal({
                       {item.weight}г x{item.quantity}
                     </span>
                   </div>
-                  <span className="font-medium">{item.price * item.quantity} ₽</span>
+                  <span className="font-medium">{formatPrice(item.quantity * item.price)}</span>
                 </div>
               ))}
             </div>
@@ -551,7 +552,7 @@ function SuccessModal({
 
           <div className="flex justify-between items-center mb-5 pt-4 border-t">
             <span className="font-bold xs:text-sm text-lg">Итого к оплате:</span>
-            <span className="font-bold text-black xs:text-sm text-2xl">{totalAmount} ₽</span>
+            <span className="font-bold text-black xs:text-sm text-2xl">{formatPrice(totalAmount)}</span>
           </div>
 
           <div className="flex sm:flex-row flex-col gap-3">
