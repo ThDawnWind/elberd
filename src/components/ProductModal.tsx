@@ -54,9 +54,9 @@ export function ProductModal({ product, onClose }: ModalProps) {
     >
       <motion.div
         className={cn(
-          "relative grid grid-cols-1 md:grid-cols-2",
+          "relative grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))]",
           "bg-white shadow-2xl rounded-xl sm:rounded-2xl",
-          "w-full max-w-[1152px] min-w-0 max-h-[90vh]",
+          "w-full max-w-[1152px] max-h-[90vh]",
           "mx-1 sm:mx-4 lg:mx-12 overflow-hidden"
         )}
         onClick={(e) => e.stopPropagation()}
@@ -65,12 +65,12 @@ export function ProductModal({ product, onClose }: ModalProps) {
         exit={{ opacity: 0, scale: 0.96, y: 10 }}
         transition={{ duration: 0.18, ease: "easeOut" }}
       >
-        <div className="relative min-w-0 aspect-[4/3] md:aspect-auto overflow-hidden">
+        <div className="relative min-h-[320px]">
           <CarouselWithDots
             images={images}
             alt={imgAlt}
             heightClass="h-full"
-            imageClassName="h-full w-full object-cover"
+            imageClassName="w-full object-cover"
           />
 
           <div className="top-2 sm:top-3 left-2 sm:left-3 z-10 absolute flex flex-col gap-1 sm:gap-2">
@@ -100,10 +100,10 @@ export function ProductModal({ product, onClose }: ModalProps) {
         </div>
 
         <div className="flex flex-col p-4 sm:p-5 min-w-0 overflow-y-auto">
-          <div className="flex justify-between items-start gap-3 mb-3">
-            <h2 className="font-mono font-bold text-gray-900 text-xl sm:text-2xl lg:text-3xl line-clamp-2 leading-tight">
+          <div className="flex justify-between items-start gap-3 mb-3 xs:mb-1">
+            <h1 className="font-mono font-bold text-[clamp(0.876rem,2vw,2.5rem)] text-gray-900 line-clamp-2 leading-tight">
               {product.name}
-            </h2>
+            </h1>
 
             <button
               type="button"
@@ -114,13 +114,13 @@ export function ProductModal({ product, onClose }: ModalProps) {
               className="text-gray-600 hover:text-red-600 hover:scale-110 transition shrink-0"
               aria-label="Закрыть"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 xs:w-4 h-5 xs:h-4" />
             </button>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 mb-4 text-sm">
+          <div className="flex flex-wrap items-center gap-2 mb-4 text-[clamp(0.476rem,2vw,0.876rem)]">
             {product.category && (
-              <div className="bg-gray-50 px-3 py-1 border border-gray-200 rounded-full font-mono text-gray-700 text-xs sm:text-sm">
+              <div className="bg-gray-50 px-3 py-1 border border-gray-200 rounded-full font-mono text-gray-700">
                 <span className="font-semibold text-green-600">Категория:</span>{" "}
                 <span className="font-semibold text-gray-900">{product.category}</span>
               </div>
@@ -129,7 +129,7 @@ export function ProductModal({ product, onClose }: ModalProps) {
 
           <div className="mb-auto min-h-0">
             {product.content && (
-              <div className="mb-4 sm:mb-6 font-sans text-sm sm:text-base">
+              <div className="mb-4 xs:mb-2 sm:mb-6 font-sans text-[clamp(0.476rem,3vw,0.876rem)]">
                 <h3 className="mb-2 font-semibold text-black uppercase tracking-wide">
                   Состав:
                 </h3>
@@ -138,7 +138,7 @@ export function ProductModal({ product, onClose }: ModalProps) {
             )}
 
             {product.shelfLife && (
-              <div className="font-sans text-sm sm:text-base">
+              <div className="font-sans text-[clamp(0.476rem,3vw,0.876rem)]">
                 <h3 className="mb-2 font-semibold text-black uppercase tracking-wide">
                   Срок хранения:
                 </h3>
@@ -147,9 +147,9 @@ export function ProductModal({ product, onClose }: ModalProps) {
             )}
           </div>
 
-          <div className="mt-4 pt-4 border-t">
-            <div className="flex justify-end mb-3">
-              <div className="text-gray-700 text-sm sm:text-base text-right">
+          <div className="mt-4 xs:mt-2 pt-4 border-t">
+            <div className="flex justify-end mb-3 xs:mb-1">
+              <div className="text-[clamp(0.476rem,3vw,0.876rem)] text-gray-700 text-right">
                 {product.weight && (
                   <>
                     <span className="text-gray-500">Вес:</span>{" "}
@@ -159,9 +159,9 @@ export function ProductModal({ product, onClose }: ModalProps) {
               </div>
             </div>
 
-            <div className="flex xs:flex-row flex-col justify-between items-start xs:items-end gap-3 w-full">
+            <div className="flex justify-between items-center gap-3 xs:gap-1 w-full">
               <div className="flex flex-col">
-                <span className="text-muted-foreground text-sm">Цена:</span>
+                <span className="text-[clamp(0.476rem,3vw,0.876rem)] text-muted-foreground">Цена:</span>
                 <span className="font-mono font-bold text-berd-primary text-2xl sm:text-3xl">
                   {formatPrice(product.price)}
                 </span>

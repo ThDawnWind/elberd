@@ -4,7 +4,6 @@ import { getPopularProducts } from "@/services/prismic/queries/products";
 
 export const PopularDishes = async () => {
   const popularProducts = await getPopularProducts(5);
-
   
   return (
     <section
