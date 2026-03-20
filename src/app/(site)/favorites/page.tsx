@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import FavoritesClient from "./FavoritesClient";
+import { getProducts } from "@/services/prismic/queries/products";
 
 export const metadata: Metadata = {
   title: "Избранное | EL’BERD",
@@ -13,6 +14,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function FavoritesPage() {
-  return <FavoritesClient />;
+export default async function FavoritesPage() {
+  const productsData = await getProducts({
+    pageSize: 100,
+  });
+
+  return <FavoritesClient products={productsData.results} />;
 }

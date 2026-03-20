@@ -17,10 +17,10 @@ export function CartItemCard({
   className,
 }: {
   item: CartItem;
-  onUpdateQuantity: (id: number, quantity: number) => void;
-  onRemove: (id: number) => void;
+  onUpdateQuantity: (id: string, quantity: number) => void;
+  onRemove: (id: string) => void;
   selected: boolean;
-  onToggleSelected: (id: number) => void;
+  onToggleSelected: (id: string) => void;
   className?: string;
 }) {
 

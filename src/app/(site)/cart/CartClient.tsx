@@ -26,8 +26,6 @@ import { NewtonLoader } from "@/components/ui/loader/NewtonLoader";
 import { buildWhatsAppMessage } from "@/lib/cart/whatsapp";
 import { formatPrice } from "@/lib/format";
 
-// Если хочешь оставить свою существующую функцию isCheckoutValid, можешь.
-// Я тут делаю валидацию локально, чтобы точно работало с маской и touched.
 const RESTAURANT_PHONE = "+79637042858";
 
 type DeliveryInfo = {
@@ -71,7 +69,7 @@ export default function CartClient() {
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const selectAllRef = useRef<HTMLInputElement>(null);
 
   const allSelected = items.length > 0 && selectedIds.length === items.length;
@@ -90,7 +88,7 @@ export default function CartClient() {
 
   const clearSelection = () => setSelectedIds([]);
 
-  const toggleSelected = (id: number) => {
+  const toggleSelected = (id: string) => {
     setSelectedIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   };
 
@@ -99,7 +97,7 @@ export default function CartClient() {
     setSelectedIds([]);
   };
 
-  const handleRemoveOne = (id: number) => {
+  const handleRemoveOne = (id: string) => {
     removeFromCart(id);
     setSelectedIds((prev) => prev.filter((x) => x !== id));
   };

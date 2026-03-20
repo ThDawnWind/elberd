@@ -1,0 +1,127 @@
+{
+  "format": "custom",
+  "id": "product",
+  "label": "Product",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Products": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "UID"
+        }
+      },
+      "name": {
+        "type": "Text",
+        "config": {
+          "label": "Name",
+          "placeholder": ""
+        }
+      },
+      "price": {
+        "type": "Number",
+        "config": {
+          "label": "Price",
+          "placeholder": ""
+        }
+      },
+      "weight": {
+        "type": "Text",
+        "config": {
+          "label": "Weight",
+          "placeholder": ""
+        }
+      },
+      "rating": {
+        "type": "Number",
+        "config": {
+          "label": "Rating",
+          "placeholder": ""
+        }
+      },
+      "content": {
+        "type": "Text",
+        "config": {
+          "label": "Content",
+          "placeholder": ""
+        }
+      },
+      "shelf_life": {
+        "type": "Text",
+        "config": {
+          "label": "Shelf life",
+          "placeholder": ""
+        }
+      },
+      "image": {
+        "type": "Image",
+        "config": {
+          "label": "Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "is_new": {
+        "type": "Boolean",
+        "config": {
+          "label": "Is new",
+          "placeholder_false": "false",
+          "placeholder_true": "true",
+          "default_value": false
+        }
+      },
+      "is_hit": {
+        "type": "Boolean",
+        "config": {
+          "label": "Is hit",
+          "placeholder_false": "false",
+          "placeholder_true": "true",
+          "default_value": false
+        }
+      },
+      "is_popular": {
+        "type": "Boolean",
+        "config": {
+          "label": "Is popular ",
+          "placeholder_false": "false",
+          "placeholder_true": "true",
+          "default_value": false
+        }
+      },
+      "is_recommend": {
+        "type": "Boolean",
+        "config": {
+          "label": "Is recommend",
+          "placeholder_false": "false",
+          "placeholder_true": "true",
+          "default_value": false
+        }
+      },
+      "gallery": {
+        "type": "Image",
+        "config": {
+          "label": "Gallery ",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "category": {
+        "type": "Select",
+        "config": {
+          "label": "Category ",
+          "placeholder": "",
+          "options": [
+            "semi-finished",
+            "ready-meals",
+            "meat",
+            "fish",
+            "bakery ",
+            "preserves",
+            "holiday"
+          ]
+        }
+      }
+    }
+  }
+}

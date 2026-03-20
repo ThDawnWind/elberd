@@ -1,24 +1,30 @@
-import { Header } from "@/layout/Header";
+import { Header } from "@/layout/header/Header";
 import { SubHeader } from "@/layout/SubHeader";
 import { Footer } from "@/layout/Footer";
-import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { MobileSearch } from "@/layout/MobileSearch";
+import { getSearchProducts } from "@/services/prismic/queries/search";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://твой-домен.ru"),
 };
 
-export default function SiteLayout({
+export default async function SiteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  
+const searchProducts = await getSearchProducts();
+
   return (
  <div className="flex flex-col w-full">
-      <Header />
+  
+      <Header searchProducts={searchProducts} />
 
-      <MobileSearch/>
+      <MobileSearch products={searchProducts} />
+
 
       <div className="mx-auto px-4 w-full max-w-[1440px]">
         <Suspense fallback={null}>

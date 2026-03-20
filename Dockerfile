@@ -16,7 +16,9 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN npm run build
+RUN --mount=type=secret,id=prismic_access_token \
+    export PRISMIC_ACCESS_TOKEN="$(cat /run/secrets/prismic_access_token)" && \
+    npm run build
 
 FROM base AS runner
 WORKDIR /app
@@ -33,3 +35,4 @@ COPY --from=builder /app/.next/static ./.next/static
 EXPOSE 3000
 
 CMD ["node", "server.js"]
+

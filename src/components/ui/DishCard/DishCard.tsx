@@ -1,8 +1,10 @@
 "use client";
 
-import { DishCardProps } from "@/types";
-import { AddToCartButton } from "./AddToCartButton";
+import { useMemo } from "react";
 import { Heart } from "lucide-react";
+
+import type { DishCardProps } from "@/types";
+import { AddToCartButton } from "./AddToCartButton";
 import { cn } from "@/lib/utils";
 import {
   Card,
@@ -15,7 +17,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CarouselWithDots } from "../carousel-with-dots";
 import { useFavoritesStore } from "@/stores/favorites.store";
-import { useMemo } from "react";
 import { useProductModalStore } from "@/stores/product-modal.store";
 import { formatPrice } from "@/lib/format";
 
@@ -33,7 +34,8 @@ export const DishCard: React.FC<DishCardProps> = ({
   const openModal = useProductModalStore((s) => s.open);
 
   const imgAlt = `${product.name} — доставка EL’BERD`;
-  const favAriaLabel = hasHydratedFav && isFav ? "Убрать из избранного" : "Добавить в избранное";
+  const favAriaLabel =
+    hasHydratedFav && isFav ? "Убрать из избранного" : "Добавить в избранное";
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -44,7 +46,9 @@ export const DishCard: React.FC<DishCardProps> = ({
   const ProductMicrodata = () => (
     <>
       <meta itemProp="name" content={product.name} />
-      {product.content ? <meta itemProp="description" content={product.content} /> : null}
+      {product.content ? (
+        <meta itemProp="description" content={product.content} />
+      ) : null}
       <div itemProp="offers" itemScope itemType="https://schema.org/Offer">
         <meta itemProp="priceCurrency" content="RUB" />
         <meta itemProp="price" content={String(price)} />
@@ -72,14 +76,14 @@ export const DishCard: React.FC<DishCardProps> = ({
         <ProductMicrodata />
 
         <div className="relative rounded-t-[8px] overflow-hidden">
-          <div className="w-full">
+          <div className="w-full h-full max-h-[220px]">
             <CarouselWithDots
               images={productImages}
               alt={imgAlt}
               heightClass="h-[220px]"
               imageClassName="object-cover group-hover:scale-110 transition-transform duration-500"
             />
-          </div>        
+          </div>
 
           <div className="top-2 sm:top-3 left-2 absolute flex flex-col gap-1 sm:gap-2">
             {product.isNew && (
@@ -108,38 +112,42 @@ export const DishCard: React.FC<DishCardProps> = ({
         </div>
 
         <CardHeader className="mt-[4px] p-[4px] h-[55px]">
-          <CardTitle className="mb-[3px] h-full font-semibold text- text-[18px] leading-tight">
+          <CardTitle className="mb-[3px] h-full font-semibold text-[18px] leading-tight">
             {product.name}
           </CardTitle>
         </CardHeader>
-       
-          <div className="bg-berd-primary shadow-md shadow-orange-200/40 mb-[3px] rounded-sm w-full h-[2px]" />
-        
+
+        <div className="bg-berd-primary shadow-md shadow-orange-200/40 mb-auto rounded-sm w-full h-[2px]" />
         <CardContent className="flex flex-col flex-1 p-[4px]">
-        <CardDescription className="mb-[10px] font-normal text-xs line-clamp-2">
-            Срок годности: {product.shelfLife}
-        </CardDescription>
+          <CardDescription className="h-[48px] font-normal text-xs line-clamp-2">
+              {product.shelfLife && `Срок годности: ${product.shelfLife}`}
+          </CardDescription>
+        
+        <div className="mb-auto h-[48px]">
           {product.content && (
-            <div className="mb-auto h-[48px]">
               <p className="flex items-start gap-1 font-normal text-[13px] leading-tight">
                 <span className="whitespace-nowrap">Состав:</span>
                 <span className="flex-1 break-words line-clamp-2">
                   {product.content}
                 </span>
               </p>
-            </div>
           )}
-
+        </div>
+         
           <div className="flex justify-between items-center gap-1 pt-2 border-t">
             <div className="flex flex-col font-sans">
               <span className="font-normal text-[14px] text-muted-foreground sm:text-xs leading-tight">
                 Вес: {product.weight}
               </span>
-              <span className="font-bold text-[18px]">
-                {formatPrice(price)}
-              </span>
+              <span className="font-bold text-[18px]">{formatPrice(price)}</span>
             </div>
-            <AddToCartButton product={product} price={price} variant="grid" size="sm" />
+
+            <AddToCartButton
+              product={product}
+              price={price}
+              variant="grid"
+              size="sm"
+            />
           </div>
         </CardContent>
       </Card>
@@ -163,6 +171,7 @@ export const DishCard: React.FC<DishCardProps> = ({
         )}
       >
         <ProductMicrodata />
+
         <div className="relative flex-row ml-3 sm:w-48 lg:w-72">
           <div className="relative w-full aspect-square sm:aspect-square">
             <CarouselWithDots
@@ -193,25 +202,29 @@ export const DishCard: React.FC<DishCardProps> = ({
                 "hover:fill-red-500 w-3.5 xs:w-3.5 sm:w-4 h-3.5 xs:h-3.5 sm:h-4",
                 hasHydratedFav && isFav
                   ? "fill-red-500 text-red-500 animate-pop"
-                  : " hover:text-red-500"
+                  : "hover:text-red-500"
               )}
             />
           </Button>
         </div>
 
         <div className="flex flex-col flex-grow px-3">
-          <div className="flex flex-row justify-between">
-            <CardTitle className="mb-2 font-semibold text-[16px] line-clamp-2">
+          <div className="flex flex-row justify-between h-full max-h-[55px]">
+            <CardTitle className="mb-2 font-semibold text-[21px] line-clamp-2">
               {product.name}
             </CardTitle>
             <span className="font-bold text-[19px] whitespace-nowrap">
-                {formatPrice(price)}
+              {formatPrice(price)}
             </span>
           </div>
 
           <div className="flex flex-col h-[100px] xs:h-[90px] sm:h-[110px] lg:h-[120px]">
             <CardDescription className="h-[40px] xs:h-[35px] sm:h-[42px] lg:h-[48px] font-normal text-muted-foreground xs:text-xs sm:text-sm text-base line-clamp-2">
-              Срок годности: {product.shelfLife}
+            {product.shelfLife && (
+              <>
+               Срок годности: {product.shelfLife}
+              </>
+            )}     
             </CardDescription>
 
             {product.content && (
@@ -227,9 +240,11 @@ export const DishCard: React.FC<DishCardProps> = ({
           </div>
 
           <div className="flex justify-between items-center mt-auto p-2 border-t">
-            <span className="font-medium text-black xs:text-[14px] sm:text-xs text-base">
-              Вес: {product.weight}
-            </span>
+            {product.weight && (
+              <span className="font-medium text-black xs:text-[14px] sm:text-xs text-base">
+                Вес: {product.weight}
+              </span>
+            )}
             <AddToCartButton
               product={product}
               price={price}
@@ -242,5 +257,6 @@ export const DishCard: React.FC<DishCardProps> = ({
       </Card>
     );
   }
-};
 
+  return null;
+};

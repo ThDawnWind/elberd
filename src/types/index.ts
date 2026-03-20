@@ -1,34 +1,17 @@
-import { LucideIcon } from "lucide-react";
 import { ReactNode } from "react";
+import { Product } from "./product";
+
 
 export interface Category {
   id: number;
   name: string;
-  icon: LucideIcon;
+  icon: string;
   slug: string;
 }
 
-export interface Product {
-  id: number;
-  image: string;
-  images?: string[]
-  name: string;
-  shelfLife: string
-  weight: string; 
-  price: number;
-  rating: number
-  category: string;
-  quantity?: number;
-  content?: string;
-  isNew: boolean;
-  isHit: boolean;
-  isPopular: boolean;
-  isRecommended: boolean;
-  tags?: string[];
-}
 
 export interface CartItem {
-  id: number;
+  id: string;
   name: string;
   price: number;
   weight: string;
@@ -56,7 +39,6 @@ export interface DesktopFiltersSidebarProps {
 export type FilterItem = {
   id: string;
   label: string;
-  condition: (product: Product) => boolean;
 };
 
 export interface MobileFiltersSheetProps {
@@ -81,7 +63,7 @@ export interface AddToCartButtonProps {
   className?: string;
   size?: 'default' | 'sm' | 'lg' | 'xl';
   initialQuantity?: number;
-  onQuantityChange?: (dishId: number, quantity: number) => void;
+  onQuantityChange?: (dishId: string, quantity: number) => void;
 }
 
 export interface SizeStyle {
@@ -138,22 +120,22 @@ export type CartState = {
   hasHydrated: boolean
   setHasHydrated: (v: boolean) => void
 
-  addToCart: (id: number, name: string, price: number, weight: string, image: string, qty: number) => void
-  removeFromCart: (id: number) => void
-  updateQuantity: (id: number, qty: number) => void
+  addToCart: (id: string, name: string, price: number, weight: string, image: string, qty: number) => void
+  removeFromCart: (id: string) => void
+  updateQuantity: (id: string, qty: number) => void
   clearCart: () => void
   totalItems: () => number
   totalAmount: () => number
 }
 
 export type FavoritesState = {
-  ids: number[]
+  ids: string[]
   hasHydrated: boolean
   setHasHydrated: (v: boolean) => void
 
-  toggleFavorite: (id: number) => void
+  toggleFavorite: (id: string) => void
   clearFavorites: () => void
-  isFavorite: (id: number) => boolean
+  isFavorite: (id: string) => boolean
   totalItems: () => number
 }
 
@@ -167,3 +149,4 @@ export type ProductModalState = {
   open: (product: Product) => void
   close: () => void
 }
+

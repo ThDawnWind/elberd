@@ -56,7 +56,9 @@ export function CategoryDropdown({
                         router.push(`/catalog?category=${category.slug}`);
                       }}
                     >
-                      <Icon className="w-4 h-4" />
+                      <div className="w-6 h-6">
+                        <Icon  />
+                      </div>
                       <span className="flex-1">{category.name}</span>
                       {isSelected && <div className="bg-berd-primary rounded-full w-2 h-2" />}
                     </button>

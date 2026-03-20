@@ -12,6 +12,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'fitlabs.ru', 
       },
+      {
+        protocol: "https",
+        hostname: "images.prismic.io",
+      },
     ],
   },
 };

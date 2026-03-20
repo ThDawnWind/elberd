@@ -10,7 +10,7 @@ export const useFavoritesStore = create<FavoritesState>()(
       hasHydrated: false,
       setHasHydrated: (v) => set({ hasHydrated: v }),
 
-      toggleFavorite: (id) => {
+      toggleFavorite: (id: string) => {
         const ids = get().ids
         set({
           ids: ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id],

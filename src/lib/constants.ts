@@ -1,27 +1,28 @@
-import { Category, Product } from "@/types";
-import { Beef, Box, CakeSlice, ChefHat, CookingPot, Fish, Grid3X3, Home, Info, Package, PartyPopper, Store } from "lucide-react";
+import { Category } from "@/types";
+import {  Grid3X3, Home, Info,  Store } from "lucide-react";
 
 export const CATEGORIES: Category[] = [
-  { id: 1, name: "Полуфабрикаты", icon: Package, slug: "semi-finished" },
-  { id: 2, name: "Готовая еда", icon: CookingPot, slug: "ready-meals" },
-  { id: 3, name: "Мясная продукция", icon: Beef, slug: "meat" },
-  { id: 4, name: "Рыба", icon: Fish, slug: "fish" },
-  { id: 5, name: "Хлебобулочные изделия", icon: CakeSlice, slug: "bakery" },
-  { id: 6, name: "Заготовки", icon: Box, slug: "preserves" },
-  { id: 7, name: "Праздничные блюда", icon: PartyPopper, slug: "holiday" },
-]
+  { id: 1, name: "Полуфабрикаты", icon: "package", slug: "semi-finished" },
+  { id: 2, name: "Готовая еда", icon: "cookingPot", slug: "ready-meals" },
+  { id: 3, name: "Мясная продукция", icon: "beef", slug: "meat" },
+  { id: 4, name: "Рыба", icon: "fish", slug: "fish" },
+  { id: 5, name: "Хлебобулочные изделия", icon: "cakeSlice", slug: "bakery" },
+  { id: 6, name: "Заготовки", icon: "box", slug: "preserves" },
+  { id: 7, name: "Праздничные блюда", icon: "partyPopper", slug: "holiday" },
+];
+
 
 export const allCategory = {
     id: 0,                 
     name: 'Все товары',
-    icon: ChefHat,
+    icon:  "chefHat",
     slug: 'all',                  
   }
 
 
 export const filters = [
-  { id: "new", label: "Новинки", condition: (product: Product) => product.isNew },
-  { id: "bestseller", label: "Хиты продаж", condition: (product: Product) => (product.rating || 0) >= 4.7 },
+  { id: "new", label: "Новинки" },
+  { id: "hit", label: "Хиты продаж" },
 ]
 
 export const mobileNavItems = [  

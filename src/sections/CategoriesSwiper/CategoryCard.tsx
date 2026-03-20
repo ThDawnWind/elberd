@@ -1,10 +1,13 @@
-import { Category } from "@/types";
 import Link from "next/link";
+import { ICONS } from "@/lib/icons";
+import { Category } from "@/types";
 
-export const CategoryCard = ({ name, icon: Icon, slug }: Category) => {
+export const CategoryCard = ({ name, icon, slug }: Category) => {
   const href = slug
     ? { pathname: "/catalog", query: { category: slug } }
     : "/catalog";
+
+  const Icon = icon ? ICONS[icon as keyof typeof ICONS] : null;
 
   return (
     <Link
@@ -14,7 +17,9 @@ export const CategoryCard = ({ name, icon: Icon, slug }: Category) => {
       aria-label={`Открыть категорию «${name}» в меню доставки EL’BERD`}
     >
       <div className="flex justify-center items-center bg-gray-50 group-hover:bg-berd-primary/10 rounded-full w-[56px] sm:w-[64px] lg:w-[72px] h-[56px] sm:h-[64px] lg:h-[72px] group-hover:scale-105 transition-all duration-300">
-        <Icon className="w-7 sm:w-8 lg:w-9 h-7 sm:h-8 lg:h-9 text-gray-700 group-hover:text-berd-primary transition-colors" />
+        {Icon ? (
+          <Icon className="w-7 sm:w-8 lg:w-9 h-7 sm:h-8 lg:h-9 text-gray-700 group-hover:text-berd-primary transition-colors" />
+        ) : null}
       </div>
 
       <div className="mt-2 sm:mt-3 lg:mt-4 text-center">

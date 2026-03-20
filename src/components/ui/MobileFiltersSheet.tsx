@@ -1,7 +1,9 @@
 "use client";
 
 import { Filter } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
 import {
   Sheet,
   SheetClose,
@@ -12,11 +14,24 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Slider } from "@/components/ui/slider";
-import { CATEGORIES } from "@/lib/constants";
-import { MobileFiltersSheetProps } from "@/types";
+
+import { ICONS } from "@/lib/icons";
+import type { Category, FilterItem } from "@/types";
+
+type MobileFiltersSheetProps = {
+  categories: Category[];
+  priceRange: [number, number];
+  setPriceRange: (value: [number, number]) => void;
+  selectedFilters: string[];
+  toggleFilter: (id: string) => void;
+  selectedCategory: string;
+  setSelectedCategory: (value: string) => void;
+  resetFilters: () => void;
+  filters: FilterItem[];
+};
 
 export function MobileFiltersSheet({
+  categories,
   priceRange,
   setPriceRange,
   selectedFilters,
@@ -39,7 +54,10 @@ export function MobileFiltersSheet({
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="bottom" className="w-[95vw] sm:max-w-md font-mono font-normal">
+      <SheetContent
+        side="bottom"
+        className="w-[95vw] sm:max-w-md font-mono font-normal"
+      >
         <SheetHeader className="text-left">
           <SheetTitle>Фильтры</SheetTitle>
           <SheetDescription>
@@ -54,33 +72,33 @@ export function MobileFiltersSheet({
             <div className="space-y-2">
               <button
                 type="button"
-                onClick={() => setSelectedCategory(0)}
+                onClick={() => setSelectedCategory("all")}
                 className={`
                   flex items-center gap-3 w-full p-3 rounded-lg text-left transition-colors
                   ${
-                    selectedCategory === 0
+                    selectedCategory === "all"
                       ? "bg-berd-primary/10 text-berd-primary border border-berd-primary/20"
                       : "hover:bg-gray-100 text-gray-700 border border-transparent"
                   }
                 `}
               >
                 <span className="flex-1">Все категории</span>
-                {selectedCategory === 0 && (
+                {selectedCategory === "all" && (
                   <div className="bg-berd-primary rounded-full w-2 h-2" />
                 )}
               </button>
 
-              {CATEGORIES.map((category) => {
-                const Icon = category.icon;
-                const isSelected = selectedCategory === category.id;
+              {categories.map((category) => {
+                const Icon = ICONS[category.icon as keyof typeof ICONS];
+                const isSelected = selectedCategory === category.slug;
 
                 return (
                   <button
                     type="button"
                     key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
+                    onClick={() => setSelectedCategory(category.slug)}
                     className={`
-                      flex items-center gap-1 font-sans font-normal text-sm w-full p-1 rounded-lg text-left transition-colors
+                      flex items-center gap-2 w-full p-3 rounded-lg text-left transition-colors
                       ${
                         isSelected
                           ? "bg-berd-primary/10 text-berd-primary border border-berd-primary/20"
@@ -88,11 +106,17 @@ export function MobileFiltersSheet({
                       }
                     `}
                   >
-                    <Icon
-                      aria-hidden="true"
-                      className={`w-4 h-4 ${isSelected ? "text-berd-primary" : "text-gray-500"}`}
-                    />
+                    {Icon ? (
+                      <Icon
+                        aria-hidden="true"
+                        className={`w-4 h-4 ${
+                          isSelected ? "text-berd-primary" : "text-gray-500"
+                        }`}
+                      />
+                    ) : null}
+
                     <span className="flex-1">{category.name}</span>
+
                     {isSelected && (
                       <div className="bg-berd-primary rounded-full w-2 h-2" />
                     )}
@@ -125,7 +149,6 @@ export function MobileFiltersSheet({
             </div>
           </div>
 
-    
           <div className="space-y-4 font-sans font-light">
             <div className="flex justify-between items-center">
               <h3 className="font-medium text-sm">Цена, ₽</h3>
@@ -139,7 +162,7 @@ export function MobileFiltersSheet({
               max={2600}
               step={50}
               value={priceRange}
-              onValueChange={setPriceRange}
+              onValueChange={(value) => setPriceRange(value as [number, number])}
               className="bg-berd-primary my-4"
               aria-label="Диапазон цен"
             />
@@ -155,9 +178,10 @@ export function MobileFiltersSheet({
           <Button variant="outline" onClick={resetFilters} className="flex-1">
             Сбросить
           </Button>
+
           <SheetClose asChild>
             <Button className="flex-1 bg-berd-primary hover:bg-berd-primary/90">
-              Применить
+              Закрыть
             </Button>
           </SheetClose>
         </SheetFooter>

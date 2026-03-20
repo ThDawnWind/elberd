@@ -2,9 +2,7 @@
 
 import { motion } from "motion/react";
 import { DishCard } from "@/components/ui/DishCard";
-import { Product } from "@/types";
-import { useEffect, useState } from "react";
-import { DishCardGridSkeleton } from "../ui/DishCardSkeleton";
+import { Product } from "@/types/product";
 
 const list = {
   hidden: {},
@@ -25,44 +23,36 @@ const item = {
 };
 
 export default function ProductsGrid({ products }: { products: Product[] }) {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <motion.ul
-      className="gap-2 grid grid-cols-[repeat(auto-fill,minmax(265px,1fr))]"
+      className="justify-center gap-[4px] grid grid-cols-[repeat(auto-fill,265px)]"
       variants={list}
       initial="hidden"
       animate="show"
       layout
     >
-      {loading
-        ? Array.from({ length: 8 }).map((_, i) => (
-            <li key={i}>
-              <DishCardGridSkeleton />
-            </li>
-          ))
-        : products.map((product) => (
-            <motion.li
-              key={product.id}
-              variants={item}
-              layout="position"
-              exit={{
-                opacity: 0,
-                scale: 0.98,
-                transition: { duration: 0.15 },
-              }}
-            >
-              <DishCard product={product} price={product.price} variant="grid" />
-            </motion.li>
-          ))}
+      {products.map((product) => {
+       
+
+        return (
+          <motion.li
+            key={product.id}
+            variants={item}
+            layout="position"
+            exit={{
+              opacity: 0,
+              scale: 0.98,
+              transition: { duration: 0.15 },
+            }}
+          >
+            <DishCard
+              product={product}
+              price={product.price}
+              variant="grid"
+            />
+          </motion.li>
+        );
+      })}
     </motion.ul>
   );
 }
