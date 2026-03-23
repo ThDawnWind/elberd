@@ -1,13 +1,19 @@
 import { CATEGORIES } from "@/lib/constants";
-import type { PrismicProduct } from "@/types/prismic";
+import { Content } from "@prismicio/client";
 import { Product } from "@/types/product";
 
-export function mapProduct(product: PrismicProduct): Product {
-  const categoryField = product.data.category as
-    | { uid?: string }
-    | string
-    | null
-    | undefined;
+type CategoryField =
+  | { uid?: string | null; slug?: string | null }
+  | string
+  | null
+  | undefined;
+
+export function mapProduct(product: Content.ProductDocument): Product {
+  if (!product.uid) {
+    throw new Error(`Product document ${product.id} has no uid`);
+  }
+
+  const categoryField = product.data.category as CategoryField;
 
   const categorySlug =
     typeof categoryField === "string"
@@ -17,14 +23,19 @@ export function mapProduct(product: PrismicProduct): Product {
   const matchedCategory = CATEGORIES.find((c) => c.slug === categorySlug);
 
   const gallery =
-    product.data.gallery_image
-      ?.map((item) => item.images?.url)
+    product.data.gallery
+      ?.map((item) => item.img?.url?.trim())
       .filter((url): url is string => Boolean(url)) ?? [];
 
   const mainImage =
-    product.data.image?.url && product.data.image.url.trim()
-      ? product.data.image.url
+    product.data.image?.url?.trim()
+      ? product.data.image.url.trim()
       : gallery[0] ?? "";
+
+  const allImages = [mainImage, ...gallery].filter(
+    (url, index, arr): url is string =>
+      Boolean(url) && arr.indexOf(url) === index
+  );
 
   return {
     id: product.id,
@@ -32,17 +43,13 @@ export function mapProduct(product: PrismicProduct): Product {
     name: product.data.name ?? "",
     price: product.data.price ?? 0,
     weight: product.data.weight ?? "",
-
     image: mainImage,
-    images: gallery.length ? gallery : mainImage ? [mainImage] : [],
-
+    images: allImages,
     category: matchedCategory?.name ?? categorySlug,
     categorySlug,
-
     rating: product.data.rating ?? 0,
     content: product.data.content ?? "",
     shelfLife: product.data.shelf_life ?? "",
-
     isNew: product.data.is_new ?? false,
     isHit: product.data.is_hit ?? false,
     isPopular: product.data.is_popular ?? false,

@@ -19,6 +19,7 @@ export function ProductModal({ product, onClose }: ModalProps) {
   const hasHydratedFav = useFavoritesStore((state) => state.hasHydrated);
   const favIds = useFavoritesStore((s) => s.ids);
 
+  console.log(product, "00000000000000");
   const isFav = useMemo(() => favIds.includes(product?.id), [favIds, product?.id]);
 
   const imgAlt = `${product.name} — доставка EL’BERD`;
@@ -65,12 +66,12 @@ export function ProductModal({ product, onClose }: ModalProps) {
         exit={{ opacity: 0, scale: 0.96, y: 10 }}
         transition={{ duration: 0.18, ease: "easeOut" }}
       >
-        <div className="relative min-h-[320px]">
+        <div className="relative w-full h-full max-h-[488px]">
           <CarouselWithDots
             images={images}
             alt={imgAlt}
-            heightClass="h-full"
-            imageClassName="w-full object-cover"
+            heightClass="h-[480px]"
+            imageClassName="object-cover"
           />
 
           <div className="top-2 sm:top-3 left-2 sm:left-3 z-10 absolute flex flex-col gap-1 sm:gap-2">
@@ -118,7 +119,7 @@ export function ProductModal({ product, onClose }: ModalProps) {
             </button>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 mb-4 text-[clamp(0.476rem,2vw,0.876rem)]">
+          <div className="flex flex-wrap items-center gap-2 mb-2 text-[clamp(0.476rem,2vw,0.876rem)]">
             {product.category && (
               <div className="bg-gray-50 px-3 py-1 border border-gray-200 rounded-full font-mono text-gray-700">
                 <span className="font-semibold text-green-600">Категория:</span>{" "}
@@ -127,7 +128,7 @@ export function ProductModal({ product, onClose }: ModalProps) {
             )}
           </div>
 
-          <div className="mb-auto min-h-0">
+          <div className="mb-auto h-full min-h-[203px]">
             {product.content && (
               <div className="mb-4 xs:mb-2 sm:mb-6 font-sans text-[clamp(0.476rem,3vw,0.876rem)]">
                 <h3 className="mb-2 font-semibold text-black uppercase tracking-wide">

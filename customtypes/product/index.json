@@ -98,14 +98,6 @@
           "default_value": false
         }
       },
-      "gallery": {
-        "type": "Image",
-        "config": {
-          "label": "Gallery ",
-          "constraint": {},
-          "thumbnails": []
-        }
-      },
       "category": {
         "type": "Select",
         "config": {
@@ -120,6 +112,23 @@
             "preserves",
             "holiday"
           ]
+        }
+      },
+      "gallery": {
+        "type": "Group",
+        "config": {
+          "label": "Gallery ",
+          "repeat": true,
+          "fields": {
+            "images": {
+              "type": "Image",
+              "config": {
+                "label": "Images",
+                "constraint": {},
+                "thumbnails": []
+              }
+            }
+          }
         }
       }
     }

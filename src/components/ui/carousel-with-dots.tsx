@@ -11,13 +11,12 @@ import {
 } from "@/components/ui/carousel";
 import { CarouselWithDotsProps } from "@/types";
 
-
 export function CarouselWithDots({
   images,
   alt,
   className,
   imageClassName,
-  heightClass = "h-[220px]",
+  heightClass = "min-h-[220px]",
   sizes = "510px",
 }: CarouselWithDotsProps) {
   const [api, setApi] = useState<CarouselApi>();
@@ -37,7 +36,12 @@ export function CarouselWithDots({
     api?.scrollTo(index);
   };
 
-  const safeImages = images?.length ? images : ["/images/product.jpg"];
+  const normalizedImages =
+    images?.filter((img): img is string => Boolean(img?.trim())) ?? [];
+
+  const safeImages = normalizedImages.length
+    ? normalizedImages
+    : ["/images/placeholder.png"];
 
   if (safeImages.length <= 1) {
     return (
@@ -46,29 +50,28 @@ export function CarouselWithDots({
           src={safeImages[0]}
           alt={alt}
           fill
-          className={cn("object-cover", imageClassName)}
+          className={cn("object-center object-cover", imageClassName)}
           sizes={sizes}
-          priority={false}
+          priority
         />
       </div>
     );
   }
 
   return (
-    <div className={cn("relative w-full h-full", className)}>
-      <Carousel setApi={setApi} className="w-full h-full">
+    <div className={cn("relative", heightClass, className)}>
+      <Carousel setApi={setApi}>
         <CarouselContent>
           {safeImages.map((img, index) => (
             <CarouselItem key={`${img}-${index}`}>
-              <div className={cn("relative w-full h-full overflow-hidden", heightClass)}>
+              <div className={cn("relative overflow-hidden", heightClass)}>
                 <Image
                   src={img}
                   alt={`${alt} - фото ${index + 1}`}
-                  height={577}
-                  width={577}
-                  className={cn("object-cover", imageClassName)}
+                  fill
+                  className={cn("object-center object-cover", imageClassName)}
                   sizes={sizes}
-                  priority={false}
+                  priority={index === 0}
                 />
               </div>
             </CarouselItem>
@@ -84,7 +87,9 @@ export function CarouselWithDots({
                 onClick={() => handleDotClick(index)}
                 className={cn(
                   "rounded-full h-1.5 transition-all duration-300",
-                  current === index ? "bg-white w-3" : "bg-white/60 hover:bg-white w-1.5"
+                  current === index
+                    ? "w-3 bg-white"
+                    : "w-1.5 bg-white/60 hover:bg-white"
                 )}
                 aria-label={`Перейти к фото ${index + 1}`}
               />

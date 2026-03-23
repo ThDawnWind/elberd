@@ -1,8 +1,9 @@
 import * as prismic from "@prismicio/client";
 import { createClient } from "../client";
-
 import { mapProduct } from "../mapProduct";
 import { Product } from "@/types/product";
+import { normalizePrismicError, ProductsServiceError } from "@/lib/products.errors";
+import { Content } from "@prismicio/client";
 
 export type ProductSort = "newest" | "price_asc" | "price_desc";
 
@@ -18,7 +19,7 @@ type GetProductsParams = {
   isHit?: boolean;
 };
 
-type GetProductsResult = {
+export type GetProductsResult = {
   page: number;
   pageSize: number;
   results_per_page: number;
@@ -29,6 +30,55 @@ type GetProductsResult = {
   prev_page: number | null;
   results: Product[];
 };
+
+function createEmptyProductsResult(
+  page: number,
+  pageSize: number
+): GetProductsResult {
+  return {
+    page,
+    pageSize,
+    results_per_page: pageSize,
+    results_size: 0,
+    total_results_size: 0,
+    total_pages: 1,
+    next_page: null,
+    prev_page: null,
+    results: [],
+  };
+}
+
+async function getCategoryBySlugSafe(
+  client: prismic.Client,
+  categorySlug: string
+) {
+  try {
+    return await client.getByUID("category", categorySlug);
+  } catch (error) {
+    const normalized = normalizePrismicError(
+      error,
+      `Не удалось получить категорию "${categorySlug}"`
+    );
+
+    if (normalized.code === "NOT_FOUND") {
+      return null;
+    }
+
+    throw normalized;
+  }
+}
+
+async function getProductsByTypeSafe(
+  client: prismic.Client,
+  params: Parameters<typeof client.getByType<Content.ProductDocument>>[1]
+) {
+  try {
+    return await client.getByType<Content.ProductDocument>("product", params);
+  } catch (error) {
+    throw normalizePrismicError(error, "Не удалось получить список товаров");
+  }
+}
+
 
 export async function getProducts({
   categorySlug,
@@ -43,30 +93,20 @@ export async function getProducts({
 }: GetProductsParams = {}): Promise<GetProductsResult> {
   const client = createClient();
   const filters = [];
+  
+
 
   if (categorySlug && categorySlug !== "all") {
-    const categoryDoc = await client
-      .getByUID("category", categorySlug)
-      .catch(() => null);
+    const categoryDoc = await getCategoryBySlugSafe(client, categorySlug);
 
-    if (categoryDoc) {
-      filters.push(prismic.filter.at("my.product.category", categoryDoc.id));
-    } else {
-      return {
-        page,
-        pageSize,
-        results_per_page: pageSize,
-        results_size: 0,
-        total_results_size: 0,
-        total_pages: 1,
-        next_page: null,
-        prev_page: null,
-        results: [],
-      };
+    if (!categoryDoc) {
+      return createEmptyProductsResult(page, pageSize);
     }
+
+    filters.push(prismic.filter.at("my.product.category", categoryDoc.id));
   }
 
-  const response = await client.getByType("product", {
+  const response = await getProductsByTypeSafe(client, {
     filters,
     page: 1,
     pageSize: 100,
@@ -80,7 +120,7 @@ export async function getProducts({
       : true;
 
     const price = Number(item.data.price ?? 0);
-    const matchesPrice = price >= min && price <= max;
+    const matchesPrice = Number.isFinite(price) && price >= min && price <= max;
 
     return matchesSearch && matchesPrice;
   });
@@ -131,24 +171,33 @@ export async function getProducts({
 export async function getRecommendedProducts(limit = 5): Promise<Product[]> {
   const client = createClient();
 
-  const response = await client.getByType("product", {
-    filters: [prismic.filter.at("my.product.is_recommend", true)],
-    page: 1,
-    pageSize: limit,
-  });
+  try {
+    const response = await client.getByType<Content.ProductDocument>("product", {
+      filters: [prismic.filter.at("my.product.is_recommend", true)],
+      page: 1,
+      pageSize: limit,
+    });
 
-  
-  return response.results.map(mapProduct);
+    return response.results.map(mapProduct);
+  } catch (error) {
+    throw normalizePrismicError(error, "Не удалось получить рекомендуемые товары");
+  }
 }
 
 export async function getPopularProducts(limit = 5): Promise<Product[]> {
   const client = createClient();
 
-  const response = await client.getByType("product", {
-    filters: [prismic.filter.at("my.product.is_popular", true)],
-    page: 1,
-    pageSize: limit,
-  });
+  try {
+    const response = await client.getByType<Content.ProductDocument>("product", {
+      filters: [prismic.filter.at("my.product.is_popular", true)],
+      page: 1,
+      pageSize: limit,
+    });
 
-  return response.results.map(mapProduct);
+    return response.results.map(mapProduct);
+  } catch (error) {
+    throw normalizePrismicError(error, "Не удалось получить популярные товары");
+  }
 }
+
+export { ProductsServiceError };

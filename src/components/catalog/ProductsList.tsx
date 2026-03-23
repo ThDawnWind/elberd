@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { DishCard } from "@/components/ui/DishCard";
 import { Product } from "@/types/product";
+import { DishCardListSkeleton } from "../ui/DishCardSkeleton";
 
 const list = {
   hidden: {},
@@ -20,7 +21,16 @@ const item = {
   },
 };
 
-export default function ProductsList({ products }: { products: Product[] }) {
+export default function ProductsList({
+  products,
+  isLoading,
+}: {
+  products: Product[];
+  isLoading: boolean;
+})  {
+
+  const skeletons = Array.from({ length: 8 });
+
   return (
     <motion.ul
       className="space-y-2"
@@ -29,10 +39,13 @@ export default function ProductsList({ products }: { products: Product[] }) {
       animate="show"
       layout
     >
-      {products.map((product) => {
-        
-         
-        return (
+      {isLoading
+          ? skeletons.map((_, index) => (
+              <motion.li key={index} variants={item}>
+                <DishCardListSkeleton/>
+              </motion.li>
+            ))
+          :  products.map((product) => (
           <motion.li
             key={product.id}
             variants={item}
@@ -44,9 +57,8 @@ export default function ProductsList({ products }: { products: Product[] }) {
               price={product.price}
               variant="list"
             />
-          </motion.li>
-        );
-      })}
+          </motion.li>   
+      ))}
     </motion.ul>
   );
 }

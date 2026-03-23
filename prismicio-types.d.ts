@@ -113,6 +113,21 @@ export type CategoryDocument<Lang extends string = string> =
   >;
 
 /**
+ * Item in *Product → Gallery *
+ */
+export interface ProductDocumentDataGalleryItem {
+  /**
+   * Images field in *Product → Gallery *
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: product.gallery[].images
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  img: prismic.ImageField<never>;
+}
+
+/**
  * Content for Product documents
  */
 interface ProductDocumentData {
@@ -242,17 +257,6 @@ interface ProductDocumentData {
   is_recommend: prismic.BooleanField;
 
   /**
-   * Gallery  field in *Product*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: product.gallery
-   * - **Tab**: Products
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  gallery: prismic.ImageField<never>;
-
-  /**
    * Category  field in *Product*
    *
    * - **Field Type**: Select
@@ -270,6 +274,17 @@ interface ProductDocumentData {
     | "preserves"
     | "holiday"
   >;
+
+  /**
+   * Gallery  field in *Product*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: product.gallery[]
+   * - **Tab**: Products
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  gallery: prismic.GroupField<Simplify<ProductDocumentDataGalleryItem>>;
 }
 
 /**
@@ -315,6 +330,7 @@ declare module "@prismicio/client" {
       CategoryDocumentData,
       ProductDocument,
       ProductDocumentData,
+      ProductDocumentDataGalleryItem,
       AllDocumentTypes,
     };
   }

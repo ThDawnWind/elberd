@@ -10,11 +10,13 @@ import FiltersSidebar from "@/components/catalog/FiltersSidebar";
 import ProductsGrid from "@/components/catalog/ProductsGrid";
 import ProductsList from "@/components/catalog/ProductsList";
 
+
 import type { ProductSort } from "@/services/prismic/queries/products";
 import type { Category } from "@/types";
 import { useCatalogUIStore } from "@/stores/catalog.store";
 import { filters } from "@/lib/constants";
 import { Product } from "@/types/product";
+import { ProductsErrorState } from "@/components/ProductsState";
 
 const pageFade = {
   hidden: { opacity: 0, y: 10 },
@@ -31,6 +33,11 @@ type CatalogClientProps = {
   currentCategory: string;
   currentSort: ProductSort;
   currentSearch: string;
+  error: {
+    code: string;
+    message: string;
+    retryable: boolean;
+  } | null;
 };
 
 const DEFAULT_PRICE_RANGE: [number, number] = [50, 2600];
@@ -41,6 +48,7 @@ export default function CatalogClient({
   currentCategory,
   currentSort,
   currentSearch,
+  error,
 }: CatalogClientProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -48,6 +56,7 @@ export default function CatalogClient({
 
   const viewMode = useCatalogUIStore((s) => s.viewMode);
   const setViewMode = useCatalogUIStore((s) => s.setViewMode);
+  const isLoading = useCatalogUIStore((s) => s.isLoading)
 
   const initialMin = Number(searchParams.get("min") ?? DEFAULT_PRICE_RANGE[0]);
   const initialMax = Number(searchParams.get("max") ?? DEFAULT_PRICE_RANGE[1]);
@@ -160,7 +169,7 @@ export default function CatalogClient({
               <div>
                 <h2 className="font-semibold text-lg">{selectedCategoryName}</h2>
                 <p className="font-light text-muted-foreground text-sm">
-                  Найдено {products.length} товаров
+                  {error ? "Не удалось загрузить товары" : `Найдено ${products.length} товаров`}
                 </p>
               </div>
             </div>
@@ -188,7 +197,16 @@ export default function CatalogClient({
             />
 
             <LayoutGroup id="catalog">
-              {products.length === 0 ? (
+              {error ? (
+                <div className="py-8">
+                  <ProductsErrorState
+                    code={error.code}
+                    message={error.message}
+                    retryable={error.retryable}
+                    onRetry={() => router.refresh()}
+                  />
+                </div>
+              ) : products.length === 0 ? (
                 <div className="py-12 font-mono font-light text-center">
                   <h3 className="font-semibold text-lg">Товары не найдены</h3>
                   <p className="mt-2 text-muted-foreground">
@@ -204,11 +222,11 @@ export default function CatalogClient({
                 </div>
               ) : viewMode === "grid" ? (
                 <AnimatePresence mode="popLayout">
-                  <ProductsGrid products={products} />
+                  <ProductsGrid isLoading={isLoading} products={products} />
                 </AnimatePresence>
               ) : (
                 <AnimatePresence mode="popLayout">
-                  <ProductsList products={products} />
+                  <ProductsList isLoading={isLoading} products={products} />
                 </AnimatePresence>
               )}
             </LayoutGroup>

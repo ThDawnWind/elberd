@@ -1,10 +1,49 @@
+import { Suspense, use } from "react";
+import { DishCardGridSkeleton } from "@/components/ui/DishCardSkeleton";
 import { DishCard } from "@/components/ui/DishCard";
 import { Reveal } from "./Reveal";
 import { getPopularProducts } from "@/services/prismic/queries/products";
+import { Product } from "@/types/product";
 
-export const PopularDishes = async () => {
-  const popularProducts = await getPopularProducts(5);
-  
+const popularProductsPromise = getPopularProducts(5);
+
+function PopularDishesContent() {
+  const popularProducts = use(popularProductsPromise);
+
+  if (popularProducts.length === 0) {
+    return (
+      <p className="py-8 text-gray-500 text-center">
+        Популярные блюда скоро появятся
+      </p>
+    );
+  }
+
+  return (
+    <ul className="justify-center gap-[4px] grid grid-cols-[repeat(auto-fill,265px)]">
+      {popularProducts.map((product: Product) => (
+        <li key={product.id}>
+          <Reveal>
+            <DishCard price={product.price} product={product} variant="grid" />
+          </Reveal>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function PopularDishesSkeleton() {
+  return (
+    <ul className="justify-center gap-[4px] grid grid-cols-[repeat(auto-fill,265px)]">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <li key={i}>
+          <DishCardGridSkeleton />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export const PopularDishes = () => {
   return (
     <section
       className="mb-[64px] xs:mb-[32px] px-4 sm:px-6 lg:px-8"
@@ -19,25 +58,9 @@ export const PopularDishes = async () => {
         </h2>
       </header>
 
-<ul className="justify-center gap-[4px] grid grid-cols-[repeat(auto-fill,265px)]">
-        {popularProducts.map((product) => (
-          <li key={product.id}>
-            <Reveal>
-              <DishCard
-                price={product.price}
-                product={product}
-                variant="grid"
-              />
-            </Reveal>
-          </li>
-        ))}
-      </ul>
+      <Suspense fallback={<PopularDishesSkeleton />}>
+        <PopularDishesContent />
+      </Suspense>
     </section>
   );
 };
-  //  {loading 
-  //       ? Array.from({ length: 5 }).map((_, i) => (
-  //       <li key={i}>
-  //         <DishCardGridSkeleton />
-  //       </li>
-  //     )) :

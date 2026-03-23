@@ -26,7 +26,7 @@ export const DishCard: React.FC<DishCardProps> = ({
   variant = "grid",
   className = "",
 }) => {
-  const productImages = product?.images || [];
+  const productImages = product.images || product.image;
   const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
   const hasHydratedFav = useFavoritesStore((state) => state.hasHydrated);
   const favIds = useFavoritesStore((s) => s.ids);
@@ -80,7 +80,7 @@ export const DishCard: React.FC<DishCardProps> = ({
             <CarouselWithDots
               images={productImages}
               alt={imgAlt}
-              heightClass="h-[220px]"
+              heightClass="h-[214px]"
               imageClassName="object-cover group-hover:scale-110 transition-transform duration-500"
             />
           </div>
@@ -177,7 +177,7 @@ export const DishCard: React.FC<DishCardProps> = ({
             <CarouselWithDots
               images={productImages}
               alt={imgAlt}
-              heightClass="h-full"
+              heightClass="h-[288px]"
               imageClassName="object-cover group-hover:scale-110 transition-transform duration-500"
             />
           </div>
@@ -240,11 +240,14 @@ export const DishCard: React.FC<DishCardProps> = ({
           </div>
 
           <div className="flex justify-between items-center mt-auto p-2 border-t">
+            <div>
             {product.weight && (
               <span className="font-medium text-black xs:text-[14px] sm:text-xs text-base">
                 Вес: {product.weight}
               </span>
             )}
+            </div>
+
             <AddToCartButton
               product={product}
               price={price}
