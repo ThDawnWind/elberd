@@ -85,7 +85,7 @@ export interface CarouselWithDotsProps {
   readonly alt: string
   readonly className?: string
   readonly imageClassName?: string
-  readonly heightClass: string
+  readonly heightClass?: string
   readonly sizes?: string
 }
 export type SortKey = "rating" | "price-asc" | "price-desc" | "new"

@@ -16,7 +16,7 @@ export function CarouselWithDots({
   alt,
   className,
   imageClassName,
-  heightClass = "min-h-[220px]",
+  heightClass,
   sizes = "510px",
 }: CarouselWithDotsProps) {
   const [api, setApi] = useState<CarouselApi>();
@@ -59,18 +59,18 @@ export function CarouselWithDots({
   }
 
   return (
-    <div className={cn("relative", heightClass, className)}>
-      <Carousel setApi={setApi}>
-        <CarouselContent>
+    <div className={cn("relative w-full h-full overflow-hidden", heightClass, className)}>
+      <Carousel setApi={setApi} className="h-full">
+        <CarouselContent className="h-full">
           {safeImages.map((img, index) => (
-            <CarouselItem key={`${img}-${index}`}>
-              <div className={cn("relative overflow-hidden", heightClass)}>
+            <CarouselItem className="h-full" key={`${img}-${index}`}>
+              <div className={cn("relative w-full h-full overflow-hidden", heightClass)}>
                 <Image
                   src={img}
                   alt={`${alt} - фото ${index + 1}`}
-                  fill
-                  className={cn("object-center object-cover", imageClassName)}
-                  sizes={sizes}
+                  width={576}
+                  height={480}
+                  className={cn("w-full h-full object-center object-cover", imageClassName)}
                   priority={index === 0}
                 />
               </div>
