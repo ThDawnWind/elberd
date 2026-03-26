@@ -102,7 +102,7 @@ export default function FavoritesClient({ products }: FavoritesClientProps) {
             </Button>
           </div>
         ) : (
-          <ul className="gap-4 grid grid-cols-[repeat(auto-fill,minmax(265px,1fr))]">
+          <ul className="justify-center gap-4 grid grid-cols-[repeat(auto-fill,minmax(265px,1fr))]">
             {favoriteProducts.map((product) => (
               <li key={product.id}>
                 <Reveal>

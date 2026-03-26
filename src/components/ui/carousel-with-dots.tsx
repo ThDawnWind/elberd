@@ -69,8 +69,8 @@ export function CarouselWithDots({
                   src={img}
                   alt={`${alt} - фото ${index + 1}`}
                   width={576}
-                  height={480}
-                  className={cn("w-full h-full object-center object-cover", imageClassName)}
+                  height={576}
+                  className={cn("w-full h-full", imageClassName)}
                   priority={index === 0}
                 />
               </div>

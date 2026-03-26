@@ -80,92 +80,100 @@ async function getProductsByTypeSafe(
 }
 
 
-export async function getProducts({
-  categorySlug,
-  search,
-  sort = "newest",
-  page = 1,
-  pageSize = 12,
-  min = 50,
-  max = 2600,
-  isHit = false,
-  isNew = false,
-}: GetProductsParams = {}): Promise<GetProductsResult> {
-  const client = createClient();
-  const filters = [];
-  
+export async function getProducts(
+  params: GetProductsParams = {}
+): Promise<GetProductsResult> {
+  const {
+    categorySlug,
+    search,
+    sort = "newest",
+    page = 1,
+    pageSize = 12,
+    min = 50,
+    max = 2600,
+    isHit = false,
+    isNew = false,
+  } = params;
 
+  try {
+    const client = createClient();
+    const filters = [];
 
-  if (categorySlug && categorySlug !== "all") {
-    const categoryDoc = await getCategoryBySlugSafe(client, categorySlug);
+    if (categorySlug && categorySlug !== "all") {
+      const categoryDoc = await getCategoryBySlugSafe(client, categorySlug);
 
-    if (!categoryDoc) {
-      return createEmptyProductsResult(page, pageSize);
+      if (!categoryDoc) {
+        return createEmptyProductsResult(page, pageSize);
+      }
+
+      filters.push(prismic.filter.at("my.product.category", categoryDoc.id));
     }
 
-    filters.push(prismic.filter.at("my.product.category", categoryDoc.id));
-  }
+    const response = await getProductsByTypeSafe(client, {
+      filters,
+      page: 1,
+      pageSize: 100,
+    });
 
-  const response = await getProductsByTypeSafe(client, {
-    filters,
-    page: 1,
-    pageSize: 100,
-  });
+    const query = search?.trim().toLowerCase();
 
-  const query = search?.trim().toLowerCase();
+    let filtered = response.results.filter((item) => {
+      const matchesSearch = query
+        ? String(item.data.name ?? "").toLowerCase().includes(query)
+        : true;
 
-  let filtered = response.results.filter((item) => {
-    const matchesSearch = query
-      ? String(item.data.name ?? "").toLowerCase().includes(query)
-      : true;
+      const price = Number(item.data.price ?? 0);
+      const matchesPrice =
+        Number.isFinite(price) && price >= min && price <= max;
 
-    const price = Number(item.data.price ?? 0);
-    const matchesPrice = Number.isFinite(price) && price >= min && price <= max;
+      return matchesSearch && matchesPrice;
+    });
 
-    return matchesSearch && matchesPrice;
-  });
-
-  if (isNew) {
-    filtered = filtered.filter((item) => item.data.is_new === true);
-  }
-
-  if (isHit) {
-    filtered = filtered.filter((item) => item.data.is_hit === true);
-  }
-
-  filtered.sort((a, b) => {
-    if (sort === "price_asc") {
-      return Number(a.data.price ?? 0) - Number(b.data.price ?? 0);
+    if (isNew) {
+      filtered = filtered.filter((item) => item.data.is_new === true);
     }
 
-    if (sort === "price_desc") {
-      return Number(b.data.price ?? 0) - Number(a.data.price ?? 0);
+    if (isHit) {
+      filtered = filtered.filter((item) => item.data.is_hit === true);
     }
 
-    return (
-      new Date(b.first_publication_date).getTime() -
-      new Date(a.first_publication_date).getTime()
-    );
-  });
+    filtered.sort((a, b) => {
+      if (sort === "price_asc") {
+        return Number(a.data.price ?? 0) - Number(b.data.price ?? 0);
+      }
 
-  const total_results_size = filtered.length;
-  const total_pages = Math.max(1, Math.ceil(total_results_size / pageSize));
-  const safePage = Math.min(Math.max(page, 1), total_pages);
-  const start = (safePage - 1) * pageSize;
+      if (sort === "price_desc") {
+        return Number(b.data.price ?? 0) - Number(a.data.price ?? 0);
+      }
 
-  const pagedResults = filtered.slice(start, start + pageSize).map(mapProduct);
+      return (
+        new Date(b.first_publication_date).getTime() -
+        new Date(a.first_publication_date).getTime()
+      );
+    });
 
-  return {
-    page: safePage,
-    pageSize,
-    results_per_page: pageSize,
-    results_size: pagedResults.length,
-    total_results_size,
-    total_pages,
-    next_page: safePage < total_pages ? safePage + 1 : null,
-    prev_page: safePage > 1 ? safePage - 1 : null,
-    results: pagedResults,
-  };
+    const total_results_size = filtered.length;
+    const total_pages = Math.max(1, Math.ceil(total_results_size / pageSize));
+    const safePage = Math.min(Math.max(page, 1), total_pages);
+    const start = (safePage - 1) * pageSize;
+
+    const pagedResults = filtered.slice(start, start + pageSize).map(mapProduct);
+
+    return {
+      page: safePage,
+      pageSize,
+      results_per_page: pageSize,
+      results_size: pagedResults.length,
+      total_results_size,
+      total_pages,
+      next_page: safePage < total_pages ? safePage + 1 : null,
+      prev_page: safePage > 1 ? safePage - 1 : null,
+      results: pagedResults,
+    };
+  } catch (error) {
+    console.error("[getProducts] Prismic error:", error);
+    return createEmptyProductsResult(page, pageSize);
+  }
 }
 
 export async function getRecommendedProducts(limit = 5): Promise<Product[]> {
@@ -180,7 +188,8 @@ export async function getRecommendedProducts(limit = 5): Promise<Product[]> {
 
     return response.results.map(mapProduct);
   } catch (error) {
-    throw normalizePrismicError(error, "Не удалось получить рекомендуемые товары");
+    console.error("[getRecommendedProducts]", error);
+    return [];
   }
 }
 
@@ -196,7 +205,8 @@ export async function getPopularProducts(limit = 5): Promise<Product[]> {
 
     return response.results.map(mapProduct);
   } catch (error) {
-    throw normalizePrismicError(error, "Не удалось получить популярные товары");
+    console.error("[getPopularProducts]", error);
+    return [];
   }
 }
 

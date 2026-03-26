@@ -197,7 +197,8 @@ export default function CatalogClient({
             />
 
             <LayoutGroup id="catalog">
-              {error ? (
+              <div className="justify-center">
+                  {error ? (
                 <div className="py-8">
                   <ProductsErrorState
                     code={error.code}
@@ -229,6 +230,8 @@ export default function CatalogClient({
                   <ProductsList isLoading={isLoading} products={products} />
                 </AnimatePresence>
               )}
+              </div>
+            
             </LayoutGroup>
           </div>
         </div>
