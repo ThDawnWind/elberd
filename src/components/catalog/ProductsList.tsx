@@ -1,5 +1,6 @@
 "use client";
 
+import { forwardRef } from "react";
 import { motion } from "motion/react";
 import { DishCard } from "@/components/ui/DishCard";
 import { Product } from "@/types/product";
@@ -21,44 +22,49 @@ const item = {
   },
 };
 
-export default function ProductsList({
-  products,
-  isLoading,
-}: {
+type ProductsListProps = {
   products: Product[];
   isLoading: boolean;
-})  {
+};
 
-  const skeletons = Array.from({ length: 8 });
+const ProductsList = forwardRef<HTMLUListElement, ProductsListProps>(
+  ({ products, isLoading }, ref) => {
+    const skeletons = Array.from({ length: 8 });
 
-  return (
-    <motion.ul
-      className="space-y-2"
-      variants={list}
-      initial="hidden"
-      animate="show"
-      layout
-    >
-      {isLoading
+    return (
+      <motion.ul
+        ref={ref}
+        className="space-y-2"
+        variants={list}
+        initial="hidden"
+        animate="show"
+        layout
+      >
+        {isLoading
           ? skeletons.map((_, index) => (
               <motion.li key={index} variants={item}>
-                <DishCardListSkeleton/>
+                <DishCardListSkeleton />
               </motion.li>
             ))
-          :  products.map((product) => (
-          <motion.li
-            key={product.id}
-            variants={item}
-            layout="position"
-            exit={{ opacity: 0, y: 6, transition: { duration: 0.15 } }}
-          >
-            <DishCard
-              product={product}
-              price={product.price}
-              variant="list"
-            />
-          </motion.li>   
-      ))}
-    </motion.ul>
-  );
-}
+          : products.map((product) => (
+              <motion.li
+                key={product.id}
+                variants={item}
+                layout="position"
+                exit={{ opacity: 0, y: 6, transition: { duration: 0.15 } }}
+              >
+                <DishCard
+                  product={product}
+                  price={product.price}
+                  variant="list"
+                />
+              </motion.li>
+            ))}
+      </motion.ul>
+    );
+  }
+);
+
+ProductsList.displayName = "ProductsList";
+
+export default ProductsList;
