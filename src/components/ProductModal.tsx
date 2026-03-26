@@ -47,7 +47,7 @@ export function ProductModal({ product, onClose }: ModalProps) {
 
   return (
     <motion.div
-      className="z-50 fixed inset-0 flex justify-center items-end sm:items-center bg-black/50 p-0 sm:p-2"
+      className="z-50 fixed inset-0 flex justify-center items-end sm:items-center lg:items-center bg-black/50 p-0 sm:p-2"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
