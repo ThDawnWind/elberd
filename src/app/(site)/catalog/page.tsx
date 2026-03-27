@@ -37,15 +37,13 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
   const isNew = searchParams.new === "1";
   const isHit = searchParams.hit === "1";
 
-  
-
   try {
     const productsData = await getProducts({
       categorySlug: currentCategory,
       sort: currentSort,
       search: currentSearch,
       page,
-      pageSize: 114,
+      pageSize: 8,
       min,
       max,
       isNew,
@@ -60,6 +58,8 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
           currentCategory={currentCategory}
           currentSort={currentSort}
           currentSearch={currentSearch}
+          totalPages={productsData.total_pages}
+          totalResultsSize={productsData.total_results_size}
           error={null}
         />
       </div>
@@ -82,6 +82,8 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
             currentCategory={currentCategory}
             currentSort={currentSort}
             currentSearch={currentSearch}
+            totalPages={1}
+            totalResultsSize={0}
             error={{
               code: error.code,
               message: error.userMessage,
@@ -100,6 +102,8 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
           currentCategory={currentCategory}
           currentSort={currentSort}
           currentSearch={currentSearch}
+          totalPages={1}
+          totalResultsSize={0}
           error={{
             code: "UNKNOWN",
             message: "Не удалось загрузить каталог.",

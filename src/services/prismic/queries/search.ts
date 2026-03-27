@@ -7,7 +7,7 @@ export async function getSearchProducts(): Promise<Product[]> {
 
   const response = await client.getByType("product", {
     page: 1,
-    pageSize: 100,
+    pageSize: 10,
   });
 
   return response.results.map(mapProduct);

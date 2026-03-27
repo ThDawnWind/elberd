@@ -79,6 +79,22 @@ async function getProductsByTypeSafe(
   }
 }
 
+function getPrismicOrderings(sort: ProductSort) {
+  if (sort === "price_asc") {
+    return [{ field: "my.product.price", direction: "asc" as const }];
+  }
+
+  if (sort === "price_desc") {
+    return [{ field: "my.product.price", direction: "desc" as const }];
+  }
+
+  return [
+    {
+      field: "document.first_publication_date",
+      direction: "desc" as const,
+    },
+  ];
+}
 
 export async function getProducts(
   params: GetProductsParams = {}
@@ -88,7 +104,7 @@ export async function getProducts(
     search,
     sort = "newest",
     page = 1,
-    pageSize = 12,
+    pageSize = 8,
     min = 50,
     max = 2600,
     isHit = false,
@@ -109,66 +125,43 @@ export async function getProducts(
       filters.push(prismic.filter.at("my.product.category", categoryDoc.id));
     }
 
-    const response = await getProductsByTypeSafe(client, {
-      filters,
-      page: 1,
-      pageSize: 100,
-    });
-
-    const query = search?.trim().toLowerCase();
-
-    let filtered = response.results.filter((item) => {
-      const matchesSearch = query
-        ? String(item.data.name ?? "").toLowerCase().includes(query)
-        : true;
-
-      const price = Number(item.data.price ?? 0);
-      const matchesPrice =
-        Number.isFinite(price) && price >= min && price <= max;
-
-      return matchesSearch && matchesPrice;
-    });
-
     if (isNew) {
-      filtered = filtered.filter((item) => item.data.is_new === true);
+      filters.push(prismic.filter.at("my.product.is_new", true));
     }
 
     if (isHit) {
-      filtered = filtered.filter((item) => item.data.is_hit === true);
+      filters.push(prismic.filter.at("my.product.is_hit", true));
     }
 
-    filtered.sort((a, b) => {
-      if (sort === "price_asc") {
-        return Number(a.data.price ?? 0) - Number(b.data.price ?? 0);
-      }
+    if (Number.isFinite(min)) {
+      filters.push(prismic.filter.numberGreaterThan("my.product.price", min - 1));
+    }
 
-      if (sort === "price_desc") {
-        return Number(b.data.price ?? 0) - Number(a.data.price ?? 0);
-      }
+    if (Number.isFinite(max)) {
+      filters.push(prismic.filter.numberLessThan("my.product.price", max + 1));
+    }
 
-      return (
-        new Date(b.first_publication_date).getTime() -
-        new Date(a.first_publication_date).getTime()
-      );
+    if (search?.trim()) {
+      filters.push(prismic.filter.fulltext("my.product.name", search.trim()));
+    }
+
+    const response = await getProductsByTypeSafe(client, {
+      filters,
+      orderings: getPrismicOrderings(sort),
+      page,
+      pageSize,
     });
 
-    const total_results_size = filtered.length;
-    const total_pages = Math.max(1, Math.ceil(total_results_size / pageSize));
-    const safePage = Math.min(Math.max(page, 1), total_pages);
-    const start = (safePage - 1) * pageSize;
-
-    const pagedResults = filtered.slice(start, start + pageSize).map(mapProduct);
-
     return {
-      page: safePage,
+      page: response.page,
       pageSize,
-      results_per_page: pageSize,
-      results_size: pagedResults.length,
-      total_results_size,
-      total_pages,
-      next_page: safePage < total_pages ? safePage + 1 : null,
-      prev_page: safePage > 1 ? safePage - 1 : null,
-      results: pagedResults,
+      results_per_page: response.results_per_page,
+      results_size: response.results_size,
+      total_results_size: response.total_results_size,
+      total_pages: response.total_pages,
+      next_page: response.next_page ? response.page + 1 : null,
+      prev_page: response.prev_page ? response.page - 1 : null,
+      results: response.results.map(mapProduct),
     };
   } catch (error) {
     console.error("[getProducts] Prismic error:", error);
