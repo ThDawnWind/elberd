@@ -146,7 +146,7 @@ export const DishCard: React.FC<DishCardProps> = ({
               product={product}
               price={price}
               variant="grid"
-              size="sm"
+              size="md"
             />
           </div>
         </CardContent>
@@ -252,7 +252,7 @@ export const DishCard: React.FC<DishCardProps> = ({
               product={product}
               price={price}
               variant={variant}
-              size="xl"
+              size="lg"
               className="xs:px-2 sm:px-3 xs:py-1 sm:py-1.5 xs:h-7 sm:h-8 xs:text-[10px] sm:text-xs"
             />
           </div>

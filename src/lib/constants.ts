@@ -11,14 +11,12 @@ export const CATEGORIES: Category[] = [
   { id: 7, name: "Праздничные блюда", icon: "partyPopper", slug: "holiday" },
 ];
 
-
-export const allCategory = {
-    id: 0,                 
-    name: 'Все товары',
-    icon:  "chefHat",
-    slug: 'all',                  
-  }
-
+export const allCategory: Category = {
+  id: 0,
+  name: "Все товары",
+  icon: "chefHat",
+  slug: "all",
+};
 
 export const filters = [
   { id: "new", label: "Новинки" },

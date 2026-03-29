@@ -32,7 +32,7 @@ export const SubHeader = () => {
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                         isCatalog 
                           ? "bg-berd-primary text-black" 
-                          : "hover:bg-berd-primary/10 text-gray-800"
+                          : "hover:bg-berd-primary text-gray-800"
                       }`}
                       aria-label="Открыть меню каталога"
                       title="Каталог"

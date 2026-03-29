@@ -1,11 +1,12 @@
 import { ReactNode } from "react";
 import { Product } from "./product";
+import { IconKey } from "@/lib/icons";
 
 
 export interface Category {
   id: number;
   name: string;
-  icon: string;
+  icon: IconKey;
   slug: string;
 }
 
@@ -61,15 +62,15 @@ export interface AddToCartButtonProps {
   price: number;
   variant?: 'grid' | 'list' | 'compact' | 'modal';
   className?: string;
-  size?: 'default' | 'sm' | 'lg' | 'xl';
+  size?: 'sm' | 'md' | 'lg';
   initialQuantity?: number;
   onQuantityChange?: (dishId: string, quantity: number) => void;
 }
 
 export interface SizeStyle {
-  button?: string;
-  quantityButton?: string;
-  iconSize?: string;
+  button: string;
+  quantityButton: string;
+  iconSize: string;
   cartText?:string;
 };
 

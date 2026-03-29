@@ -12,7 +12,7 @@ export const AddToCartButton = ({
   price,
   variant = "grid",
   className = "",
-  size = "default",
+  size = "md",
   onQuantityChange,
 }: AddToCartButtonProps) => {
   const quantity = useCartStore(
@@ -80,55 +80,86 @@ export const AddToCartButton = ({
     onQuantityChange?.(product.id, newQty);
   };
 
+  
+
   const variantStyles = {
     grid: {
-      button:
-        "flex justify-center items-center gap-2 bg-berd-primary hover:bg-black active:bg-berd-primary/80 py-2.5 px-4 rounded-lg font-medium text-white transition-all w-full shadow-sm hover:shadow",
-      quantityContainer: "bg-berd-primary/10 rounded-lg p-1",
+      button: "flex h-11 w-[130px] items-center justify-center gap-2 rounded-lg bg-berd-primary px-1 font-medium text-white shadow-sm transition-all duration-200 ease-out hover:bg-black hover:shadow active:scale-[0.98] active:bg-berd-primary/80",
+      quantityContainer:
+        "flex h-[43px] w-[129px] px-2 items-center rounded-lg bg-berd-primary",
+
+      quantityInner:
+        "flex w-full h-[43px] items-center gap-2",
+
       quantityButton:
-        "w-7 h-7 rounded-md bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 shadow-sm",
-      iconSize: "w-4 h-4",
-      textSize: "text-xs font-medium",
+        "flex h-full w-9  items-center justify-center rounded-md bg-white text-gray-700 shadow-sm transition-all duration-200 ease-out hover:bg-white/10 hover:text-white active:scale-95 active:bg-gray-10",
+
+      count:
+        "min-w-[28px] text-center font-semibold text-sm text-white",
+
+      iconSize: "h-4 w-4",
+
+      textSize: "text-sm font-medium",
+
       successButton: "bg-green-500 hover:bg-green-600",
+
       cartLabel: "В корзину",
-      inCartText: "text-berd-primary",
-      inCartIcon: "text-berd-primary",
+
+      inCartText: "text-white",
+
+      inCartIcon: "text-white",
     },
+
     list: {
       button:
-        "flex justify-center items-center gap-2 bg-berd-primary text-white hover:bg-black active:bg-berd-primary/80 py-3 px-6 rounded-lg font-medium transition-all shadow-sm hover:shadow",
-      quantityContainer: "bg-berd-primary/10 rounded-lg p-2",
+        "flex items-center justify-center gap-2 rounded-lg bg-berd-primary px-6 py-3 font-medium text-white shadow-sm transition-all duration-200 ease-out hover:bg-black hover:shadow active:scale-[0.98] active:bg-berd-primary/80",
+      quantityContainer:
+        "rounded-lg bg-berd-primary/10 p-2",
+      quantityInner:
+        "flex items-center gap-2",
       quantityButton:
-        "w-8 h-8 rounded-md bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 shadow-sm",
-      iconSize: "w-5 h-5",
+        "flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 bg-white text-gray-700 shadow-sm transition-all duration-200 ease-out hover:bg-gray-50 active:scale-95 active:bg-gray-100",
+      count:
+        "min-w-[24px] px-1 text-center font-semibold text-sm text-berd-primary",
+      iconSize: "h-5 w-5",
       textSize: "text-sm font-semibold",
       successButton: "bg-green-500 hover:bg-green-600",
       cartLabel: "В корзину",
       inCartText: "text-berd-primary",
       inCartIcon: "text-berd-primary",
     },
+
     modal: {
       button:
-        "flex w-full items-center justify-center gap-2 rounded-lg bg-berd-primary text-white hover:bg-black active:bg-berd-primary/80 px-4 py-3 sm:px-6 sm:py-4 font-medium shadow-sm transition-all hover:shadow text-sm sm:text-base",
-     quantityContainer: "bg-berd-primary/10 rounded-lg p-2",
+        "flex h-12 w-full max-w-[220px] items-center justify-center gap-2 rounded-lg bg-berd-primary px-4 text-white shadow-sm transition-all duration-200 ease-out hover:bg-black hover:shadow active:scale-[0.98] active:bg-berd-primary/80 sm:h-12",
+      quantityContainer:
+        "w-full max-w-[220px] rounded-lg bg-berd-primary px-2",
+      quantityInner:
+        "flex h-12 w-full items-center justify-between sm:h-12",
       quantityButton:
-        "w-8 h-8 rounded-md bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100 shadow-sm",
-      iconSize:
-        "w-4 h-4 sm:w-5 sm:h-5",
-      textSize:
-        "font-semibold text-sm sm:text-base",
+        "flex h-9 w-9 items-center justify-center rounded-md text-white transition-all duration-200 ease-out hover:bg-white/10 active:scale-95 active:bg-white/15",
+      count:
+        "min-w-[32px] text-center font-semibold text-white text-sm sm:text-base",
+      iconSize: "h-4 w-4 sm:h-5 sm:w-5",
+      textSize: "text-sm font-semibold sm:text-base",
       successButton: "bg-green-500 hover:bg-green-600",
       cartLabel: "В корзину",
-      inCartText: "text-berd-primary text-sm sm:text-base",
-      inCartIcon: "text-berd-primary mr-1 sm:mr-2",
+      inCartText: "text-white",
+      inCartIcon: "text-white",
     },
+
     compact: {
       button:
-        "flex items-center justify-center gap-1 bg-gray-100 hover:bg-black py-1.5 px-3 rounded-md text-sm font-medium text-gray-700 hover:text-white transition-all active:scale-95",
-      quantityContainer: "bg-berd-primary/10 rounded-md p-1",
+        "flex items-center justify-center gap-1 rounded-md bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-700 transition-all duration-200 ease-out hover:bg-black hover:text-white active:scale-95",
+      quantityContainer:
+        "rounded-md bg-berd-primary/10 p-1",
+      quantityInner:
+        "flex items-center gap-1",
       quantityButton:
-        "w-6 h-6 rounded bg-white border border-gray-200 hover:bg-gray-50 active:bg-gray-100",
-      iconSize: "w-4 h-4",
+        "flex h-6 w-6 items-center justify-center rounded border border-gray-200 bg-white text-gray-700 transition-all duration-200 ease-out hover:bg-gray-50 active:scale-95 active:bg-gray-100",
+      count:
+        "min-w-[20px] text-center text-xs font-semibold text-berd-primary",
+      iconSize: "h-4 w-4",
       textSize: "text-xs font-semibold",
       successButton: "bg-green-500 hover:bg-green-600 text-white",
       cartLabel: "В корзину",
@@ -137,22 +168,21 @@ export const AddToCartButton = ({
     },
   } as const;
 
-  const sizeStyles: Record<"sm" | "default" | "lg" | "xl", SizeStyle> = {
+  const sizeStyles: Record<"sm" | "md" | "lg", SizeStyle> = {
     sm: {
       button: "py-1 px-2 text-xs",
-      quantityButton: "w-6 h-6",
+      quantityButton: "w-6 h-full",
       iconSize: "w-3 h-3",
     },
-    default: {},
-    lg: {
+    md: {
       button: "py-3 px-8 text-base",
-      quantityButton: "w-8 h-8",
+      quantityButton: "w-[25px] h-9 bg-inherit",
       iconSize: "w-5 h-5",
     },
-   xl: {
-      button: "py-3 px-4 text-sm sm:py-4 sm:px-6 sm:text-base",
-      quantityButton: "w-7 h-7 sm:w-8 sm:h-8",
-      iconSize: "w-4 h-4 sm:w-5 sm:h-5",
+    lg: {
+      button: "py-6 px-16 text-lg rounded-xl sm:py-4 sm:px-6 sm:text-base",
+      quantityButton: "w-10 h-10",
+      iconSize: "w-5 h-5 sm:w-5 sm:h-5",
     },
   };
 
@@ -164,7 +194,7 @@ export const AddToCartButton = ({
   const getButtonClass = () =>
     cn(
       styles.button,
-      sizeStyle.button,
+      variant !== "modal" && sizeStyle.button,
       isSuccess && styles.successButton,
       "relative overflow-hidden"
     );
@@ -172,29 +202,29 @@ export const AddToCartButton = ({
   const getQuantityButtonClass = () =>
     cn(
       styles.quantityButton,
-      sizeStyle.quantityButton,
-      "flex items-center justify-center text-gray-700 hover:text-gray-900 transition-all active:scale-95"
+      variant !== "modal" && sizeStyle.quantityButton
     );
 
   if (quantity === 0) {
     return (
-      <div className={className}>
+      <div className={cn(variant === "modal" && "w-full", className)}>
         <Button onClick={handleAddToCart} className={getButtonClass()}>
           {isSuccess ? (
             <>
               <Check className={cn(getIconSize(), "animate-in")} />
-              <span>Добавлено</span>
+              <span className={styles.textSize}>Добавлено</span>
             </>
           ) : (
             <>
               <ShoppingCart
                 className={cn(getIconSize(), isAdding && "animate-spin")}
               />
-              <span>
+              <span className={styles.textSize}>
                 {isAdding ? "Добавление..." : styles.cartLabel}
               </span>
             </>
           )}
+
           {isAdding && (
             <span className="absolute inset-0 bg-white/20 animate-pulse" />
           )}
@@ -207,22 +237,23 @@ export const AddToCartButton = ({
     <div
       className={cn(
         styles.quantityContainer,
-        "transition-all duration-200 hover:shadow-sm",
+        variant === "modal" && "w-full",
+        "transition-all duration-200 ease-out",
         className
       )}
     >
-      <div className="flex items-center gap-2">
-        <div className={cn("flex items-center gap-1", styles.inCartText)}>
+      <div className={styles.quantityInner}>
+        <div className={cn("flex items-center gap-2", styles.inCartText)}>
           <ShoppingCart
             className={cn(
               getIconSize(),
               styles.inCartIcon,
-              "fill-current/10 h-5  w-5"
+              variant === "modal" ? "fill-current/10" : ""
             )}
           />
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 min-h-[40px]">
           <Button
             variant="ghost"
             size="icon"
@@ -232,13 +263,7 @@ export const AddToCartButton = ({
             <Minus className={getIconSize()} />
           </Button>
 
-          <span
-            className={cn(
-              "px-1 min-w-[24px] font-medium text-center",
-              styles.textSize,
-              styles.inCartText
-            )}
-          >
+          <span className={cn(styles.count, styles.textSize)}>
             {quantity}
           </span>
 

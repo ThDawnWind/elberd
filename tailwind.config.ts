@@ -10,8 +10,8 @@ const config: Config = {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			berd: {
-  				primary: 'var(--berd-primary)'
-  			},
+				primary: "hsl(var(--berd-primary) / <alpha-value>)",
+				},
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'

@@ -58,7 +58,7 @@ export function ProductModal({ product, onClose }: ModalProps) {
     >
       <motion.div
         className={cn(
-          "relative bg-white shadow-2xl sm:rounded-xl rounded-t-3xl w-full overflow-hidden",
+          "relative bg-white shadow-2xl sm:rounded-3xl lg:rounded-3xl rounded-t-3xl w-full overflow-hidden",
           "max-h-[576px] h-full xs:max-h-[620px] xs:min-w-[300px] xs:max-w-[400px]",
           "flex flex-col",
           "sm:grid sm:grid-cols-2",
@@ -208,11 +208,14 @@ export function ProductModal({ product, onClose }: ModalProps) {
                 </span>
               </div>
 
-              <AddToCartButton
-                product={product}
-                price={product.price}
-                variant="modal"
-              />
+  <div className="flex justify-end w-full max-w-[200px]">
+                <AddToCartButton
+                  product={product}
+                  price={product.price}
+                  variant="modal"
+                  size="lg"
+                />
+              </div>
             </div>
           </div>
         </div>
