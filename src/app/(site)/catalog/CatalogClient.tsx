@@ -322,7 +322,7 @@ export default function CatalogClient({
                     <div ref={ref} className="w-full h-10" />
 
                     {isLoadingMore && viewMode === "grid" && (
-                      <div className="justify-center gap-[4px] grid grid-cols-[repeat(auto-fill,265px)] mt-4">
+                      <div className="justify-center gap-[8px] grid grid-cols-[repeat(auto-fill,265px)] mt-4">
                         {Array.from({ length: 4 }).map((_, i) => (
                           <DishCardGridSkeleton key={i} />
                         ))}
@@ -331,7 +331,7 @@ export default function CatalogClient({
 
 
                      {isLoadingMore && viewMode === "list" && (
-                      <div className="justify-center gap-[4px] grid grid-cols-[repeat(auto-fill,265px)] mt-4">
+                      <div className="justify-center gap-[8px] grid grid-cols-[repeat(auto-fill,265px)] mt-4">
                         {Array.from({ length: 1 }).map((_, i) => (
                           <DishCardListSkeleton key={i} />
                         ))}
