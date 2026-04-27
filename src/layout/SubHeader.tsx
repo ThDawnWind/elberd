@@ -1,21 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { Home, Menu} from "lucide-react";
-import { CategoryDropdown } from "@/components/ui/category-dropdown";
 import { mobileNavItems } from "@/lib/constants";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname} from "next/navigation";
 
 export const SubHeader = () => {
   const pathname = usePathname();
-  const router = useRouter(); 
-  const searchParams =  useSearchParams();
-  const isCatalog = pathname.startsWith("/catalog");
-  const selectedCategory = searchParams.get("category") || "all";
+  // const router = useRouter(); 
+  // const searchParams =  useSearchParams();
+  // const isCatalog = pathname.startsWith("/catalog");
+  // const selectedCategory = searchParams.get("category") || "all";
 
   return (
     <>
-      <nav aria-label="Подменю" className="xs:hidden bg-white border-b w-full">
+      {/* <nav aria-label="Подменю" className="xs:hidden bg-white border-b w-full">
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-6 lg:gap-8 h-12">
             <div className="flex items-center gap-6 lg:gap-8">
@@ -32,7 +30,7 @@ export const SubHeader = () => {
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                         isCatalog 
                           ? "bg-berd-primary text-black" 
-                          : "hover:bg-berd-primary text-gray-800"
+                          : "hover:bg-berd-primary/10 text-gray-800"
                       }`}
                       aria-label="Открыть меню каталога"
                       title="Каталог"
@@ -105,7 +103,7 @@ export const SubHeader = () => {
             </div>
           </div>
         </div>
-      </nav>
+      </nav> */}
 
       <nav className="sm:hidden lg:hidden block right-0 bottom-0 left-0 z-50 fixed bg-white/95 shadow-lg backdrop-blur-lg border-t min-w-[320px]">
           <div className="flex items-center h-16">

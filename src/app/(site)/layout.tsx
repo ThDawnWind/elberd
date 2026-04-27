@@ -1,10 +1,11 @@
 // import { SubHeader } from "@/layout/SubHeader";
 import { Footer } from "@/layout/Footer";
 import type { Metadata } from "next";
-// import { Suspense } from "react";
+import { Suspense } from "react";
 import { MobileSearch } from "@/layout/MobileSearch";
 import { getSearchProducts } from "@/services/prismic/queries/search";
 import Header from "@/layout/header/Header";
+import { SubHeader } from "@/layout/SubHeader";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://твой-домен.ru"),
@@ -21,11 +22,11 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
 
       <MobileSearch products={searchProducts} />
 
-      {/* <div className="mx-auto px-4 w-full max-w-[1440px]">
+      <div className="mx-auto px-4 w-full max-w-[1440px]">
         <Suspense fallback={null}>
           <SubHeader />
         </Suspense>
-      </div> */}
+      </div>
 
       <main className="flex-1">{children}</main>
 
