@@ -5,7 +5,7 @@ import { Autoplay, EffectFade } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useState, useCallback } from "react";
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -15,11 +15,9 @@ const slides = [
   {
     id: 1,
     title: "EL’BERD — вкус, проверенный временем!",
-    subtitle: "Наши шеф-повара",
-    description:
-      "Семейное дело, выросшее из многолетнего опыта которому уже более 20-ти лет",
-    image:
-      "https://tasty-team.ru/upload/iblock/fbb/fbb3e6ebf039530a9b64c861d7dfb700.jpg",
+    subtitle: "Многолетний опыт",
+    description: "Семейное дело, выросшее из многолетнего опыта. Авторская кухня и тёплая атмосфера уже более 20 лет.",
+    image: "/home-page/slide-1.png",
     imageAlt: "Шеф-повара EL’BERD на кухне",
     buttonText: "Узнать о команде",
     buttonLink: "/about",
@@ -29,9 +27,8 @@ const slides = [
     id: 2,
     title: "Чистота и стерильность",
     subtitle: "Чистота прежде всего",
-    description:
-      "Мы строго соблюдаем санитарные нормы на всех этапах — от отбора сырья до упаковки",
-    image: "https://fitlabs.ru/wp-content/uploads/2017/07/123.jpg",
+    description: "Мы строго соблюдаем санитарные нормы на всех этапах — от отбора сырья до упаковки",
+    image: "/home-page/slide-2.png",
     imageAlt: "Стерильная кухня и соблюдение санитарных норм",
     buttonText: "Смотреть меню",
     buttonLink: "/catalog",
@@ -40,10 +37,9 @@ const slides = [
   {
     id: 3,
     title: "Натуральный состав",
-    subtitle: "Качество прежде всего",
-    description:
-      "Только натуральные ингредиенты без искусственных добавок, усилителей вкуса и красителей",
-    image: "https://fitlabs.ru/wp-content/uploads/2017/07/123.jpg",
+    subtitle: "Высшее качество",
+    description: "Только натуральные ингредиенты без искусственных добавок, усилителей вкуса и красителей",
+    image: "/home-page/slide-3.png",
     imageAlt: "Натуральные ингредиенты для блюд EL’BERD",
     buttonText: "Смотреть меню",
     buttonLink: "/catalog",
@@ -55,19 +51,19 @@ export const WallaperSwiper = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
 
-  const handlePrev = useCallback(() => {
-    swiperInstance?.slidePrev();
-  }, [swiperInstance]);
+  // const handlePrev = useCallback(() => {
+  //   swiperInstance?.slidePrev();
+  // }, [swiperInstance]);
 
-  const handleNext = useCallback(() => {
-    swiperInstance?.slideNext();
-  }, [swiperInstance]);
+  // const handleNext = useCallback(() => {
+  //   swiperInstance?.slideNext();
+  // }, [swiperInstance]);
 
   const goToSlide = useCallback(
     (index: number) => {
       swiperInstance?.slideTo(index);
     },
-    [swiperInstance]
+    [swiperInstance],
   );
 
   return (
@@ -83,10 +79,10 @@ export const WallaperSwiper = () => {
         <Swiper
           onSwiper={setSwiperInstance}
           modules={[Autoplay, EffectFade]}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-          }}
+          // autoplay={{
+          //   delay: 5000,
+          //   disableOnInteraction: false,
+          // }}
           effect="fade"
           fadeEffect={{ crossFade: true }}
           speed={800}
@@ -111,29 +107,33 @@ export const WallaperSwiper = () => {
                   />
                 </div>
 
-                <div className="z-20 relative flex flex-col justify-end sm:p-8 lg:p-16 px-3 py-8 h-full">
-                  <div className="max-w-2xl">
-                    <div className="mb-2 xs:mb-2 sm:mb-4 lg:mb-6">
-                      <span className="inline-block bg-berd-primary px-2 py-1 rounded-full font-bold text-[clamp(0.676rem,3vw,1.2rem)] text-gray-900">
-                        {slide.subtitle}
-                      </span>
+                <div className="max-w-[1440px] m-auto z-20 relative flex flex-col  sm:p-8 lg:px-4 px-3 py-8 pt-24 h-full xs:pt-8">
+                  <div className="max-w-[650px]">
+                    <div className="px-2 py-1 bg-berd-primary text-white font-semibold rounded-lg max-w-max mb-4 text-[16px] leading-8 xs:mb-2 xs:text-[11px] xs:leading-[13px] xs:rounded-[4px]">
+                      {" "}
+                      {slide.subtitle}
                     </div>
-
-                    <h2 className="mb-1 sm:mb-4 lg:mb-6 font-bold text-[clamp(0.876rem,3vw,1.5rem)] text-white">
+                    <h2 className="mb-1 sm:mb-4 lg:mb-6 font-bold text-[58px] leading-[62px] text-[#f0e2cc] xs:text-white xs:text-2xl ">
                       {slide.title}
                     </h2>
 
-                    <p className="mb-1 sm:mb-8 lg:mb-9 max-w-xl font-medium text-[clamp(0.676rem,3vw,1.3rem)] text-white/90">
+                    <p className="mb-1 sm:mb-8 lg:mb-9 max-w-xl font-medium text-[28px] leading-[32px] text-[#f0e2cc] xs:text-sm xs:mb-4 xs:text-white">
                       {slide.description}
                     </p>
 
                     <Link
                       href={slide.buttonLink}
                       aria-label={slide.buttonAriaLabel}
-                      className="inline-flex items-center gap-2 bg-berd-primary shadow-lg hover:shadow-xl px-1 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-lg font-medium text-[clamp(0.767rem,3vw,1.2rem)] text-gray-900 hover:text-white transition-all duration-300"
+                      className="inline-flex items-center gap-2 bg-berd-primary shadow-lg 
+                      hover:shadow-xl px-1 sm:px-6 lg:px-8 py-2 sm:py-3
+                      lg:py-4 rounded-[55px] font-semibold text-[18px] leading-[18px]  
+                      text-white hover:text-[hsl(var(--berd-primary))] hover:bg-[white] 
+                      border border-transparent hover:border hover:border-berd-primary 
+                      transition-all duration-300 xs:text-[14px] xs:rounded-lg xs:gap-x-1 xs:py-3 xs:px-2
+                      "
                     >
                       {slide.buttonText}
-                      <ChevronRight className="w-3 sm:w-4 lg:w-5 h-3 sm:h-4 lg:h-5" />
+                      <ChevronRight className="w-5 sm:w-4 lg:w-5 h-4 sm:h-4 lg:h-5" />
                     </Link>
                   </div>
                 </div>
@@ -142,21 +142,21 @@ export const WallaperSwiper = () => {
           ))}
         </Swiper>
 
-        <button
+        {/* <button
           onClick={handlePrev}
           className="top-1/2 left-2 sm:left-4 z-30 absolute flex justify-center items-center bg-white/20 hover:bg-white/30 opacity-0 group-hover:opacity-100 backdrop-blur-sm rounded-full w-8 sm:w-10 lg:w-12 h-8 sm:h-10 lg:h-12 transition-all -translate-y-1/2 duration-300"
           aria-label="Предыдущий слайд"
         >
           <ChevronLeft className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-white" />
-        </button>
-
+        </button> */}
+        {/* 
         <button
           onClick={handleNext}
           className="top-1/2 right-2 sm:right-4 z-30 absolute flex justify-center items-center bg-white/20 hover:bg-white/30 opacity-0 group-hover:opacity-100 backdrop-blur-sm rounded-full w-8 sm:w-10 lg:w-12 h-8 sm:h-10 lg:h-12 transition-all -translate-y-1/2 duration-300"
           aria-label="Следующий слайд"
         >
           <ChevronRight className="w-4 sm:w-5 lg:w-6 h-4 sm:h-5 lg:h-6 text-white" />
-        </button>
+        </button> */}
 
         <div className="bottom-4 sm:bottom-6 left-1/2 z-30 absolute flex items-center gap-2 -translate-x-1/2">
           {slides.map((s, index) => (

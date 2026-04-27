@@ -21,7 +21,7 @@ export function MobileSearch({ products }: MobileSearchProps) {
   }
 
   return (
-    <div className="lg:hidden max-md:block mx-3 md:mx-6 mt-3 mb-2.5">
+    <div className="lg:hidden max-md:block mx-3 md:mx-6 mt-3 mb-2.5 xs:hidden">
       <SearchBar products={products} />
     </div>
   );

@@ -6,13 +6,7 @@ import { Heart } from "lucide-react";
 import type { DishCardProps } from "@/types";
 import { AddToCartButton } from "./AddToCartButton";
 import { cn } from "@/lib/utils";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CarouselWithDots } from "../carousel-with-dots";
@@ -20,12 +14,7 @@ import { useFavoritesStore } from "@/stores/favorites.store";
 import { useProductModalStore } from "@/stores/product-modal.store";
 import { formatPrice } from "@/lib/format";
 
-export const DishCard: React.FC<DishCardProps> = ({
-  product,
-  price,
-  variant = "grid",
-  className = "",
-}) => {
+export const DishCard: React.FC<DishCardProps> = ({ product, price, variant = "grid", className = "" }) => {
   const productImages = product.images || product.image;
   const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
   const hasHydratedFav = useFavoritesStore((state) => state.hasHydrated);
@@ -34,8 +23,7 @@ export const DishCard: React.FC<DishCardProps> = ({
   const openModal = useProductModalStore((s) => s.open);
 
   const imgAlt = `${product.name} — доставка EL’BERD`;
-  const favAriaLabel =
-    hasHydratedFav && isFav ? "Убрать из избранного" : "Добавить в избранное";
+  const favAriaLabel = hasHydratedFav && isFav ? "Убрать из избранного" : "Добавить в избранное";
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -46,9 +34,7 @@ export const DishCard: React.FC<DishCardProps> = ({
   const ProductMicrodata = () => (
     <>
       <meta itemProp="name" content={product.name} />
-      {product.content ? (
-        <meta itemProp="description" content={product.content} />
-      ) : null}
+      {product.content ? <meta itemProp="description" content={product.content} /> : null}
       <div itemProp="offers" itemScope itemType="https://schema.org/Offer">
         <meta itemProp="priceCurrency" content="RUB" />
         <meta itemProp="price" content={String(price)} />
@@ -65,22 +51,22 @@ export const DishCard: React.FC<DishCardProps> = ({
         itemType="https://schema.org/Product"
         onClick={() => openModal(product)}
         className={cn(
-          "group p-[4px] overflow-hidden transition-all duration-300",
-          "hover:shadow-lg hover:-translate-y-1 hover:shadow-berd-primary",
+          "group  overflow-hidden transition-all duration-300",
+          "hover:shadow-berd-primary",
           "border-border/60",
-          "flex flex-col h-[430px] w-[265px]",
+          "flex flex-col h-full",
           "cursor-pointer",
-          className
+          className,
         )}
       >
         <ProductMicrodata />
 
         <div className="relative rounded-t-[8px] overflow-hidden">
-          <div className="w-full h-full max-h-[220px]">
+          <div className="w-full h-full max-h-[260px] xs:max-h-[150px]">
             <CarouselWithDots
               images={productImages}
               alt={imgAlt}
-              heightClass="h-[214px]"
+              heightClass="h-[260px] xs:h-[150px]"
               imageClassName="object-cover group-hover:scale-110 transition-transform duration-500"
             />
           </div>
@@ -103,51 +89,41 @@ export const DishCard: React.FC<DishCardProps> = ({
             <Heart
               className={cn(
                 "w-3.5 sm:w-4 h-3.5 sm:h-4 transition-colors",
-                hasHydratedFav && isFav
-                  ? "fill-red-500 text-red-500 animate-pop"
-                  : "text-muted-foreground"
+                hasHydratedFav && isFav ? "fill-[#d9a441] text-[#d9a441] animate-pop" : "text-muted-foreground",
               )}
             />
           </Button>
         </div>
 
-        <CardHeader className="mt-[4px] p-[4px] h-[55px]">
-          <CardTitle className="mb-[3px] h-full font-semibold text-[18px] leading-tight">
-            {product.name}
-          </CardTitle>
+        <CardHeader className="p-2.5 xs:p-2">
+          <CardTitle className="h-full font-semibold text-[18px] leading-tight xs:text-sm xs:line-clamp-1 ">{product.name}</CardTitle>
         </CardHeader>
 
         <div className="bg-berd-primary shadow-md shadow-orange-200/40 mb-auto rounded-sm w-full h-[2px]" />
-        <CardContent className="flex flex-col flex-1 p-[4px]">
-          <CardDescription className="h-[48px] font-normal text-xs line-clamp-2">
-              {product.shelfLife && `Срок годности: ${product.shelfLife}`}
-          </CardDescription>
-        
-        <div className="mb-auto h-[48px]">
-          {product.content && (
-              <p className="flex items-start gap-1 font-normal text-[13px] leading-tight">
-                <span className="whitespace-nowrap">Состав:</span>
-                <span className="flex-1 break-words line-clamp-2">
-                  {product.content}
-                </span>
-              </p>
+        <CardContent className="grid grid-[auto_1fr_auto] flex-1 p-2.5">
+          {product.shelfLife && (
+            <CardDescription className="font-normal text-xs line-clamp-2 mb-5 xs:mb-2">
+              Срок годности: {product.shelfLife}
+            </CardDescription>
           )}
-        </div>
-         
-          <div className="flex justify-between items-center gap-1 pt-2 border-t">
+          {product.content && (
+            <div className="mb-auto">
+              <p className="flex items-start gap-1 font-normal text-[13px] leading-tight mb-5 xs:mb-2">
+                <span className="whitespace-nowrap">Состав:</span>
+                <span className="flex-1 break-words line-clamp-2">{product.content}</span>
+              </p>
+            </div>
+          )}
+
+          <div className="flex justify-between items-center gap-1 pt-4 border-t self-end xs:pt-2" >
             <div className="flex flex-col font-sans">
-              <span className="font-normal text-[14px] text-muted-foreground sm:text-xs leading-tight">
+              <span className="font-normal text-[14px] xs:text-[10px] text-muted-foreground sm:text-xs leading-tight">
                 Вес: {product.weight}
               </span>
-              <span className="font-bold text-[18px]">{formatPrice(price)}</span>
+              <span className="font-bold text-[18px] xs:text-[12px]">{formatPrice(price)}</span>
             </div>
 
-            <AddToCartButton
-              product={product}
-              price={price}
-              variant="grid"
-              size="md"
-            />
+            <AddToCartButton product={product} price={price} variant="grid" size="md" />
           </div>
         </CardContent>
       </Card>
@@ -167,7 +143,7 @@ export const DishCard: React.FC<DishCardProps> = ({
           "hover:shadow-lg",
           "border-border/40",
           "flex flex-row",
-          className
+          className,
         )}
       >
         <ProductMicrodata />
@@ -200,9 +176,7 @@ export const DishCard: React.FC<DishCardProps> = ({
             <Heart
               className={cn(
                 "hover:fill-red-500 w-3.5 xs:w-3.5 sm:w-4 h-3.5 xs:h-3.5 sm:h-4",
-                hasHydratedFav && isFav
-                  ? "fill-red-500 text-red-500 animate-pop"
-                  : "hover:text-red-500"
+                hasHydratedFav && isFav ? "fill-red-500 text-red-500 animate-pop" : "hover:text-red-500",
               )}
             />
           </Button>
@@ -210,42 +184,30 @@ export const DishCard: React.FC<DishCardProps> = ({
 
         <div className="flex flex-col flex-grow px-3">
           <div className="flex flex-row justify-between h-full max-h-[55px]">
-            <CardTitle className="mb-2 font-semibold text-[21px] line-clamp-2">
-              {product.name}
-            </CardTitle>
-            <span className="font-bold text-[19px] whitespace-nowrap">
-              {formatPrice(price)}
-            </span>
+            <CardTitle className="mb-2 font-semibold text-[21px] line-clamp-2">{product.name}</CardTitle>
+            <span className="font-bold text-[19px] whitespace-nowrap">{formatPrice(price)}</span>
           </div>
 
           <div className="flex flex-col h-[100px] xs:h-[90px] sm:h-[110px] lg:h-[120px]">
             <CardDescription className="h-[40px] xs:h-[35px] sm:h-[42px] lg:h-[48px] font-normal text-muted-foreground xs:text-xs sm:text-sm text-base line-clamp-2">
-            {product.shelfLife && (
-              <>
-               Срок годности: {product.shelfLife}
-              </>
-            )}     
+              {product.shelfLife && <>Срок годности: {product.shelfLife}</>}
             </CardDescription>
 
             {product.content && (
               <div className="flex flex-col h-[50px] xs:h-[45px] sm:h-[55px] lg:h-[60px]">
-                <p className="mb-1 xs:mb-0.5 font-semibold xs:text-xs text-base">
-                  Состав:
-                </p>
-                <p className="font-normal xs:text-[10px] sm:text-xs text-base line-clamp-2">
-                  {product.content}
-                </p>
+                <p className="mb-1 xs:mb-0.5 font-semibold xs:text-xs text-base">Состав:</p>
+                <p className="font-normal xs:text-[10px] sm:text-xs text-base line-clamp-2">{product.content}</p>
               </div>
             )}
           </div>
 
           <div className="flex justify-between items-center mt-auto p-2 border-t">
             <div>
-            {product.weight && (
-              <span className="font-medium text-black xs:text-[14px] sm:text-xs text-base">
-                Вес: {product.weight}
-              </span>
-            )}
+              {product.weight && (
+                <span className="font-medium text-black xs:text-[14px] sm:text-xs text-base">
+                  Вес: {product.weight}
+                </span>
+              )}
             </div>
 
             <AddToCartButton

@@ -3,9 +3,7 @@ import { ICONS } from "@/lib/icons";
 import { Category } from "@/types";
 
 export const CategoryCard = ({ name, icon, slug }: Category) => {
-  const href = slug
-    ? { pathname: "/catalog", query: { category: slug } }
-    : "/catalog";
+  const href = slug ? { pathname: "/catalog", query: { category: slug } } : "/catalog";
 
   const Icon = icon ? ICONS[icon as keyof typeof ICONS] : null;
 
@@ -13,23 +11,43 @@ export const CategoryCard = ({ name, icon, slug }: Category) => {
     <Link
       href={href}
       prefetch={false}
-      className="group flex flex-col justify-center items-center bg-white hover:shadow-lg px-2 sm:px-4 lg:px-4 py-3 sm:py-5 lg:py-5 border border-gray-100 hover:border-berd-primary rounded-xl lg:rounded-2xl w-[120px] sm:w-[140px] lg:w-[150px] h-[150px] sm:h-[170px] lg:h-[190px] transition-all duration-300"
+      className="
+    group flex flex-col items-center justify-center gap-[15px]
+    w-[120px] sm:w-[130px] lg:w-[172px]
+    h-[150px] sm:h-[160px] 
+    px-3 py-3
+    rounded-2xl border
+    bg-[#FBF9F5] border-[#EAE2D6]
+    transition-all duration-300
+    hover:bg-[#FFF9EE] hover:border-[#D6B25E] hover:shadow-[0_6px_18px_rgba(122,90,31,0.16)]
+  "
       aria-label={`Открыть категорию «${name}» в меню доставки EL’BERD`}
     >
-      <div className="flex justify-center items-center bg-gray-50 group-hover:bg-berd-primary/10 rounded-full w-[56px] sm:w-[64px] lg:w-[72px] h-[56px] sm:h-[64px] lg:h-[72px] group-hover:scale-105 transition-all duration-300">
+      <div
+        className="
+      flex items-center justify-center
+      w-11 h-11 sm:w-12 sm:h-12
+      rounded-full bg-[#F2ECE3]
+      transition-all duration-300
+      group-hover:bg-[#F3E4C6]
+    "
+      >
         {Icon ? (
-          <Icon className="w-7 sm:w-8 lg:w-9 h-7 sm:h-8 lg:h-9 text-gray-700 group-hover:text-berd-primary transition-colors" />
+          <Icon className="w-5 h-5 text-[#5B4B38] transition-colors duration-300 group-hover:text-[#B28A3C]" />
         ) : null}
       </div>
 
-      <div className="mt-2 sm:mt-3 lg:mt-4 text-center">
-        <h3 className="font-bold text-gray-900 group-hover:text-berd-primary text-xs sm:text-sm lg:text-sm line-clamp-2 leading-tight transition-colors">
+      <div className="mt-2 text-center w-full">
+        <h3
+          className="
+        font-semibold text-[14px] leading-[1.1]
+        text-[#2C2318] transition-colors duration-300
+        group-hover:text-[#B28A3C]
+        line-clamp-2
+      "
+        >
           {name}
         </h3>
-
-        <span className="block mt-1 font-medium text-gray-500 group-hover:text-berd-primary/70 text-xs transition-colors">
-          в меню →
-        </span>
       </div>
     </Link>
   );

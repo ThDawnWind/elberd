@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const SwiperControls = () => {
   return (
-    <div className="flex justify-center items-center gap-4 mt-10">
+    <div className="flex justify-center items-center gap-4 mt-10 pt-5">
       <button 
         className="bottom-0 left-1/2 z-10 absolute bg-white hover:bg-berd-primary shadow rounded-full w-8 sm:w-10 lg:w-10 h-8 sm:h-10 lg:h-10 hover:text-white transition-all -translate-x-12 sm:-translate-x-14 lg:-translate-x-16 duration-300 custom-prev"
       >

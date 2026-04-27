@@ -94,12 +94,12 @@ export const SearchBar = ({ products = [] }: SearchBarProps) => {
   return (
     <div ref={searchRef} className="z-50 relative flex-1 max-w-2xl">
       <form onSubmit={handleSearch} className="relative">
-        <div className="flex items-center bg-white shadow-sm hover:shadow border border-gray-200 focus-within:border-amber-500 rounded-full focus-within:ring-2 focus-within:ring-amber-200 overflow-hidden transition-all duration-200">
+        <div className="flex items-center bg-white shadow-sm hover:shadow border border-gray-200 focus-within:border-amber-500 rounded-[10px] focus-within:ring-2 focus-within:ring-amber-200 overflow-hidden transition-all duration-200">
           <Input
             ref={inputRef}
             type="text"
             placeholder="Поиск товаров..."
-            className="shadow-none py-2 sm:py-2.5 pr-12 pl-4 sm:pl-5 border-0 focus-visible:ring-0 focus-visible:ring-offset-0 w-full h-auto font-normal text-sm sm:text-base"
+            className="shadow-none py-2.5 sm:py-2.5 pr-12 pl-4 sm:pl-5 border-0 focus-visible:ring-0 focus-visible:ring-offset-0 w-full h-auto font-normal text-sm sm:text-base"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setIsOpen(true)}
