@@ -68,6 +68,7 @@ export default function CartClient() {
   });
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [agreePolicy, setAgreePolicy] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const selectAllRef = useRef<HTMLInputElement>(null);
@@ -149,9 +150,10 @@ export default function CartClient() {
       deliveryInfo.address.trim().length > 0 &&
       deliveryInfo.name.trim().length > 0 &&
       isPhoneComplete &&
-      isWhatsappComplete
+      isWhatsappComplete &&
+      agreePolicy
     );
-  }, [deliveryInfo, items.length, isPhoneComplete, isWhatsappComplete]);
+  }, [deliveryInfo, items.length, isPhoneComplete, isWhatsappComplete, agreePolicy]);
 
   const anyTouched = useMemo(() => Object.values(touched).some(Boolean), [touched]);
 
@@ -413,6 +415,29 @@ export default function CartClient() {
                     </p>
                   )}
 
+                  <div className="flex items-start gap-3 mb-4">
+                    <input
+                      id="policy"
+                      type="checkbox"
+                      checked={agreePolicy}
+                      onChange={(e) => setAgreePolicy(e.target.checked)}
+                      className="mt-1 border-gray-300 rounded w-4 h-4 accent-berd-primary cursor-pointer"
+                    />
+
+                    <label
+                      htmlFor="policy"
+                      className="font-sans text-gray-600 text-xs leading-relaxed cursor-pointer"
+                    >
+                      Я соглашаюсь на обработку персональных данных и принимаю{" "}
+                      <a
+                        href="/privacy-policy"
+                        target="_blank"
+                        className="text-berd-primary hover:underline"
+                      >
+                        политику конфиденциальности
+                      </a>
+                    </label>
+                  </div>
                   <Button
                     onClick={handleSubmitOrder}
                     disabled={!isFormValid}
