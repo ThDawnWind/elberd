@@ -12,7 +12,11 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+ARG PRISMIC_ACCESS_TOKEN
+ENV PRISMIC_ACCESS_TOKEN=$PRISMIC_ACCESS_TOKEN
 ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN node -e "console.log('PRISMIC TOKEN:', process.env.PRISMIC_ACCESS_TOKEN ? 'EXISTS length=' + process.env.PRISMIC_ACCESS_TOKEN.length : 'MISSING')"
 
 RUN npm run build
 
