@@ -216,7 +216,7 @@ export const AddToCartButton = ({
           />
         </div> */}
 
-        <div className="flex items-center gap-1 min-h-[48px] justify-between w-full xs:min-h-[40px]">
+        <div className="flex justify-between items-center gap-1 w-full min-h-[48px] xs:min-h-[40px]">
           <Button variant="ghost" size="icon" onClick={handleDecrease} className={getQuantityButtonClass()}>
             <Minus className={getIconSize()} />
           </Button>
