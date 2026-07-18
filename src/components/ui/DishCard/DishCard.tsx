@@ -51,7 +51,7 @@ export const DishCard: React.FC<DishCardProps> = ({ product, price, variant = "g
         itemType="https://schema.org/Product"
         onClick={() => openModal(product)}
         className={cn(
-          "group  overflow-hidden transition-all duration-300",
+          "group overflow-hidden transition-all duration-300",
           "hover:shadow-berd-primary",
           "border-border/60",
           "flex flex-col h-full",
@@ -96,31 +96,35 @@ export const DishCard: React.FC<DishCardProps> = ({ product, price, variant = "g
         </div>
 
         <CardHeader className="p-2.5 xs:p-2">
-          <CardTitle className="h-full font-semibold text-[18px] leading-tight xs:text-sm xs:line-clamp-1 ">{product.name}</CardTitle>
+          <CardTitle className="h-full font-semibold text-[18px] xs:text-sm xs:line-clamp-1 leading-tight">{product.name}</CardTitle>
         </CardHeader>
 
         <div className="bg-berd-primary shadow-md shadow-orange-200/40 mb-auto rounded-sm w-full h-[2px]" />
-        <CardContent className="grid grid-[auto_1fr_auto] flex-1 p-2.5">
+        <CardContent className="flex-1 grid grid-[auto_1fr_auto] p-2.5">
           {product.shelfLife && (
-            <CardDescription className="font-normal text-xs line-clamp-2 mb-5 xs:mb-2">
+            <CardDescription className="mb-5 xs:mb-2 font-normal text-xs line-clamp-2">
               Срок годности: {product.shelfLife}
             </CardDescription>
           )}
           {product.content && (
             <div className="mb-auto">
-              <p className="flex items-start gap-1 font-normal text-[13px] leading-tight mb-5 xs:mb-2">
+              <p className="flex items-start gap-1 mb-5 xs:mb-2 font-normal text-[13px] leading-tight">
                 <span className="whitespace-nowrap">Состав:</span>
                 <span className="flex-1 break-words line-clamp-2">{product.content}</span>
               </p>
             </div>
           )}
 
-          <div className="flex justify-between items-center gap-1 pt-4 border-t self-end xs:pt-2" >
+          <div className="flex justify-between items-center self-end gap-1 pt-4 xs:pt-2 border-t" >
             <div className="flex flex-col font-sans">
-              <span className="font-normal text-[14px] xs:text-[10px] text-muted-foreground sm:text-xs leading-tight">
-                Вес: {product.weight}
-              </span>
-              <span className="font-bold text-[18px] xs:text-[12px]">{formatPrice(price)}</span>
+              {
+                product.weight &&
+                <span className="font-normal text-muted-foreground xs:text-[10px] sm:text-xs leading-tight">
+                   Вес: {product.weight}
+               </span>
+              }
+
+              <span className="font-bold xs:text-[9px] lg:text-[15px]">{formatPrice(price)}</span>
             </div>
 
             <AddToCartButton product={product} price={price} variant="grid" size="md" />

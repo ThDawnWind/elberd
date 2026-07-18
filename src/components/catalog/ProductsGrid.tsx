@@ -36,7 +36,7 @@ const ProductsGrid = forwardRef<HTMLUListElement, ProductsGridProps>(
     return (
       <motion.ul
         ref={ref}
-        className="justify-center gap-[4px] grid grid-cols-[repeat(auto-fill,265px)]"
+        className="justify-center gap-[4px] xs:gap-2.5 grid grid-cols-[repeat(auto-fill,265px)] xs:grid-cols-2"
         variants={list}
         initial="hidden"
         animate="show"

@@ -15,7 +15,7 @@ function PopularDishesContent() {
   }
 
   return (
-    <div className="justify-between gap-[4px] grid grid-cols-[repeat(auto-fill,330px)] xs:grid-cols-2 xs:gap-2.5">
+    <div className="justify-between gap-[4px] xs:gap-2.5 grid grid-cols-[repeat(auto-fill,330px)] xs:grid-cols-2">
       {popularProducts.map((product: Product) => (
           <Reveal key={product.id}> 
             <DishCard price={product.price} product={product} variant="grid" />
@@ -40,7 +40,7 @@ function PopularDishesSkeleton() {
 export const PopularDishes = () => {
   return (
     <section className="mb-[64px] xs:mb-[32px]" aria-labelledby="popular-dishes-title">
-      <h2 id="popular-dishes-title" className="font-bold text-gray-900 text-xl sm:text-2xl lg:text-3xl mb-8 sm:mb-10 lg:mb-12">
+      <h2 id="popular-dishes-title" className="mb-8 sm:mb-10 lg:mb-12 font-bold text-gray-900 text-xl sm:text-2xl lg:text-3xl">
         Популярные блюда
       </h2>
 
