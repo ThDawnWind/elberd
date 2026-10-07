@@ -45,10 +45,6 @@ export const metadata: Metadata = {
 
   applicationName: "EL’BERD",
 
-  alternates: {
-    canonical: "/",
-  },
-
   robots: {
     index: true,
     follow: true,

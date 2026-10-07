@@ -2,7 +2,7 @@ import Link from "next/link"
 import { MapPin } from "lucide-react"
 
 export const metadata = {
-  title: "Где купить — EL’BERD",
+  title: "Где купить",
   robots: {
     index: false,
     follow: true,
@@ -12,7 +12,7 @@ export const metadata = {
 export default function WhereToBuyPage() {
   return (
     <section className="bg-white w-full min-h-screen">
-      <div className="mx-auto px-4 xs:py-10 lg:py-16 s:py-8 sm:py-12 max-w-5xl">
+      <div className="mx-auto px-4 s:py-8 xs:py-10 sm:py-12 lg:py-16 max-w-5xl">
         
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center bg-amber-100 px-3 py-1 rounded-full font-medium text-amber-800 s:text-xs xs:text-sm sm:text-sm lg:text-base animate-pulse">
