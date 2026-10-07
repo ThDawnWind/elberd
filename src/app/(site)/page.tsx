@@ -21,17 +21,9 @@ export default function Home() {
       <WallaperSwiper />
 
       <section className="mx-auto px-4 py-8 max-w-[1440px]">
-        <div className="max-w-3xl">
-          <h1 className="font-bold text-gray-900 text-2xl sm:text-3xl lg:text-4xl">
-            Доставка готовых блюд и продуктов EL’BERD в Грозном
-          </h1>
-
-          <p className="mt-4 text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed">
-            EL’BERD — готовые блюда, полуфабрикаты и продукты для заказа
-            с доставкой и самовывозом в Грозном. Выбирайте товары по категориям,
-            добавляйте их в корзину и оформляйте заказ удобным способом.
-          </p>
-        </div>
+        <h1 className="font-bold text-gray-900 text-2xl sm:text-3xl lg:text-4xl">
+          EL’BERD — готовые блюда и продукты в Грозном
+        </h1>
       </section>
 
       <div className="mx-auto px-4 max-w-[1440px]">
