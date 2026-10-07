@@ -8,9 +8,12 @@ import {
 import { CATEGORIES } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Каталог | EL’BERD",
-  description: "Каталог продуктов EL’BERD. Фильтры по категориям и сортировка.",
-  alternates: { canonical: "/catalog" },
+  title: "Каталог готовых блюд и продуктов",
+  description:
+    "Каталог EL’BERD: готовые блюда, полуфабрикаты и продукты с доставкой и самовывозом в Грозном. Категории, поиск и сортировка.",
+  alternates: {
+    canonical: "/catalog",
+  },
 };
 
 type CatalogPageProps = {
@@ -52,6 +55,17 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
 
     return (
       <div className="mx-auto px-4 max-w-[1440px]">
+        <section className="py-8">
+          <h1 className="font-bold text-gray-900 text-2xl sm:text-3xl lg:text-4xl">
+            Каталог готовых блюд и продуктов EL’BERD
+          </h1>
+
+          <p className="mt-4 max-w-3xl text-gray-600 text-sm sm:text-base leading-relaxed">
+            В каталоге EL’BERD собраны готовые блюда, полуфабрикаты и продукты
+            для заказа в Грозном. Используйте категории, поиск и сортировку,
+            чтобы быстрее найти подходящие позиции.
+          </p>
+        </section>
         <CatalogClient
           products={productsData.results}
           categories={CATEGORIES}
