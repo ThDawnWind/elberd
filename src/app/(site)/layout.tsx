@@ -1,15 +1,10 @@
 // import { SubHeader } from "@/layout/SubHeader";
 import { Footer } from "@/layout/Footer";
-import type { Metadata } from "next";
 import { Suspense } from "react";
 import { MobileSearch } from "@/layout/MobileSearch";
 import { getSearchProducts } from "@/services/prismic/queries/search";
 import Header from "@/layout/header/Header";
 import { SubHeader } from "@/layout/SubHeader";
-
-export const metadata: Metadata = {
-  metadataBase: new URL("https://твой-домен.ru"),
-};
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
 

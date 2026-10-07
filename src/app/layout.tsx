@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import { StoreHydration } from "@/components/StoreHydration"
 import "./globals.css";
 import { GlobalProductModal } from "@/components/GlobalProductModal";
-import Script from "next/dist/client/script";
+import Script from "next/script";
 
 const onest = localFont({
   src: [
@@ -33,30 +33,75 @@ const onest = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Эльберд — доставка еды",
-  description: "Доставка еды в вашем городе",
+  metadataBase: new URL("https://www.dawnlab.ru"),
+
+  title: {
+    default: "EL’BERD — доставка готовых блюд и продуктов в Грозном",
+    template: "%s | EL’BERD",
+  },
+
+  description:
+    "EL’BERD — доставка готовых блюд, полуфабрикатов и продуктов в Грозном. Каталог, самовывоз и доставка по городу.",
+
+  applicationName: "EL’BERD",
+
+  alternates: {
+    canonical: "/",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    url: "https://www.dawnlab.ru",
+    siteName: "EL’BERD",
+    title: "EL’BERD — доставка готовых блюд и продуктов в Грозном",
+    description:
+      "Готовые блюда, полуфабрикаты и продукты с доставкой и самовывозом в Грозном.",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "EL’BERD — доставка готовых блюд в Грозном",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "EL’BERD — доставка готовых блюд и продуктов в Грозном",
+    description:
+      "Готовые блюда, полуфабрикаты и продукты с доставкой и самовывозом в Грозном.",
+    images: ["/og-image.jpg"],
+  },
+
   icons: {
     icon: "/favicon.ico",
   },
 };
 
+const siteUrl = "https://www.dawnlab.ru";
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": ["LocalBusiness", "Store", "GroceryStore"],
 
-  "@id": "https://example.com/#elberd",
+  "@id": `${siteUrl}/#elberd`,
   name: "EL’BERD",
-  url: "https://example.com",
-  description: "Магазин готовых продуктов и полуфабрикатов с доставкой и самовывозом в Грозном.",
+  url: siteUrl,
 
-  logo: "https://example.com/logo.png",
-  image: [
-    "https://example.com/og-image.jpg",
-    "https://example.com/storefront.jpg"
-  ],
+  description:
+    "Магазин готовых продуктов и полуфабрикатов с доставкой и самовывозом в Грозном.",
+
+  logo: `${siteUrl}/logo.png`,
+  image: [`${siteUrl}/og-image.jpg`],
 
   telephone: "+7-989-919-48-71",
-  email: "info@example.com",
 
   address: {
     "@type": "PostalAddress",
@@ -64,51 +109,46 @@ const jsonLd = {
     addressLocality: "Грозный",
     addressRegion: "Чеченская Республика",
     postalCode: "364000",
-    addressCountry: "RU"
+    addressCountry: "RU",
   },
 
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 43.317000,
-    longitude: 45.698000
+    latitude: 43.317,
+    longitude: 45.698,
   },
 
-  hasMap: "https://yandex.ru/maps/?text=ELBERD%20%D0%93%D1%80%D0%BE%D0%B7%D0%BD%D1%8B%D0%B9",
+  hasMap:
+    "https://yandex.ru/maps/?text=ELBERD%20%D0%93%D1%80%D0%BE%D0%B7%D0%BD%D1%8B%D0%B9",
 
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: [
-        "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
       ],
       opens: "09:00",
-      closes: "20:00"
-    }
+      closes: "20:00",
+    },
   ],
 
   areaServed: [
-    { "@type": "City", name: "Грозный" }
-  ],
-
-  makesOffer: [
     {
-      "@type": "Offer",
-      name: "Доставка по городу",
-      availability: "https://schema.org/InStock",
-      areaServed: { "@type": "City", name: "Грозный" }
+      "@type": "City",
+      name: "Грозный",
     },
-    {
-      "@type": "Offer",
-      name: "Самовывоз из точки",
-      availability: "https://schema.org/InStock",
-      areaServed: { "@type": "City", name: "Грозный" }
-    }
   ],
 
   sameAs: [
     "https://www.instagram.com/el.berd_",
-    "https://wa.me/79899194871"
-  ]
+    "https://wa.me/79899194871",
+  ],
 };
 
 export default function RootLayout({
