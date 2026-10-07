@@ -3,7 +3,7 @@ import FavoritesClient from "./FavoritesClient";
 import { getProducts } from "@/services/prismic/queries/products";
 
 export const metadata: Metadata = {
-  title: "Избранное | EL’BERD",
+  title: "Избранное",
   description: "Сохранённые товары и блюда, которые вам понравились.",
   robots: {
     index: false,

@@ -1,3 +1,14 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Политика конфиденциальности",
+  description:
+    "Политика конфиденциальности EL’BERD: информация о сборе, обработке и использовании персональных данных при оформлении заказа.",
+  alternates: {
+    canonical: "/privacy-policy",
+  },
+};
+
 export default function PrivacyPolicyPage() {
   return (
     <main className="bg-gray-50 min-h-screen">

@@ -3,7 +3,7 @@ import CartClient from "./CartClient";
 
 
 export const metadata: Metadata = {
-  title: "Корзина | EL’BERD",
+  title: "Корзина",
   description: "Оформление заказа и данные для доставки.",
   robots: { index: false, follow: true },
   alternates: { canonical: "/cart" },
