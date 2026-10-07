@@ -13,9 +13,12 @@ import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "О нас | EL’BERD — доставка продуктов в Грозном",
-  description: "EL’BERD — семейное производство и продажа продуктов питания с доставкой в Грозном. Самовывоз и доставка ежедневно.",
-  alternates: { canonical: "/about" },
+  title: "О компании",
+  description:
+    "EL’BERD — семейное производство готовых блюд, полуфабрикатов и продуктов питания с доставкой и самовывозом в Грозном.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {
